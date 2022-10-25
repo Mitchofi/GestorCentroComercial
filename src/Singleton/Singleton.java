@@ -4,13 +4,22 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import src.CentroComercial;
-import src.Cliente;
+import src.Local;
+import src.Persona;
 import util.Lista;
 
 public class Singleton {
 
     private static Singleton INSTANCIA = new Singleton();
     private static CentroComercial instanciaControlador = new CentroComercial();
+
+    private Lista<Persona> personas;
+    private static Local[][] locales;
+
+    private Singleton() {
+        leerListaPersonas();
+        leerListaLocales();
+    }
 
     public static Singleton getINSTANCIA() {
         return INSTANCIA;
@@ -24,29 +33,41 @@ public class Singleton {
         instanciaControlador = aInstanciaControlador;
     }
 
-    private Lista<Cliente> clientes;
-
-    private Singleton() {
-        leerListaClientes();
+    public Lista<Persona> getPersonas() {
+        return personas;
     }
 
-    public Lista<Cliente> getClientes() {
-        return clientes;
+    public void setPersonas(Lista<Persona> personas) {
+        this.personas = personas;
     }
 
-    public void getClientes(Lista<Cliente> usuarios) {
-        this.clientes = usuarios;
-    }
-
-    private void leerListaClientes() {
+    private void leerListaPersonas() {
         try {
-            FileInputStream archivo = new FileInputStream("Clientes.dat");
+            FileInputStream archivo = new FileInputStream("personas.dat");
             ObjectInputStream lector = new ObjectInputStream(archivo);
-            clientes = (Lista<Cliente>) lector.readObject();
+            personas = (Lista<Persona>) lector.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
-            clientes = new Lista<>();
+            personas = new Lista<>();
         }
     }
 
+    public static Local[][] getLocales() {
+        return locales;
+    }
+
+    public static void setLocales(Local[][] aLocales) {
+        locales = aLocales;
+    }
+
+    private void leerListaLocales() {
+        try {
+            FileInputStream archivo = new FileInputStream("locales.dat");
+            ObjectInputStream lector = new ObjectInputStream(archivo);
+            locales = (Local[][]) lector.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+            locales = new Local[5][4];
+        }
+    }
 }

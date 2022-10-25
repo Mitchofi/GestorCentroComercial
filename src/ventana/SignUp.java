@@ -372,6 +372,7 @@ public class SignUp extends javax.swing.JFrame {
         if (txtCorreo.getText().equals("")) {
             txtCorreo.setText("Correo");
             txtCorreo.setForeground(Color.gray);
+
         }
     }//GEN-LAST:event_txtCorreoFocusLost
 
@@ -406,9 +407,10 @@ public class SignUp extends javax.swing.JFrame {
             String correo = txtCorreo.getText();
             String contrasena = String.valueOf(txtContrasena.getPassword());
             Vehiculo vehiculo = vehiculo();
-            Cliente cliente = new Cliente(correo, contrasena, vehiculo, nombre, cedula, telefono, edad);
+            Cliente cliente = new Cliente(vehiculo, nombre, cedula, telefono, correo, contrasena, edad);
             if (controlador.anadirCliente(cliente)) {
                 JOptionPane.showMessageDialog(this, "Registrado correctamente");
+                cleanTextField();
             } else {
                 JOptionPane.showMessageDialog(this, "No pudiste ser registrado"
                         + " debido a que hay un usuario registrado con algunos de los datos que escribistes ");
@@ -484,6 +486,23 @@ public class SignUp extends javax.swing.JFrame {
             }
         }
         return vehiculo;
+    }
+
+    public void cleanTextField() {
+        txtTipoDeVehiculo.setText("Tipo de vehiculo");
+        txtTipoDeVehiculo.setForeground(Color.gray);
+        txtTelefono.setText("Numero movil");
+        txtTelefono.setForeground(Color.gray);
+        txtNombre.setText("Nombre completo");
+        txtNombre.setForeground(Color.gray);
+        txtEdad.setText("Edad");
+        txtEdad.setForeground(Color.gray);
+        txtCedula.setText("Cedula");
+        txtCedula.setForeground(Color.gray);
+        txtCorreo.setText("Correo");
+        txtCorreo.setForeground(Color.gray);
+        txtContrasena.setText("******");
+        txtContrasena.setForeground(Color.gray);
     }
 
     public static void main(String args[]) {

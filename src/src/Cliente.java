@@ -9,11 +9,9 @@ import util.Lista;
  */
 public class Cliente extends Persona implements Serializable {
 
-    private String correo;
-    private String contrasena;
     private Vehiculo Vehiculo;
     private Lista<Articulo> articulos;
-    private Lista<Multa> multas;
+    private boolean multa;
     private HistorialCompra historialCompra;
     private HistorialConcurso historialConcurso;
     private Lista<Separado> listaArticulosSeparados;
@@ -23,61 +21,26 @@ public class Cliente extends Persona implements Serializable {
 
     /**
      *
-     * @param correo
-     * @param contrasena
      * @param Vehiculo
      * @param nombre
      * @param cedula
      * @param numeroCelular
+     * @param correo
+     * @param contrasena
      * @param edad
      */
-    public Cliente(String correo, String contrasena, Vehiculo Vehiculo,
-            String nombre, String cedula,
-            String numeroCelular, short edad) {
-        super(nombre, cedula, numeroCelular, edad);
-        this.correo = correo;
-        this.contrasena = contrasena;
+    public Cliente(Vehiculo Vehiculo, String nombre, String cedula,
+            String numeroCelular, String correo, String contrasena, short edad) {
+        super(nombre, cedula, numeroCelular, correo, contrasena, edad);
         this.Vehiculo = Vehiculo;
         this.articulos = new Lista<>();
-        this.multas = new Lista<>();
+        this.multa = false;
         this.historialCompra = new HistorialCompra();
         this.historialConcurso = new HistorialConcurso();
         this.listaArticulosSeparados = new Lista<>();
         this.valorInvertidoOnline = 0;
         this.valorInvertidoPresencial = 0;
         this.valorTotal = 0;
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public String getCorreo() {
-        return correo;
-    }
-
-    /**
-     *
-     * @param correo
-     */
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    /**
-     *
-     * @param contrasena
-     */
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
     }
 
     /**
@@ -116,16 +79,16 @@ public class Cliente extends Persona implements Serializable {
      *
      * @return
      */
-    public Lista<Multa> getMultas() {
-        return multas;
+    public boolean isMulta() {
+        return multa;
     }
 
     /**
      *
-     * @param multas
+     * @param multa
      */
-    public void setMultas(Lista<Multa> multas) {
-        this.multas = multas;
+    public void setMulta(boolean multa) {
+        this.multa = multa;
     }
 
     /**

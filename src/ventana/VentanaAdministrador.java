@@ -4,9 +4,11 @@
  */
 package ventana;
 
+import controlador.ControladorVentanaAdministrador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import src.Local;
 
 /**
  *
@@ -19,12 +21,14 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
      */
     LogIn ventanaLogIn;
     private JButton[][] botones;
+    ControladorVentanaAdministrador controlador;
 
     public VentanaAdministrador(LogIn logIn) {
         initComponents();
         setLocationRelativeTo(this);
         this.botones = new JButton[5][4];
         this.ventanaLogIn = logIn;
+        this.controlador = new ControladorVentanaAdministrador();
         initBotones();
     }
 
@@ -76,7 +80,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel2.setText("ADMINISTRADOR");
 
-        jLabelLocales.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelLocales.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabelLocales.setForeground(new java.awt.Color(51, 153, 255));
         jLabelLocales.setText("Locales");
         jLabelLocales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -86,7 +90,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             }
         });
 
-        jLabelEmpleados.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelEmpleados.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabelEmpleados.setForeground(new java.awt.Color(51, 153, 255));
         jLabelEmpleados.setText("Empleados");
         jLabelEmpleados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -96,7 +100,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             }
         });
 
-        jLabelClientes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelClientes.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabelClientes.setForeground(new java.awt.Color(51, 153, 255));
         jLabelClientes.setText("Clientes");
         jLabelClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -106,9 +110,9 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             }
         });
 
-        jLabelConcursos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelConcursos.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabelConcursos.setForeground(new java.awt.Color(51, 153, 255));
-        jLabelConcursos.setText("Concursos");
+        jLabelConcursos.setText("Ventas");
         jLabelConcursos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelConcursos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -116,9 +120,9 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             }
         });
 
-        jLabelVentas.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelVentas.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabelVentas.setForeground(new java.awt.Color(51, 153, 255));
-        jLabelVentas.setText("Ventas");
+        jLabelVentas.setText("Concursos");
         jLabelVentas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelVentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -126,7 +130,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             }
         });
 
-        jLabelSolicitudes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelSolicitudes.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabelSolicitudes.setForeground(new java.awt.Color(51, 153, 255));
         jLabelSolicitudes.setText("Solicitudes");
         jLabelSolicitudes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -141,36 +145,32 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelEmpleados)
-                            .addComponent(jLabelLocales)
-                            .addComponent(jLabelClientes)
-                            .addComponent(jLabelVentas)
-                            .addComponent(jLabelConcursos)
-                            .addComponent(jLabelSolicitudes)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabelEmpleados)
+                    .addComponent(jLabelLocales)
+                    .addComponent(jLabelClientes)
+                    .addComponent(jLabelVentas)
+                    .addComponent(jLabelConcursos)
+                    .addComponent(jLabelSolicitudes))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(49, 49, 49)
                 .addComponent(jLabel2)
-                .addGap(60, 60, 60)
+                .addGap(85, 85, 85)
                 .addComponent(jLabelLocales)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelEmpleados)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelClientes)
                 .addGap(18, 18, 18)
-                .addComponent(jLabelVentas)
-                .addGap(18, 18, 18)
                 .addComponent(jLabelConcursos)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelVentas)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelSolicitudes)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -195,7 +195,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(485, Short.MAX_VALUE)
+                .addContainerGap(487, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelRegistrar2)
@@ -230,7 +230,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(494, Short.MAX_VALUE)
+                .addContainerGap(496, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelRegistrar1)
@@ -265,7 +265,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(494, Short.MAX_VALUE)
+                .addContainerGap(496, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelRegistrar3)
@@ -300,7 +300,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(494, Short.MAX_VALUE)
+                .addContainerGap(496, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelRegistrar4)
@@ -335,7 +335,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(494, Short.MAX_VALUE)
+                .addContainerGap(496, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelRegistrar5)
@@ -370,7 +370,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(494, Short.MAX_VALUE)
+                .addContainerGap(496, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelRegistrar6)
@@ -388,7 +388,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
 
         jTabbedPane1.addTab("Solicitud", jPanel9);
 
-        jPanel3.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 63, -1, 595));
+        jPanel3.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 63, 690, 595));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -410,9 +410,9 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -506,10 +506,14 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         for (int i = 0; i < botones.length; i++) {
             for (int j = 0; j < botones[i].length; j++) {
                 if (e.getSource().equals(botones[i][j])) {
-                    Silla silla = controlador.obtenerSilla(i, j);
-                    ventanaSilla ventanaSilla = new ventanaSilla(this, silla);
-                    ventanaSilla.setVisible(true);
-                    this.dispose();
+                    Local local = controlador.obtenerLocal(i, j);
+                    if (local.isDisponible()) {
+                        VentanaLocal ventanaLocal = new VentanaLocal(this, local);
+                        ventanaLocal.setVisible(true);
+                        this.dispose();
+                    } else {
+                        
+                    }
                 }
             }
         }
