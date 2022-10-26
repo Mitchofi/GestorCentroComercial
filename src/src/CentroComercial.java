@@ -6,23 +6,28 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import util.Lista;
+import util.Queve;
 
 public class CentroComercial implements Serializable {
-
-    private static Lista<Persona> personas;
-    private static Local[][] locales;
+    
+    public static Lista<Persona> personas;
+    public static Local[][] locales;
+    Lista<Concurso> concursos;
     AdministradorGCentroComercial administrador;
-
+    Queve<Solicitud> solicitudes;
+    Parqueadero parqueadero;
+    
     public CentroComercial() {
         this.personas = Singleton.getINSTANCIA().getPersonas();
         this.locales = Singleton.getINSTANCIA().getLocales();
+        this.administrador = new AdministradorGCentroComercial("julian",
+                "12334", "123", "admin", "123", Short.parseShort("18"));
         if (locales[0][0] == null) {
             initLocales();
             serializarListaLocales();
         }
-        anadirAdmin();
     }
-
+    
     private void initLocales() {
         for (int i = 0; i < locales.length; i++) {
             for (int j = 0; j < locales[i].length; j++) {
@@ -30,41 +35,40 @@ public class CentroComercial implements Serializable {
             }
         }
     }
-
+    
     public int iniciarSecion(String correo, String contrasena) {
         int resultado = 0;
-        for (int i = 0; i < personas.Size(); i++) {
-            if (personas.obtenerDato(i) instanceof Cliente && personas.obtenerDato(i).getCorreo().equals(correo)
-                    && personas.obtenerDato(i).getContrasena().equals(contrasena)) {
-                resultado = 1;
-            } else if (personas.obtenerDato(i) instanceof AdministradorGCentroComercial) {
-                resultado = 2;
+        if (administrador.getCorreo().equals(correo)
+                && administrador.getContrasena().equals(contrasena)) {
+            resultado = 1;
+        }
+        if (resultado == 0) {
+            for (int i = 0; i < personas.Size(); i++) {
+                if (personas.obtenerDato(i) instanceof Cliente && personas.obtenerDato(i).getCorreo().equals(correo)
+                        && personas.obtenerDato(i).getContrasena().equals(contrasena)) {
+                    resultado = 3;
+                }
+            }
+        }
+        if (resultado == 0) {
+            for (int i = 0; i < locales.length; i++) {
+                for (int j = 0; j < locales[i].length; j++) {
+                    if (locales[i][j].getNegocio() != null) {
+                        if (locales[i][j].getNegocio().getAdministrador().getCorreo().equals(correo)
+                                && locales[i][j].getNegocio().getAdministrador().getContrasena().equals(contrasena)) {
+                            resultado = 2;
+                        }
+                    }
+                }
             }
         }
         return resultado;
     }
-
+    
     public Local obtenerLocal(int fila, int columna) {
         return locales[fila][columna];
     }
-
-    public void anadirAdmin() {
-        boolean existe = true;
-        administrador = new AdministradorGCentroComercial("julian",
-                "12334", "123", "admin", "123", Short.parseShort("18"));
-        for (int i = 0; i < personas.Size(); i++) {
-            if (personas.obtenerDato(i).getCedula().equals(administrador.getCedula())
-                    || personas.obtenerDato(i).getCorreo().equals(administrador.getCorreo())
-                    || personas.obtenerDato(i).getNumeroCelular().equals(administrador.getNumeroCelular())) {
-                existe = false;
-            }
-        }
-        if (existe) {
-            personas.add(administrador);
-            serializarListaPersonas();
-        }
-    }
-
+    
     public boolean anadirCliente(Cliente cliente) {
         boolean existe = true;
         boolean registrado = false;
@@ -82,25 +86,19 @@ public class CentroComercial implements Serializable {
         }
         return registrado;
     }
-
-    public boolean anadirAdministradorNegocio(AdministradorDeNegocio administradorDeNegocio) {
-        boolean existe = true;
-        boolean registrado = false;
-        for (int i = 0; i < personas.Size(); i++) {
-            if (personas.obtenerDato(i).getCedula().equals(administradorDeNegocio.getCedula())
-                    || personas.obtenerDato(i).getCorreo().equals(administradorDeNegocio.getCorreo())
-                    || personas.obtenerDato(i).getNumeroCelular().equals(administradorDeNegocio.getNumeroCelular())) {
-                existe = false;
-            }
+    
+    public boolean anadirNegocio(AdministradorDeNegocio administradorDeNegocio, Negocio negocio, Contrato contrato, Local local) {
+        boolean registro = false;
+        if (local.isDisponible()) {
+            negocio.setContrato(contrato);
+            local.setNegocio(negocio);
+            local.setDisponible(false);
+            registro = true;
         }
-        if (existe) {
-            personas.add(administradorDeNegocio);
-            serializarListaPersonas();
-            registrado = true;
-        }
-        return registrado;
+        serializarListaLocales();
+        return registro;
     }
-
+    
     public static void serializarListaPersonas() {
         try {
             FileOutputStream archivo = new FileOutputStream("personas.dat");
@@ -110,7 +108,7 @@ public class CentroComercial implements Serializable {
             ex.printStackTrace();
         }
     }
-
+    
     public static void serializarListaLocales() {
         try {
             FileOutputStream archivo = new FileOutputStream("locales.dat");

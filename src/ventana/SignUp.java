@@ -44,7 +44,6 @@ public class SignUp extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         txtTelefono = new javax.swing.JTextField();
-        txtNombre = new javax.swing.JTextField();
         txtEdad = new javax.swing.JTextField();
         txtCedula = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
@@ -52,6 +51,7 @@ public class SignUp extends javax.swing.JFrame {
         checkVehiculo = new java.awt.Checkbox();
         txtPlacaVehiculo = new javax.swing.JTextField();
         txtTipoDeVehiculo = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sign Up");
@@ -111,17 +111,6 @@ public class SignUp extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtTelefonoFocusLost(evt);
-            }
-        });
-
-        txtNombre.setForeground(new java.awt.Color(153, 153, 153));
-        txtNombre.setText("Nombre completo");
-        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombreFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNombreFocusLost(evt);
             }
         });
 
@@ -198,6 +187,17 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
 
+        txtNombre.setForeground(new java.awt.Color(153, 153, 153));
+        txtNombre.setText("Nombre completo");
+        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNombreFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNombreFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -207,31 +207,31 @@ public class SignUp extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(checkVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTelefono)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtEdad)
                     .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtCorreo)
                     .addComponent(txtContrasena)
                     .addComponent(txtTipoDeVehiculo)
-                    .addComponent(txtPlacaVehiculo))
+                    .addComponent(txtPlacaVehiculo, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                    .addComponent(txtNombre))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(checkVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -303,25 +303,6 @@ public class SignUp extends javax.swing.JFrame {
             txtTelefono.setBackground(Color.white);
         }
     }//GEN-LAST:event_txtTelefonoFocusLost
-
-    private void txtNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusGained
-        if (txtNombre.getText().equals("Nombre completo")) {
-            txtNombre.setText("");
-            txtNombre.setForeground(Color.black);
-        }
-     }//GEN-LAST:event_txtNombreFocusGained
-
-    private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
-        if (txtNombre.getText().equals("")) {
-            txtNombre.setText("Nombre completo");
-            txtNombre.setForeground(Color.gray);
-        }
-        if (!validarLetras(txtNombre.getText()) && !txtNombre.getText().equals("Nombre completo")) {
-            txtNombre.setBackground(Color.red);
-        } else {
-            txtNombre.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtNombreFocusLost
 
     private void txtEdadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdadFocusGained
         if (txtEdad.getText().equals("Edad")) {
@@ -460,6 +441,19 @@ public class SignUp extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_checkVehiculoItemStateChanged
+
+    private void txtNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusGained
+        if (txtNombre.getText().equals("Nombre completo")) {
+            txtNombre.setText("");
+            txtNombre.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtNombreFocusGained
+
+    private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
+        if (txtNombre.getText().equals("")) {
+            txtNombre.setText("Nombre completo");
+            txtNombre.setForeground(Color.gray);
+        }    }//GEN-LAST:event_txtNombreFocusLost
 
     public static boolean validarNumeros(String datos) {
         return datos.matches("[0-9]*");

@@ -6,89 +6,70 @@ import java.io.Serializable;
  *
  * @author Acer
  */
-public class Articulo implements Serializable{
+public class Articulo implements Serializable {
 
     private String nombreProducto;
-    private String nombreDelLocal;
-    private String categoria;
+    private String decripcionProducto;
+    private String nombreCategoria;
     private float valorDelProducto;
+    private int porcentajeDescuento;
+    private int cantidadProducto;
 
-    /**
-     *
-     * @param nombreProducto
-     * @param nombreDelLocal
-     * @param categoria
-     * @param valorDelProducto
-     */
-    public Articulo(String nombreProducto, String nombreDelLocal, String categoria, float valorDelProducto) {
+    public Articulo(String nombreProducto, String decripcionProducto, String nombreCategoria, float valorDelProducto, int porcentajeDescuento, int cantidadProducto) {
         this.nombreProducto = nombreProducto;
-        this.nombreDelLocal = nombreDelLocal;
-        this.categoria = categoria;
+        this.decripcionProducto = decripcionProducto;
+        this.nombreCategoria = nombreCategoria;
         this.valorDelProducto = valorDelProducto;
+        this.porcentajeDescuento = porcentajeDescuento;
+        this.cantidadProducto = cantidadProducto;
     }
 
-    /**
-     *
-     * @return
-     */
     public String getNombreProducto() {
         return nombreProducto;
     }
 
-    /**
-     *
-     * @param nombreProducto
-     */
     public void setNombreProducto(String nombreProducto) {
         this.nombreProducto = nombreProducto;
     }
 
-    /**
-     *
-     * @return
-     */
-    public String getNombreDelLocal() {
-        return nombreDelLocal;
+    public String getDecripcionProducto() {
+        return decripcionProducto;
     }
 
-    /**
-     *
-     * @param nombreDelLocal
-     */
-    public void setNombreDelLocal(String nombreDelLocal) {
-        this.nombreDelLocal = nombreDelLocal;
+    public void setDecripcionProducto(String decripcionProducto) {
+        this.decripcionProducto = decripcionProducto;
     }
 
-    /**
-     *
-     * @return
-     */
-    public String getCategoria() {
-        return categoria;
+    public String getNombreCategoria() {
+        return nombreCategoria;
     }
 
-    /**
-     *
-     * @param categoria
-     */
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
     }
 
-    /**
-     *
-     * @return
-     */
     public float getValorDelProducto() {
         return valorDelProducto;
     }
 
-    /**
-     *
-     * @param valorDelProducto
-     */
     public void setValorDelProducto(float valorDelProducto) {
         this.valorDelProducto = valorDelProducto;
+    }
+
+    public int getPorcentajeDescuento() {
+        return porcentajeDescuento;
+    }
+
+    public void setPorcentajeDescuento(int porcentajeDescuento) {
+        this.porcentajeDescuento = porcentajeDescuento;
+    }
+
+    public int getCantidadProducto() {
+        return cantidadProducto;
+    }
+
+    public void setCantidadProducto(int cantidadProducto) {
+        this.cantidadProducto = cantidadProducto;
     }
 
 }

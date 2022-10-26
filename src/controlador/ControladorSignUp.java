@@ -12,6 +12,6 @@ public class ControladorSignUp {
     }
 
     public boolean anadirCliente(Cliente cliente) {
-        return controlador.anadirPersonas(cliente);
+        return controlador.anadirCliente(cliente);
     }
 }

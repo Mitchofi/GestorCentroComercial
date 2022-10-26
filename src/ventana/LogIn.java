@@ -217,12 +217,16 @@ public class LogIn extends javax.swing.JFrame {
         if (tipo == 0) {
             JOptionPane.showMessageDialog(this, "No hay un usuario registrado con esos datos. Vuelve a intentarlo");
         } else if (tipo == 1) {
-            VentanaCliente ventanaCliente = new VentanaCliente(this);
-            ventanaCliente.setVisible(true);
-            this.dispose();
-        } else if (tipo == 2) {
             VentanaAdministrador ventanaAdmin = new VentanaAdministrador(this);
             ventanaAdmin.setVisible(true);
+            this.dispose();
+        } else if (tipo == 2) {
+            VentanaAdministradorNegocio ventanaAdministradorNegocio = new VentanaAdministradorNegocio(this);
+            ventanaAdministradorNegocio.setVisible(true);
+            this.dispose();
+        } else if (tipo == 3) {
+            VentanaCliente ventanaCliente = new VentanaCliente(this);
+            ventanaCliente.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed

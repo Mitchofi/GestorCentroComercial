@@ -4,24 +4,14 @@ import java.io.Serializable;
 
 public class Local implements Serializable {
 
-    private String nombre;
     private Negocio negocio;
     private boolean disponible;
     private float valorArriendo;
 
     public Local() {
-        this.nombre = null;
         this.negocio = null;
-        this.disponible = true;
         this.valorArriendo = 0;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.disponible = true;
     }
 
     public Negocio getNegocio() {
@@ -47,5 +37,4 @@ public class Local implements Serializable {
     public void setValorArriendo(float valorArriendo) {
         this.valorArriendo = valorArriendo;
     }
-
 }

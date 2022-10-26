@@ -1,21 +1,28 @@
 package src;
 
+import java.io.Serializable;
 import java.util.Date;
 
-class Contrato {
+public class Contrato  implements Serializable{
 
+    private Negocio negocio;
     private String descripcion;
-    private String nombreDelNegocio;
-    private Persona dueñoDelNegocio;
     private Date fechaInicio;
     private Date fechaFin;
 
-    public Contrato(String descripcion, String nombreDelNegocio, Persona dueñoDelNegocio, Date fechaInicio, Date fechaFin) {
+    public Contrato(Negocio negocio, String descripcion, Date fechaInicio, Date fechaFin) {
+        this.negocio = negocio;
         this.descripcion = descripcion;
-        this.nombreDelNegocio = nombreDelNegocio;
-        this.dueñoDelNegocio = dueñoDelNegocio;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+    }
+
+    public Negocio getNegocio() {
+        return negocio;
+    }
+
+    public void setNegocio(Negocio negocio) {
+        this.negocio = negocio;
     }
 
     public String getDescripcion() {
@@ -24,22 +31,6 @@ class Contrato {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public String getNombreDelNegocio() {
-        return nombreDelNegocio;
-    }
-
-    public void setNombreDelNegocio(String nombreDelNegocio) {
-        this.nombreDelNegocio = nombreDelNegocio;
-    }
-
-    public Persona getDueñoDelNegocio() {
-        return dueñoDelNegocio;
-    }
-
-    public void setDueñoDelNegocio(Persona dueñoDelNegocio) {
-        this.dueñoDelNegocio = dueñoDelNegocio;
     }
 
     public Date getFechaInicio() {

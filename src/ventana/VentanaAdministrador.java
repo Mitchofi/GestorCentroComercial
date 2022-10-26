@@ -4,10 +4,12 @@
  */
 package ventana;
 
-import controlador.ControladorVentanaAdministrador;
+import controlador.ControladorVentanaContrato;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import src.Local;
 
 /**
@@ -21,15 +23,16 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
      */
     LogIn ventanaLogIn;
     private JButton[][] botones;
-    ControladorVentanaAdministrador controlador;
+    ControladorVentanaContrato controlador;
 
     public VentanaAdministrador(LogIn logIn) {
         initComponents();
         setLocationRelativeTo(this);
         this.botones = new JButton[5][4];
         this.ventanaLogIn = logIn;
-        this.controlador = new ControladorVentanaAdministrador();
+        this.controlador = new ControladorVentanaContrato();
         initBotones();
+        validarPosiciones();
     }
 
     /**
@@ -485,8 +488,6 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         int ancho = 90;
         int alto = 90;
         int separado1 = 20;
-        int separado2 = 40;
-        int separado3 = separado1 + separado2;
         int texto = 1;
 
         for (int i = 0; i < botones.length; i++) {
@@ -501,6 +502,19 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         }
     }
 
+    private void validarPosiciones() {
+        for (int i = 0; i < botones.length; i++) {
+            for (int j = 0; j < botones[i].length; j++) {
+                Local local = controlador.obtenerLocal(i, j);
+                if (local.isDisponible()) {
+                    botones[i][j].setBackground(Color.white);
+                } else {
+                    botones[i][j].setBackground(Color.yellow);
+                }
+            }
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         for (int i = 0; i < botones.length; i++) {
@@ -508,11 +522,11 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                 if (e.getSource().equals(botones[i][j])) {
                     Local local = controlador.obtenerLocal(i, j);
                     if (local.isDisponible()) {
-                        VentanaLocal ventanaLocal = new VentanaLocal(this, local);
+                        VentanaContrato ventanaLocal = new VentanaContrato(this, local);
                         ventanaLocal.setVisible(true);
                         this.dispose();
                     } else {
-                        
+                        JOptionPane.showMessageDialog(this, "Aqui falta una ventana");
                     }
                 }
             }

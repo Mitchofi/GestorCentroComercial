@@ -8,50 +8,70 @@ import util.Lista;
  *
  * @author Acer
  */
-public class Separado implements Serializable{
+public class Separado implements Serializable {
 
-    private Lista<Articulo> listaAriculosSeparados;
+    private Lista<Articulo> produtosSeparados;
+    private Cliente cliente;
+    private Negocio negocio;
+    private Date fechaInicio;
     private Date fechaDeRecogida;
+    private float valorTotal;
 
-    /**
-     *
-     * @param fechaDeRecogida
-     */
-    public Separado(Date fechaDeRecogida) {
-        this.listaAriculosSeparados = new Lista<>();
+    public Separado(Lista<Articulo> produtosSeparados, Cliente cliente, Negocio negocio, Date fechaInicio, Date fechaDeRecogida, float valorTotal) {
+        this.produtosSeparados = new Lista<>();
+        this.cliente = cliente;
+        this.negocio = negocio;
+        this.fechaInicio = fechaInicio;
         this.fechaDeRecogida = fechaDeRecogida;
+        this.valorTotal = valorTotal;
     }
 
-    /**
-     *
-     * @return
-     */
-    public Lista<Articulo> getListaAriculosSeparados() {
-        return listaAriculosSeparados;
+    public Lista<Articulo> getProdutosSeparados() {
+        return produtosSeparados;
     }
 
-    /**
-     *
-     * @param listaAriculosSeparados
-     */
-    public void setListaAriculosSeparados(Lista<Articulo> listaAriculosSeparados) {
-        this.listaAriculosSeparados = listaAriculosSeparados;
+    public void setProdutosSeparados(Lista<Articulo> produtosSeparados) {
+        this.produtosSeparados = produtosSeparados;
     }
 
-    /**
-     *
-     * @return
-     */
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Negocio getNegocio() {
+        return negocio;
+    }
+
+    public void setNegocio(Negocio negocio) {
+        this.negocio = negocio;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
     public Date getFechaDeRecogida() {
         return fechaDeRecogida;
     }
 
-    /**
-     *
-     * @param fechaDeRecogida
-     */
     public void setFechaDeRecogida(Date fechaDeRecogida) {
         this.fechaDeRecogida = fechaDeRecogida;
+    }
+
+    public float getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(float valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
 }

@@ -8,147 +8,93 @@ import util.Lista;
  *
  * @author Acer
  */
-public class Concurso implements Serializable{
+public class Concurso implements Serializable {
+
+    private float valorMinimo;
+    private boolean estado;
 
     private String nombreConcurso;
     private String premioConcurso;
-    private Cliente ganador;
-    private Lista<Cliente> participantes;
     private Date fechaIncioConcurso;
     private Date fechaFinConcurso;
-    private boolean estado;
+    private Cliente ganador;
+    private Lista<Cliente> participantes;
 
-    /**
-     *
-     * @param nombreConcurso
-     * @param premioConcurso
-     * @param ganador
-     * @param participantes
-     * @param fechaIncioConcurso
-     * @param fechaFinConcurso
-     * @param estado
-     */
-    public Concurso(String nombreConcurso, String premioConcurso,
-            Cliente ganador, Date fechaIncioConcurso, Date fechaFinConcurso) {
-        this.nombreConcurso = nombreConcurso;
-        this.premioConcurso = premioConcurso;
-        this.ganador = ganador;
-        this.participantes = new Lista<>();
-        this.fechaIncioConcurso = fechaIncioConcurso;
-        this.fechaFinConcurso = fechaFinConcurso;
+    public Concurso(float valorMinimo, boolean estado, String nombreConcurso,
+            String premioConcurso, Date fechaIncioConcurso,
+            Date fechaFinConcurso, Cliente ganador) {
+        this.valorMinimo = valorMinimo;
         this.estado = true;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getNombreConcurso() {
-        return nombreConcurso;
-    }
-
-    /**
-     *
-     * @param nombreConcurso
-     */
-    public void setNombreConcurso(String nombreConcurso) {
         this.nombreConcurso = nombreConcurso;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getPremioConcurso() {
-        return premioConcurso;
-    }
-
-    /**
-     *
-     * @param premioConcurso
-     */
-    public void setPremioConcurso(String premioConcurso) {
         this.premioConcurso = premioConcurso;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Cliente getGanador() {
-        return ganador;
-    }
-
-    /**
-     *
-     * @param ganador
-     */
-    public void setGanador(Cliente ganador) {
-        this.ganador = ganador;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Lista<Cliente> getParticipantes() {
-        return participantes;
-    }
-
-    /**
-     *
-     * @param participantes
-     */
-    public void setParticipantes(Lista<Cliente> participantes) {
-        this.participantes = participantes;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Date getFechaIncioConcurso() {
-        return fechaIncioConcurso;
-    }
-
-    /**
-     *
-     * @param fechaIncioConcurso
-     */
-    public void setFechaIncioConcurso(Date fechaIncioConcurso) {
         this.fechaIncioConcurso = fechaIncioConcurso;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Date getFechaFinConcurso() {
-        return fechaFinConcurso;
-    }
-
-    /**
-     *
-     * @param fechaFinConcurso
-     */
-    public void setFechaFinConcurso(Date fechaFinConcurso) {
         this.fechaFinConcurso = fechaFinConcurso;
+        this.ganador = null;
+        this.participantes = new Lista<>();
     }
 
-    /**
-     *
-     * @return
-     */
+    public float getValorMinimo() {
+        return valorMinimo;
+    }
+
+    public void setValorMinimo(float valorMinimo) {
+        this.valorMinimo = valorMinimo;
+    }
+
     public boolean isEstado() {
         return estado;
     }
 
-    /**
-     *
-     * @param estado
-     */
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    public String getNombreConcurso() {
+        return nombreConcurso;
+    }
+
+    public void setNombreConcurso(String nombreConcurso) {
+        this.nombreConcurso = nombreConcurso;
+    }
+
+    public String getPremioConcurso() {
+        return premioConcurso;
+    }
+
+    public void setPremioConcurso(String premioConcurso) {
+        this.premioConcurso = premioConcurso;
+    }
+
+    public Date getFechaIncioConcurso() {
+        return fechaIncioConcurso;
+    }
+
+    public void setFechaIncioConcurso(Date fechaIncioConcurso) {
+        this.fechaIncioConcurso = fechaIncioConcurso;
+    }
+
+    public Date getFechaFinConcurso() {
+        return fechaFinConcurso;
+    }
+
+    public void setFechaFinConcurso(Date fechaFinConcurso) {
+        this.fechaFinConcurso = fechaFinConcurso;
+    }
+
+    public Cliente getGanador() {
+        return ganador;
+    }
+
+    public void setGanador(Cliente ganador) {
+        this.ganador = ganador;
+    }
+
+    public Lista<Cliente> getParticipantes() {
+        return participantes;
+    }
+
+    public void setParticipantes(Lista<Cliente> participantes) {
+        this.participantes = participantes;
     }
 
 }
