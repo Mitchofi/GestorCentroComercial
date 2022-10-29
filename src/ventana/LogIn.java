@@ -1,8 +1,10 @@
 package ventana;
 
 import controlador.ControladorLogIn;
+import excepciones.ExcepcionNoSeEncuentraElUsuario;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import src.Local;
 
 /**
  *
@@ -213,23 +215,39 @@ public class LogIn extends javax.swing.JFrame {
         }
         String correo = txtCorreo.getText();
         String contrasena = String.valueOf(txtContrasena.getPassword());
-        int tipo = controlador.iniciarSecion(correo, contrasena);
-        if (tipo == 0) {
-            JOptionPane.showMessageDialog(this, "No hay un usuario registrado con esos datos. Vuelve a intentarlo");
-        } else if (tipo == 1) {
-            VentanaAdministrador ventanaAdmin = new VentanaAdministrador(this);
-            ventanaAdmin.setVisible(true);
-            this.dispose();
-        } else if (tipo == 2) {
-            VentanaAdministradorNegocio ventanaAdministradorNegocio = new VentanaAdministradorNegocio(this);
-            ventanaAdministradorNegocio.setVisible(true);
-            this.dispose();
-        } else if (tipo == 3) {
-            VentanaCliente ventanaCliente = new VentanaCliente(this);
-            ventanaCliente.setVisible(true);
-            this.dispose();
+        try {
+            int tipo = controlador.iniciarSecion(correo, contrasena);
+            if (tipo == 1) {
+                VentanaAdministrador ventanaAdmin = new VentanaAdministrador(this);
+                ventanaAdmin.setVisible(true);
+                this.dispose();
+            } else if (tipo == 2) {
+                Local local = controlador.returnLocalAdmin(correo, contrasena);
+                VentanaAdministradorNegocio ventanaAdministradorNegocio = new VentanaAdministradorNegocio(this, local);
+                ventanaAdministradorNegocio.setVisible(true);
+                this.dispose();
+            } else if (tipo == 3) {
+                VentanaCliente ventanaCliente = new VentanaCliente(this);
+                ventanaCliente.setVisible(true);
+                this.dispose();
+            } else if (tipo == 4) {
+                Local local = controlador.returnLocalEmpleado(correo, contrasena);
+                VentanaEncargadoInventario ventanaEncargadoInventario = new VentanaEncargadoInventario(this, local);
+                ventanaEncargadoInventario.setVisible(true);
+                this.dispose();
+            } else if (tipo == 5) {
+                VentanaParqueadero ventanaParqueadero = new VentanaParqueadero(this);
+                ventanaParqueadero.setVisible(true);
+                this.dispose();
+            }
+        } catch (ExcepcionNoSeEncuentraElUsuario ex) {
+            if (!txtCorreo.getText().equals("Correo")
+                    || !String.valueOf(txtContrasena.getPassword()).equals("******")) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
     public void reinciarLogIn() {
         txtCorreo.setText("Correo");
         txtCorreo.setForeground(Color.gray);

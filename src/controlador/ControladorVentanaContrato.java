@@ -21,4 +21,9 @@ public class ControladorVentanaContrato {
     public boolean anadirNegocio(AdministradorDeNegocio administradorDeNegocio, Negocio negocio, Contrato contrato, Local local) {
         return controlador.anadirNegocio(administradorDeNegocio, negocio, contrato, local);
     }
+
+    public boolean validarCorreo(String correo) {
+        return controlador.validarCorreo(correo);
+    }
+
 }

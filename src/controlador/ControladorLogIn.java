@@ -1,6 +1,7 @@
 package controlador;
 
 import src.CentroComercial;
+import src.Local;
 
 public class ControladorLogIn {
 
@@ -12,5 +13,13 @@ public class ControladorLogIn {
 
     public int iniciarSecion(String correo, String contrasena) {
         return controlador.iniciarSecion(correo, contrasena);
+    }
+
+    public Local returnLocalAdmin(String correo, String contrasena) {
+        return controlador.returnLocalAdmin(correo, contrasena);
+    }
+
+    public Local returnLocalEmpleado(String correo, String contrasena) {
+        return controlador.returnLocalEmpleado(correo, contrasena);
     }
 }

@@ -361,16 +361,22 @@ public class VentanaContrato extends javax.swing.JFrame {
             String descripcion = txtContrato.getText();
             Date fechaInicio = jDateInicio.getDate();
             Date fechaFinal = jDateFinal.getDate();
-            AdministradorDeNegocio administradorNegocio = new AdministradorDeNegocio(nombre, cedula, telefono, correo, contrasena, edad);
-            Negocio negocio = new Negocio(nombre, administradorNegocio);
-            Contrato contrato = new Contrato(negocio, descripcion, fechaInicio, fechaFinal);
-            if (controlador.anadirNegocio(administradorNegocio, negocio, contrato, local)) {
-                JOptionPane.showMessageDialog(this, "Registrado correctamente");
-                cleanTextField();
+            if (controlador.validarCorreo(correo)) {
+                JOptionPane.showMessageDialog(this, "Ya hay un usuario registrado con ese correo");
             } else {
-                JOptionPane.showMessageDialog(this, "No pudiste ser registrado"
-                        + " debido a que hay un usuario registrado con algunos de los datos que escribistes ");
+                AdministradorDeNegocio administradorNegocio = new AdministradorDeNegocio(nombre, cedula, telefono, correo, contrasena, edad);
+                Negocio negocio = new Negocio(nombre, administradorNegocio);
+                Contrato contrato = new Contrato(negocio, descripcion, fechaInicio, fechaFinal);
+                if (controlador.anadirNegocio(administradorNegocio, negocio, contrato, local)) {
+                    JOptionPane.showMessageDialog(this, "Registrado correctamente");
+                    cleanTextField();
+                    ventanaAdministrador.validarPosiciones();
+                } else {
+                    JOptionPane.showMessageDialog(this, "No pudiste ser registrado"
+                            + " debido a que hay un usuario registrado con algunos de los datos que escribistes ");
+                }
             }
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

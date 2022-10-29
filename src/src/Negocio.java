@@ -1,6 +1,8 @@
 package src;
 
 import java.io.Serializable;
+import static src.CentroComercial.personas;
+import static src.CentroComercial.serializarListaPersonas;
 import util.Lista;
 
 public class Negocio implements Serializable {
@@ -89,4 +91,24 @@ public class Negocio implements Serializable {
         this.multas = multas;
     }
 
+    public boolean anadirEmpleado(Empleado empleado) {
+        boolean existe = true;
+        boolean registrado = false;
+        for (int i = 0; i < empleados.Size(); i++) {
+            for (int j = 0; j < CentroComercial.personas.Size(); j++) {
+                if (CentroComercial.personas.obtenerDato(j).getCedula().equals(empleado.getCedula()) 
+                        || empleados.obtenerDato(i).getCedula().equals(empleado.getCedula())
+                        || empleados.obtenerDato(i).getCorreo().equals(empleado.getCorreo())
+                        || empleados.obtenerDato(i).getNumeroCelular().equals(empleado.getNumeroCelular())) {
+                    existe = false;
+                }
+            }
+
+        }
+        if (existe) {
+            empleados.add(empleado);
+            registrado = true;
+        }
+        return registrado;
+    }
 }
