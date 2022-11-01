@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import src.CentroComercial;
+import src.Concurso;
 import src.Local;
 import src.Parqueadero;
 import src.Persona;
@@ -16,11 +17,13 @@ public class Singleton {
 
     private Lista<Persona> personas;
     private static Local[][] locales;
+    private Lista<Concurso> concursos;
     private Parqueadero parqueadero;
 
     private Singleton() {
         leerListaPersonas();
         leerListaLocales();
+        leerListaConcursos();
         leerListaParqueadero();
     }
 
@@ -32,32 +35,20 @@ public class Singleton {
         return instanciaControlador;
     }
 
-    public static void setInstanciaControlador(CentroComercial aInstanciaControlador) {
-        instanciaControlador = aInstanciaControlador;
-    }
-
     public Lista<Persona> getPersonas() {
         return personas;
     }
 
-    public void setPersonas(Lista<Persona> personas) {
-        this.personas = personas;
+    public Lista<Concurso> getConcursos() {
+        return concursos;
     }
 
     public static Local[][] getLocales() {
         return locales;
     }
 
-    public static void setLocales(Local[][] aLocales) {
-        locales = aLocales;
-    }
-
     public Parqueadero getParqueadero() {
         return parqueadero;
-    }
-
-    public void setParqueadero(Parqueadero parqueadero) {
-        this.parqueadero = parqueadero;
     }
 
     private void leerListaPersonas() {
@@ -79,6 +70,17 @@ public class Singleton {
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
             locales = new Local[5][4];
+        }
+    }
+
+    private void leerListaConcursos() {
+        try {
+            FileInputStream archivo = new FileInputStream("concursos.dat");
+            ObjectInputStream lector = new ObjectInputStream(archivo);
+            concursos = (Lista<Concurso>) lector.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+            concursos = new Lista<>();
         }
     }
 

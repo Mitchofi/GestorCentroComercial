@@ -11,7 +11,7 @@ package excepciones;
 public class ExcepcionClienteDuplicado extends RuntimeException {
 
     public ExcepcionClienteDuplicado() {
-        super("Los datos del cliente ya se encuentra registrado en el sistema "
+        super("Los datos del cliente ya se encuentra registrado en el sistema, "
                 + "por lo que no se puede registrar");
     }
 

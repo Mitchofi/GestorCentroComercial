@@ -12,7 +12,6 @@ public class Concurso implements Serializable {
 
     private float valorMinimo;
     private boolean estado;
-
     private String nombreConcurso;
     private String premioConcurso;
     private Date fechaIncioConcurso;

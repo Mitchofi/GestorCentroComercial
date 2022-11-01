@@ -365,11 +365,15 @@ public class VentanaContrato extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Ya hay un usuario registrado con ese correo");
             } else {
                 AdministradorDeNegocio administradorNegocio = new AdministradorDeNegocio(nombre, cedula, telefono, correo, contrasena, edad);
-                Negocio negocio = new Negocio(nombre, administradorNegocio);
+                Negocio negocio = new Negocio();
+                negocio.setNombre(nombre);
+                negocio.setAdministrador(administradorNegocio);
                 Contrato contrato = new Contrato(negocio, descripcion, fechaInicio, fechaFinal);
                 if (controlador.anadirNegocio(administradorNegocio, negocio, contrato, local)) {
                     JOptionPane.showMessageDialog(this, "Registrado correctamente");
                     cleanTextField();
+                    ventanaAdministrador.limpiarTablaVentas();
+                    ventanaAdministrador.cargarTablaVentas();
                     ventanaAdministrador.validarPosiciones();
                 } else {
                     JOptionPane.showMessageDialog(this, "No pudiste ser registrado"

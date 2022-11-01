@@ -11,7 +11,7 @@ package excepciones;
 public class ExcepcionEmpleadoDuplicado extends RuntimeException {
 
     public ExcepcionEmpleadoDuplicado() {
-        super("Los datos del Empleado ya se encuentra registrado en el sistema "
+        super("Los datos del Empleado ya se encuentra registrado en el sistema, "
                 + "por lo que no se puede registrar");
     }
 

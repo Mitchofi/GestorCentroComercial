@@ -5,8 +5,6 @@
 package controlador;
 
 import src.CentroComercial;
-import src.Empleado;
-import src.Local;
 import src.Parqueadero;
 
 /**
@@ -29,7 +27,4 @@ public class ControladorVentanaParqueadero {
         return controlador.validarCorreo(correo);
     }
 
-    public boolean anadirEmpleado(Empleado empleado) {
-        return controlador.anadirEmpleado(empleado);
-    }
 }

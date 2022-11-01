@@ -6,15 +6,11 @@ package ventana;
 
 import controlador.ControladorVentanaAdministrador;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import src.Articulo;
 import src.CentroComercial;
 import src.Empleado;
-import src.Local;
 import src.Vehiculo;
 
 /**
@@ -1023,7 +1019,6 @@ public class VentanaCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtTipoDeVehiculo1FocusGained
 
-
     public Vehiculo vehiculo() {
         Vehiculo vehiculo = null;
         if (checkVehiculo.getState()) {
@@ -1051,7 +1046,6 @@ public class VentanaCliente extends javax.swing.JFrame {
             }
         }
     }
-
 
     public static boolean validarNumeros(String datos) {
         return datos.matches("[0-9]*");

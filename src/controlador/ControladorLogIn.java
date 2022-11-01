@@ -12,7 +12,7 @@ public class ControladorLogIn {
     }
 
     public int iniciarSecion(String correo, String contrasena) {
-        return controlador.iniciarSecion(correo, contrasena);
+        return controlador.iniciarSesion(correo, contrasena);
     }
 
     public Local returnLocalAdmin(String correo, String contrasena) {

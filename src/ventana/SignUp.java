@@ -5,6 +5,7 @@
 package ventana;
 
 import controlador.ControladorSignUp;
+import excepciones.ExcepcionClienteDuplicado;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import src.Cliente;
@@ -389,12 +390,13 @@ public class SignUp extends javax.swing.JFrame {
             String contrasena = String.valueOf(txtContrasena.getPassword());
             Vehiculo vehiculo = vehiculo();
             Cliente cliente = new Cliente(vehiculo, nombre, cedula, telefono, correo, contrasena, edad);
-            if (controlador.anadirCliente(cliente)) {
-                JOptionPane.showMessageDialog(this, "Registrado correctamente");
-                cleanTextField();
-            } else {
-                JOptionPane.showMessageDialog(this, "No pudiste ser registrado"
-                        + " debido a que hay un usuario registrado con algunos de los datos que escribistes ");
+            try {
+                if (controlador.anadirCliente(cliente)) {
+                    JOptionPane.showMessageDialog(this, "Registrado correctamente");
+                    cleanTextField();
+                }
+            } catch (ExcepcionClienteDuplicado ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -513,13 +515,17 @@ public class SignUp extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUp.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUp.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUp.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUp.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

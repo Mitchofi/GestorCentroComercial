@@ -4,12 +4,12 @@
  */
 package ventana;
 
-import controlador.ControladorVentanaContrato;
+import controlador.ControladorVentanaAdministradorNegocio;
+import excepciones.ExcepcionEmpleadoDuplicado;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import src.CentroComercial;
-import src.Cliente;
 import src.Empleado;
 import src.Local;
 import src.Vehiculo;
@@ -24,7 +24,7 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
      * Creates new form VentanaAdministrador
      */
     private LogIn ventanaLogIn;
-    private ControladorVentanaContrato controlador;
+    private ControladorVentanaAdministradorNegocio controlador;
     private Local local;
     private DefaultTableModel modelo;
 
@@ -32,7 +32,7 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         this.ventanaLogIn = logIn;
-        this.controlador = new ControladorVentanaContrato();
+        this.controlador = new ControladorVentanaAdministradorNegocio();
         this.local = local;
         modelo = new DefaultTableModel();
         limpiarTabla();
@@ -63,7 +63,7 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabelRegistrar1 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
         txtTelefono = new javax.swing.JTextField();
         txtEdad = new javax.swing.JTextField();
         txtCedula = new javax.swing.JTextField();
@@ -74,6 +74,8 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
         txtTipoDeVehiculo = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -208,10 +210,10 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.MatteBorder(null), "Registrar empleado"));
 
-        jButton1.setText("Registrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRegistrarActionPerformed(evt);
             }
         });
 
@@ -310,26 +312,49 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cargo", "Vendedor negocio", "Encargado de Inventario del Negocio", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cargo", "Vendedor del negocio", "Encargado de Inventario del Negocio" }));
+
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(checkVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTelefono)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtEdad)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtCorreo)
-                    .addComponent(txtContrasena)
-                    .addComponent(txtTipoDeVehiculo)
-                    .addComponent(txtPlacaVehiculo)
-                    .addComponent(txtNombre)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(checkVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTelefono)
+                            .addComponent(txtEdad)
+                            .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtCorreo)
+                            .addComponent(txtContrasena)
+                            .addComponent(txtTipoDeVehiculo)
+                            .addComponent(txtPlacaVehiculo)
+                            .addComponent(txtNombre)
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                                .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(9, 9, 9))))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(104, 104, 104)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
@@ -355,9 +380,13 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
                 .addComponent(txtPlacaVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(19, 19, 19))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegistrar)
+                    .addComponent(btnModificar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEliminar)
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -431,7 +460,7 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabelRegistrar1))
@@ -665,7 +694,7 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabelRegistrar1MouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         if (txtCorreo.getText().equals("") || txtCorreo.getText().equals("Correo")
                 || String.valueOf(txtContrasena.getPassword()).equals("")
                 || String.valueOf(txtContrasena.getPassword()).equals("******")
@@ -685,17 +714,19 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
             Vehiculo vehiculo = vehiculo();
             String rol = String.valueOf(jComboBox1.getSelectedItem());
             Empleado empleado = new Empleado(vehiculo, rol, nombre, cedula, telefono, correo, contrasena, edad);
-            if (local.getNegocio().anadirEmpleado(empleado)) {
-                JOptionPane.showMessageDialog(this, "Registrado correctamente");
-                limpiarTabla();
-                cargar();
-                cleanTextField();
-                CentroComercial.serializarListaLocales();
-            } else {
-                JOptionPane.showMessageDialog(this, "La persona no fue registrado correctamente");
+            try {
+                if (local.getNegocio().anadirEmpleadoLocal(empleado)) {
+                    JOptionPane.showMessageDialog(this, "Registrado correctamente");
+                    limpiarTabla();
+                    cargar();
+                    cleanTextField();
+                    CentroComercial.serializarListaLocales();
+                }
+            } catch (ExcepcionEmpleadoDuplicado ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
             }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void txtTelefonoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusGained
         if (txtTelefono.getText().equals("Numero movil")) {
@@ -839,6 +870,51 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtNombreFocusLost
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        if (txtCorreo.getText().equals("") || txtCorreo.getText().equals("Correo")
+                || String.valueOf(txtContrasena.getPassword()).equals("")
+                || String.valueOf(txtContrasena.getPassword()).equals("******")
+                || txtCedula.getText().equals("") || txtCedula.getText().equals("Cedula")
+                || txtEdad.getText().equals("") || txtEdad.getText().equals("Edad")
+                || txtNombre.getText().equals("") || txtNombre.getText().equals("Nombre completo")
+                || txtTelefono.getText().equals("") || txtTelefono.getText().equals("Numero movil")
+                || jComboBox1.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
+        } else {
+            String telefono = txtTelefono.getText();
+            String nombre = txtNombre.getText();
+            short edad = Short.parseShort(txtEdad.getText());
+            String cedula = txtCedula.getText();
+            String correo = txtCorreo.getText();
+            String contrasena = String.valueOf(txtContrasena.getPassword());
+            Vehiculo vehiculo = vehiculo();
+            String rol = String.valueOf(jComboBox1.getSelectedItem());
+            Empleado empleado = new Empleado(vehiculo, rol, nombre, cedula, telefono, correo, contrasena, edad);
+            if (controlador.modificarEmpleadoLocal(cedula, empleado, local)) {
+                JOptionPane.showMessageDialog(this, "Usuario modificado correctamente");
+                limpiarTabla();
+                cargar();
+            } else {
+                JOptionPane.showMessageDialog(this, "El usuario no fue modificado");
+            }
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (txtCedula.getText().equals("") || txtCedula.getText().equals("Cedula")) {
+            JOptionPane.showMessageDialog(this, "Por favor rellena el campo de cedula para eliminar el empleado");
+        } else {
+            String cedula = txtCedula.getText();
+            if (controlador.eliminarEmpleadoLocal(cedula, local)) {
+                JOptionPane.showMessageDialog(this, "El empleado con cedula: " + cedula + " fue eliminado correctamente.");
+                limpiarTabla();
+                cargar();
+            } else {
+                JOptionPane.showMessageDialog(this, "El empleado con cedula: " + cedula + " NO fue eliminado.");
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
     public static boolean validarNumeros(String datos) {
         return datos.matches("[0-9]*");
     }
@@ -921,13 +997,17 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministradorNegocio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaAdministradorNegocio.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministradorNegocio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaAdministradorNegocio.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministradorNegocio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaAdministradorNegocio.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministradorNegocio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaAdministradorNegocio.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -937,8 +1017,10 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnRegistrar;
     private java.awt.Checkbox checkVehiculo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

@@ -63,6 +63,8 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
         checkVehiculo = new java.awt.Checkbox();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        jLabelRegistrar2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administrador");
@@ -221,6 +223,20 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
 
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 447, 153));
 
+        jLabel4.setText("¿Deseas salir de la cuenta?");
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 630, -1, -1));
+
+        jLabelRegistrar2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabelRegistrar2.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelRegistrar2.setText("Salir");
+        jLabelRegistrar2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelRegistrar2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelRegistrar2MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabelRegistrar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 630, -1, -1));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -354,6 +370,12 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_checkVehiculoItemStateChanged
 
+    private void jLabelRegistrar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar2MouseClicked
+        ventanaLogIn.reinciarLogIn();
+        ventanaLogIn.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabelRegistrar2MouseClicked
+
     public void llenarArticulos() {
         for (int i = 0; i < CentroComercial.locales.length; i++) {
             for (int j = 0; j < CentroComercial.locales[i].length; j++) {
@@ -446,6 +468,8 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelRegistrar2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;

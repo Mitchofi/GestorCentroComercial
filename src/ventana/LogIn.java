@@ -21,7 +21,6 @@ public class LogIn extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         controlador = new ControladorLogIn();
-
     }
 
     /**
@@ -236,6 +235,11 @@ public class LogIn extends javax.swing.JFrame {
                 ventanaEncargadoInventario.setVisible(true);
                 this.dispose();
             } else if (tipo == 5) {
+                Local local = controlador.returnLocalEmpleado(correo, contrasena);
+                VentanaVendedorNegocio ventanaVendedorNegocio = new VentanaVendedorNegocio(this, local);
+                ventanaVendedorNegocio.setVisible(true);
+                this.dispose();
+            } else if (tipo == 6) {
                 VentanaParqueadero ventanaParqueadero = new VentanaParqueadero(this);
                 ventanaParqueadero.setVisible(true);
                 this.dispose();

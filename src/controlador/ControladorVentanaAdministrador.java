@@ -4,9 +4,13 @@
  */
 package controlador;
 
+import excepciones.ExcepcionClienteDuplicado;
 import src.CentroComercial;
+import src.Cliente;
+import src.Concurso;
 import src.Empleado;
 import src.Local;
+import src.Persona;
 
 /**
  *
@@ -28,7 +32,35 @@ public class ControladorVentanaAdministrador {
         return controlador.validarCorreo(correo);
     }
 
-    public boolean anadirEmpleado(Empleado empleado) {
-        return controlador.anadirEmpleado(empleado);
+    public boolean anadirEmpleadoCentroComercial(Empleado empleado) {
+        return controlador.anadirEmpleadoCentroComercial(empleado);
+    }
+
+    public boolean modificarEmpleadoCentroComercial(String cedula, Empleado empleado) {
+        return controlador.modificarEmpleadoCentroComercial(cedula, empleado);
+    }
+
+    public boolean eliminarEmpleadoCentroComercial(String cedula) {
+        return controlador.eliminarEmpleadoCentroComercial(cedula);
+    }
+
+    public boolean anadirCliente(Cliente cliente) throws ExcepcionClienteDuplicado {
+        return controlador.anadirCliente(cliente);
+    }
+
+    public boolean modificarCliente(String cedula, Cliente cliente) {
+        return controlador.modificarCliente(cedula, cliente);
+    }
+
+    public boolean eliminarCliente(String cedula) {
+        return controlador.eliminarCliente(cedula);
+    }
+
+    public boolean anadirConcurso(Concurso concurso) {
+        return controlador.anadirConcurso(concurso);
+    }
+
+    public Persona buscarPorCedula(String cedula) {
+        return controlador.buscarPorCedula(cedula);
     }
 }

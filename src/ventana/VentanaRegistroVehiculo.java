@@ -5,6 +5,7 @@
 package ventana;
 
 import controlador.ControladorSignUp;
+import excepciones.ExcepcionVehiculoDuplicado;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import src.CentroComercial;
@@ -15,11 +16,11 @@ import src.Vehiculo;
  * @author Acer
  */
 public class VentanaRegistroVehiculo extends javax.swing.JFrame {
-    
+
     VentanaParqueadero ventanaParqueadero;
     ControladorSignUp controlador;
     Vehiculo vehiculo;
-    
+
     public VentanaRegistroVehiculo(VentanaParqueadero ventanaParqueadero, Vehiculo vehiculo) {
         initComponents();
         setLocationRelativeTo(this);
@@ -234,11 +235,11 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
             txtPlaca.setText("Nombre completo");
             txtPlaca.setForeground(Color.gray);
         }    }//GEN-LAST:event_txtPlacaFocusLost
-    
+
     public static boolean validarNumeros(String datos) {
         return datos.matches("[0-9]*");
     }
-    
+
     public static boolean validarLetras(String datos) {
         return datos.matches("[a-zA-Z]*");
     }
@@ -252,7 +253,7 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
         txtTipoVehiculo.setText("Tipo de placa");
         txtTipoVehiculo.setForeground(Color.gray);
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
