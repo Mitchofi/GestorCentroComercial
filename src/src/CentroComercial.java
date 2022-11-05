@@ -2,6 +2,7 @@ package src;
 
 import Singleton.Singleton;
 import excepciones.ExcepcionClienteDuplicado;
+import excepciones.ExcepcionConcursoDuplicado;
 import excepciones.ExcepcionCorreoDuplicado;
 import excepciones.ExcepcionEmpleadoDuplicado;
 import excepciones.ExcepcionNoSeEncuentraElUsuario;
@@ -13,19 +14,21 @@ import util.Lista;
 import util.Queve;
 
 public class CentroComercial implements Serializable {
-
+    
     public static Lista<Persona> personas;
     public static Local[][] locales;
     public static Parqueadero parqueadero;
     public static Lista<Concurso> concursos;
+    public static HistorialConcurso historialConcursos;
     public static Queve<Solicitud> solicitudes;
     AdministradorGCentroComercial administrador;
-
+    
     public CentroComercial() {
         this.personas = Singleton.getINSTANCIA().getPersonas();
         this.locales = Singleton.getINSTANCIA().getLocales();
         this.parqueadero = Singleton.getINSTANCIA().getParqueadero();
         this.concursos = Singleton.getINSTANCIA().getConcursos();
+        this.historialConcursos = Singleton.getINSTANCIA().getHistorialConcursos();
         this.administrador = new AdministradorGCentroComercial("julian",
                 "12334", "123", "admin", "123", Short.parseShort("18"));
         if (locales[0][0] == null) {
@@ -33,7 +36,7 @@ public class CentroComercial implements Serializable {
             serializarListaLocales();
         }
     }
-
+    
     private void initLocales() {
         for (int i = 0; i < locales.length; i++) {
             for (int j = 0; j < locales[i].length; j++) {
@@ -41,7 +44,7 @@ public class CentroComercial implements Serializable {
             }
         }
     }
-
+    
     public int iniciarSesion(String correo, String contrasena) throws ExcepcionNoSeEncuentraElUsuario {
         int resultado = 0;
         if (administrador.getCorreo().equals(correo)
@@ -104,7 +107,7 @@ public class CentroComercial implements Serializable {
                         && personas.obtenerDato(k).getContrasena().equals(contrasena)) {
                     resultado = 6;
                 }
-
+                
             }
         }
         if (resultado == 0) {
@@ -112,7 +115,7 @@ public class CentroComercial implements Serializable {
         }
         return resultado;
     }
-
+    
     public Local returnLocalAdmin(String correo, String contrasena) {
         Local local = null;
         for (int i = 0; i < locales.length; i++) {
@@ -127,7 +130,7 @@ public class CentroComercial implements Serializable {
         }
         return local;
     }
-
+    
     public Local returnLocalEmpleado(String correo, String contrasena) {
         Local local = null;
         for (int i = 0; i < locales.length; i++) {
@@ -146,15 +149,15 @@ public class CentroComercial implements Serializable {
         }
         return local;
     }
-
+    
     public Local obtenerLocal(int fila, int columna) {
         return locales[fila][columna];
     }
-
+    
     public Parqueadero returnParqueadero() {
         return parqueadero;
     }
-
+    
     public boolean anadirCliente(Cliente cliente) throws ExcepcionClienteDuplicado {
         boolean existe = true;
         boolean registrado = false;
@@ -186,7 +189,7 @@ public class CentroComercial implements Serializable {
         }
         return registrado;
     }
-
+    
     public boolean modificarCliente(String cedula, Cliente cliente) {
         boolean modificado = false;
         boolean disponible = true;
@@ -216,7 +219,7 @@ public class CentroComercial implements Serializable {
         }
         return modificado;
     }
-
+    
     public boolean eliminarCliente(String cedula) {
         boolean eliminado = false;
         for (int i = 0; i < personas.Size(); i++) {
@@ -228,7 +231,18 @@ public class CentroComercial implements Serializable {
         }
         return eliminado;
     }
-
+    
+    public Cliente buscarCliente(String correo, String contrasena) {
+        Cliente cliente = null;
+        for (int i = 0; i < personas.Size(); i++) {
+            if (personas.obtenerDato(i) instanceof Cliente && personas.obtenerDato(i).getCorreo().equals(correo)
+                    && personas.obtenerDato(i).getContrasena().equals(contrasena)) {
+                cliente = (Cliente) personas.obtenerDato(i);
+            }
+        }
+        return cliente;
+    }
+    
     public boolean anadirEmpleadoCentroComercial(Empleado empleado) throws ExcepcionEmpleadoDuplicado {
         boolean existe = true;
         boolean registrado = false;
@@ -247,7 +261,7 @@ public class CentroComercial implements Serializable {
         }
         return registrado;
     }
-
+    
     public boolean modificarEmpleadoCentroComercial(String cedula, Empleado empleado) {
         boolean modificado = false;
         boolean disponible = true;
@@ -279,7 +293,7 @@ public class CentroComercial implements Serializable {
         }
         return modificado;
     }
-
+    
     public boolean eliminarEmpleadoCentroComercial(String cedula) {
         boolean eliminado = false;
         for (int i = 0; i < personas.Size(); i++) {
@@ -291,26 +305,69 @@ public class CentroComercial implements Serializable {
         }
         return eliminado;
     }
-
+    
     public boolean anadirConcurso(Concurso concurso) {
         boolean existe = true;
         boolean registrado = false;
         for (int i = 0; i < concursos.Size(); i++) {
-            if (concursos.obtenerDato(i).getNombreConcurso().equals(concurso.getNombreConcurso())
-                    && concursos.obtenerDato(i).getFechaIncioConcurso().equals(concurso.getFechaIncioConcurso())
-                    || concursos.obtenerDato(i).getFechaFinConcurso().equals(concurso.getFechaFinConcurso())) {
+            if (concursos.obtenerDato(i).getCodigo() == concurso.getCodigo()) {
                 existe = false;
-                throw new ExcepcionClienteDuplicado();
+                throw new ExcepcionConcursoDuplicado();
             }
         }
         if (existe) {
             concursos.add(concurso);
+            historialConcursos.getConcursos().add(concurso);
             serializarListaConcursos();
+            serializarHistorialConcursos();
             registrado = true;
         }
         return registrado;
     }
-
+    
+    public boolean modificarConcurso(int codigo, Concurso concurso) {
+        boolean modificado = false;
+        boolean disponible = true;
+        Concurso concursoAux = null;
+        for (int i = 0; i < concursos.Size(); i++) {
+            if (concursos.obtenerDato(i).getCodigo() == codigo) {
+                concursoAux = concursos.obtenerDato(i);
+            }
+        }
+        if (disponible) {
+            concursoAux.setEstado(concurso.isEstado());
+            concursoAux.setFechaFinConcurso(concurso.getFechaFinConcurso());
+            concursoAux.setFechaIncioConcurso(concurso.getFechaIncioConcurso());
+            concursoAux.setNombreConcurso(concurso.getNombreConcurso());
+            concursoAux.setValorMinimo(concurso.getValorMinimo());
+            modificado = true;
+            serializarListaConcursos();
+        }
+        return modificado;
+    }
+    
+    public boolean eliminarConcurso(int codigo) {
+        boolean eliminado = false;
+        for (int i = 0; i < concursos.Size(); i++) {
+            if (concursos.obtenerDato(i).getCodigo() == codigo) {
+                concursos.eliminarDato(i);
+                serializarListaConcursos();
+                eliminado = true;
+            }
+        }
+        return eliminado;
+    }
+    
+    public Concurso buscarPorConcurso(int codigo) {
+        Concurso concurso = null;
+        for (int i = 0; i < concursos.Size(); i++) {
+            if (concursos.obtenerDato(i).getCodigo() == codigo) {
+                concurso = concursos.obtenerDato(i);
+            }
+        }
+        return concurso;
+    }
+    
     public Persona buscarPorCedula(String cedula) {
         Persona persona = null;
         for (int i = 0; i < personas.Size(); i++) {
@@ -320,7 +377,7 @@ public class CentroComercial implements Serializable {
         }
         return persona;
     }
-
+    
     public boolean validarCorreo(String correo) throws ExcepcionCorreoDuplicado {
         boolean existe = false;
         for (int k = 0; k < personas.Size(); k++) {
@@ -345,7 +402,7 @@ public class CentroComercial implements Serializable {
         }
         return existe;
     }
-
+    
     public boolean anadirNegocio(AdministradorDeNegocio administradorDeNegocio, Negocio negocio, Contrato contrato, Local local) {
         boolean registro = false;
         if (local.isDisponible()) {
@@ -357,7 +414,23 @@ public class CentroComercial implements Serializable {
         }
         return registro;
     }
-
+    
+    /*public boolean comprarArticulo(String nombreLocal, int cantidad) {
+        boolean compraRealizada = false;
+        for (int i = 0; i < locales.length; i++) {
+            for (int j = 0; j < locales[i].length; j++) {
+                if (locales[i][j].getNegocio() != null) {
+                    if (locales[i][j].getNegocio().getNombre().equals(nombreLocal)) {
+                        if (locales[i][j].getNegocio().getArticulos().) {
+                            
+                        }
+                    }
+                }
+            }
+        }
+        return compraRealizada;
+    }*/
+    
     public static void serializarListaPersonas() {
         try {
             FileOutputStream archivo = new FileOutputStream("personas.dat");
@@ -367,7 +440,7 @@ public class CentroComercial implements Serializable {
             ex.printStackTrace();
         }
     }
-
+    
     public static void serializarListaLocales() {
         try {
             FileOutputStream archivo = new FileOutputStream("locales.dat");
@@ -377,22 +450,32 @@ public class CentroComercial implements Serializable {
             ex.printStackTrace();
         }
     }
-
-    public static void serializarListaParqueadero() {
-        try {
-            FileOutputStream archivo = new FileOutputStream("parqueadero.dat");
-            ObjectOutputStream escritor = new ObjectOutputStream(archivo);
-            escritor.writeObject(parqueadero);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
+    
     public static void serializarListaConcursos() {
         try {
             FileOutputStream archivo = new FileOutputStream("concursos.dat");
             ObjectOutputStream escritor = new ObjectOutputStream(archivo);
             escritor.writeObject(concursos);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public static void serializarHistorialConcursos() {
+        try {
+            FileOutputStream archivo = new FileOutputStream("historialConcursos.dat");
+            ObjectOutputStream escritor = new ObjectOutputStream(archivo);
+            escritor.writeObject(historialConcursos);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public static void serializarListaParqueadero() {
+        try {
+            FileOutputStream archivo = new FileOutputStream("parqueadero.dat");
+            ObjectOutputStream escritor = new ObjectOutputStream(archivo);
+            escritor.writeObject(parqueadero);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

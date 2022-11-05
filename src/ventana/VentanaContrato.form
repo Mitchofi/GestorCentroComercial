@@ -315,8 +315,8 @@
                         <Property name="text" type="java.lang.String" value="Nombre completo"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreFocusGained"/>
                         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreFocusLost"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtNombreMouseClicked"/>
                       </Events>
                     </Component>
                   </SubComponents>

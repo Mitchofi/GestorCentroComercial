@@ -50,6 +50,8 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
@@ -57,10 +59,13 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
         txtValor = new javax.swing.JTextField();
         txtArticulo = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jTxtDescripcion = new javax.swing.JTextArea();
+        jComboBoxCategoria = new javax.swing.JComboBox<>();
         txtDescuento = new javax.swing.JTextField();
-        checkVehiculo = new java.awt.Checkbox();
+        checkDescuento = new java.awt.Checkbox();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        txtCodigoArticulo = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
@@ -73,22 +78,38 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
         jPanel2.setForeground(new java.awt.Color(153, 153, 153));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel2.setText("BIENVENIDO");
+        jLabel2.setText("ENCARGADO");
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel3.setText("BIENVENIDO");
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel5.setText("DE INVENTARIO");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel2)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGap(17, 17, 17)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(64, 64, 64)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -137,11 +158,21 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane3.setViewportView(jTextArea1);
+        jTxtDescripcion.setColumns(20);
+        jTxtDescripcion.setForeground(new java.awt.Color(153, 153, 153));
+        jTxtDescripcion.setRows(5);
+        jTxtDescripcion.setText("Descripcion articulo");
+        jTxtDescripcion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTxtDescripcionFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtDescripcionFocusLost(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTxtDescripcion);
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Categoria", "Accesorios para Vehículos", "Agro", "Alimentos y Bebidas", "Animales y Mascotas", "Antigüedades y Colecciones", "Arte, Papelería y Mercería", "Bebés", "Belleza y Cuidado Personal", "Boletas para Espectáculos", "Cámaras y Accesorios", "Carros, Motos y Otros", "Celulares y Teléfonos", "Computación", "Consolas y Videojuegos", "Construcción", "Deportes y Fitness", "Electrodomésticos", "Electrónica, Audio y Video", "Herramientas", "Hogar y Muebles", "Industrias y Oficinas", "Inmuebles", "Instrumentos Musicales", "Juegos y Juguetes", "Libros, Revistas y Comics", "Música, Películas y Series", "Recuerdos, Piñatería y Fiestas", "Relojes y Joyas", "Ropa y Accesorios", "Salud y Equipamiento Médico", "Servicios", "Otras categorías" }));
+        jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Categoria", "Accesorios para Vehículos", "Agro", "Alimentos y Bebidas", "Animales y Mascotas", "Antigüedades y Colecciones", "Arte, Papelería y Mercería", "Bebés", "Belleza y Cuidado Personal", "Boletas para Espectáculos", "Cámaras y Accesorios", "Carros, Motos y Otros", "Celulares y Teléfonos", "Computación", "Consolas y Videojuegos", "Construcción", "Deportes y Fitness", "Electrodomésticos", "Electrónica, Audio y Video", "Herramientas", "Hogar y Muebles", "Industrias y Oficinas", "Inmuebles", "Instrumentos Musicales", "Juegos y Juguetes", "Libros, Revistas y Comics", "Música, Películas y Series", "Recuerdos, Piñatería y Fiestas", "Relojes y Joyas", "Ropa y Accesorios", "Salud y Equipamiento Médico", "Servicios", "Otras categorías" }));
 
         txtDescuento.setForeground(new java.awt.Color(153, 153, 153));
         txtDescuento.setText("Porcentaje de descuento");
@@ -154,10 +185,37 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
             }
         });
 
-        checkVehiculo.setLabel("¿Tiene Descuento?");
-        checkVehiculo.addItemListener(new java.awt.event.ItemListener() {
+        checkDescuento.setLabel("¿Tiene Descuento?");
+        checkDescuento.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                checkVehiculoItemStateChanged(evt);
+                checkDescuentoItemStateChanged(evt);
+            }
+        });
+
+        jButton3.setText("Modificar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Eliminar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        txtCodigoArticulo.setForeground(new java.awt.Color(153, 153, 153));
+        txtCodigoArticulo.setText("Codigo articulo");
+        txtCodigoArticulo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCodigoArticuloFocusLost(evt);
+            }
+        });
+        txtCodigoArticulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCodigoArticuloMouseClicked(evt);
             }
         });
 
@@ -166,25 +224,34 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(checkVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCantidad)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtValor)
                     .addComponent(txtArticulo)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.TRAILING, 0, 192, Short.MAX_VALUE)
-                    .addComponent(txtDescuento))
-                .addGap(0, 12, Short.MAX_VALUE))
+                    .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtDescuento)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(txtCodigoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -192,26 +259,30 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(checkVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(checkDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton4)
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
-        jPanel3.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, -1, 360));
+        jPanel3.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 50, 220, 440));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Articulo", "Categoria", "Valor", "Stock"
+                "Codigo", "Articulo", "Categoria", "Valor", "Stock"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -220,8 +291,15 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
         });
         jTable1.setToolTipText("");
         jScrollPane2.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+            jTable1.getColumnModel().getColumn(4).setResizable(false);
+        }
 
-        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 447, 153));
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 447, 153));
 
         jLabel4.setText("¿Deseas salir de la cuenta?");
         jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 630, -1, -1));
@@ -270,22 +348,27 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (txtArticulo.getText().equals("") || txtArticulo.getText().equals("Nombre articulo")
+        if (txtCodigoArticulo.getText().equals("") || txtCodigoArticulo.getText().equals("Codigo")
+                || txtArticulo.getText().equals("") || txtArticulo.getText().equals("Nombre articulo")
                 || txtValor.getText().equals("") || txtValor.getText().equals("Valor")
                 || txtCantidad.getText().equals("") || txtCantidad.getText().equals("Cantidad")
-                || jComboBox3.getSelectedIndex() == 0) {
+                || jComboBoxCategoria.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
         } else {
+            String codigo = txtCodigoArticulo.getText();
             String nombreArticulo = txtArticulo.getText();
-            String categoria = String.valueOf(jComboBox3.getSelectedItem());
-            String descripcion = jTextArea1.getText();
+            String categoria = String.valueOf(jComboBoxCategoria.getSelectedItem());
+            String descripcion = "";
+            if (!jTxtDescripcion.getText().equals("Descripcion articulo")) {
+                descripcion = jTxtDescripcion.getText();
+            }
             int cantidad = Integer.parseInt(txtCantidad.getText());
             float valor = Float.parseFloat(txtValor.getText());
             int descuento = 0;
             if (!txtDescuento.getText().equals("Porcentaje de descuento")) {
                 descuento = Integer.parseInt(txtDescuento.getText());
             }
-            Articulo articulo = new Articulo(nombreArticulo, descripcion, categoria, valor, descuento, cantidad);
+            Articulo articulo = new Articulo(codigo, nombreArticulo, descripcion, categoria, valor, descuento, cantidad);
             local.getNegocio().getArticulos().add(articulo);
             limpiarTabla();
             cargar();
@@ -360,21 +443,57 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtDescuentoFocusLost
 
-    private void checkVehiculoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkVehiculoItemStateChanged
-        if (checkVehiculo.getState()) {
+    private void checkDescuentoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkDescuentoItemStateChanged
+        if (checkDescuento.getState()) {
             txtDescuento.setEnabled(true);
         } else {
             txtDescuento.setEnabled(false);
             txtDescuento.setText("Porcentaje de descuento");
             txtDescuento.setForeground(Color.gray);
         }
-    }//GEN-LAST:event_checkVehiculoItemStateChanged
+    }//GEN-LAST:event_checkDescuentoItemStateChanged
 
     private void jLabelRegistrar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar2MouseClicked
         ventanaLogIn.reinciarLogIn();
         ventanaLogIn.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabelRegistrar2MouseClicked
+
+    private void jTxtDescripcionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtDescripcionFocusGained
+        if (jTxtDescripcion.getText().equals("Descipcion articulo")) {
+            jTxtDescripcion.setText("");
+            jTxtDescripcion.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_jTxtDescripcionFocusGained
+
+    private void jTxtDescripcionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtDescripcionFocusLost
+        if (jTxtDescripcion.getText().equals("")) {
+            jTxtDescripcion.setText("Descipcion articulo");
+            jTxtDescripcion.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_jTxtDescripcionFocusLost
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtCodigoArticuloFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoArticuloFocusLost
+        if (txtCodigoArticulo.getText().equals("")) {
+            txtCodigoArticulo.setText("Codigo articulo");
+            txtCodigoArticulo.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtCodigoArticuloFocusLost
+
+    private void txtCodigoArticuloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCodigoArticuloMouseClicked
+        if (txtCodigoArticulo.getText().equals("Codigo articulo")) {
+            txtCodigoArticulo.setText("");
+            txtCodigoArticulo.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtCodigoArticuloMouseClicked
 
     public void llenarArticulos() {
         for (int i = 0; i < CentroComercial.locales.length; i++) {
@@ -398,17 +517,18 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
 
     public void cargar() {
         modelo = (DefaultTableModel) jTable1.getModel();
-        Object[] ob = new Object[4];
+        Object[] ob = new Object[5];
         for (int i = 0; i < CentroComercial.locales.length; i++) {
             for (int j = 0; j < CentroComercial.locales[i].length; j++) {
                 if (CentroComercial.locales[i][j].getNegocio() != null) {
                     if (CentroComercial.locales[i][j].getNegocio().getArticulos() != null) {
                         for (int k = 0; k < CentroComercial.locales[i][j].getNegocio().getArticulos().Size(); k++) {
                             Articulo arti = (Articulo) CentroComercial.locales[i][j].getNegocio().getArticulos().obtenerDato(k);
-                            ob[0] = arti.getNombreProducto();
-                            ob[1] = arti.getNombreCategoria();
-                            ob[2] = arti.getValorDelProducto();
-                            ob[3] = arti.getCantidadProducto();
+                            ob[0] = arti.getCodigo();
+                            ob[1] = arti.getNombreProducto();
+                            ob[2] = arti.getNombreCategoria();
+                            ob[3] = arti.getValorDelProducto();
+                            ob[4] = arti.getCantidadProducto();
                             modelo.addRow(ob);
                         }
                     }
@@ -423,6 +543,22 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
             modelo.removeRow(i);
             i = i - 1;
         }
+    }
+
+    public void cleanTextField() {
+        txtArticulo.setText("Nombre articulo");
+        txtArticulo.setForeground(Color.gray);
+        jComboBoxCategoria.setSelectedIndex(0);
+        txtValor.setText("Valor");
+        txtValor.setForeground(Color.gray);
+        txtCantidad.setText("Cantidad");
+        txtCantidad.setForeground(Color.gray);
+        jTxtDescripcion.setText("Descripcion");
+        jTxtDescripcion.setForeground(Color.gray);
+        txtCantidad.setText("Cantidad");
+        txtCantidad.setForeground(Color.gray);
+        txtDescuento.setText("Porcentaje de descuento");
+        checkDescuento.setState(false);
     }
 
     /**
@@ -464,11 +600,15 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Checkbox checkVehiculo;
+    private java.awt.Checkbox checkDescuento;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<String> jComboBoxCategoria;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelRegistrar2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
@@ -477,9 +617,10 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTxtDescripcion;
     private javax.swing.JTextField txtArticulo;
     private javax.swing.JTextField txtCantidad;
+    private javax.swing.JTextField txtCodigoArticulo;
     private javax.swing.JTextField txtDescuento;
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables

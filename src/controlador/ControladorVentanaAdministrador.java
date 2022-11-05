@@ -60,6 +60,18 @@ public class ControladorVentanaAdministrador {
         return controlador.anadirConcurso(concurso);
     }
 
+    public boolean modificarConcurso(int codigo, Concurso concurso) {
+        return controlador.modificarConcurso(codigo, concurso);
+    }
+
+    public boolean eliminarConcurso(int codigo) {
+        return controlador.eliminarConcurso(codigo);
+    }
+
+    public Concurso buscarPorConcurso(int codigo) {
+        return controlador.buscarPorConcurso(codigo);
+    }
+
     public Persona buscarPorCedula(String cedula) {
         return controlador.buscarPorCedula(cedula);
     }

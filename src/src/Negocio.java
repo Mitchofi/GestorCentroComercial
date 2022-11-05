@@ -205,4 +205,52 @@ public class Negocio implements Serializable {
         }
         return ingresos;
     }
+
+    public boolean registrarNuevoArticulo(Articulo articulo) {
+        boolean existe = false;
+        boolean registrado = false;
+        for (int i = 0; i < articulos.Size(); i++) {
+            if (articulos.obtenerDato(i).getCodigo() == articulo.getCodigo()) {
+                existe = true;
+            }
+        }
+        if (!existe) {
+            articulos.add(articulo);
+            CentroComercial.serializarListaLocales();
+            registrado = true;
+        }
+        return registrado;
+    }
+
+    public boolean modificarArticulo(String codigo, Articulo articulo) {
+        boolean modificado = false;
+        Articulo articuloAux = null;
+        for (int i = 0; i < articulos.Size(); i++) {
+            if (articulos.obtenerDato(i).getCodigo().equals(codigo)) {
+                articuloAux = articulos.obtenerDato(i);
+            }
+        }
+        if (articuloAux != null) {
+            articuloAux.setCantidadProducto(articulo.getCantidadProducto());
+            articuloAux.setDecripcionProducto(articulo.getDecripcionProducto());
+            articuloAux.setNombreCategoria(articulo.getNombreCategoria());
+            articuloAux.setNombreProducto(articulo.getNombreProducto());
+            articuloAux.setPorcentajeDescuento(articulo.getPorcentajeDescuento());
+            articuloAux.setValorDelProducto(articulo.getValorDelProducto());
+            modificado = true;
+            serializarListaLocales();
+        }
+        return modificado;
+    }
+
+    public boolean eliminarArticulo(String codigo) {
+        boolean eliminado = false;
+        for (int i = 0; i < articulos.Size(); i++) {
+            if (articulos.obtenerDato(i).getCodigo().equals(codigo)) {
+                articulos.eliminarDato(i);
+                eliminado = true;
+            }
+        }
+        return eliminado;
+    }
 }

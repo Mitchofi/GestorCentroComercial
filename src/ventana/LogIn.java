@@ -4,6 +4,7 @@ import controlador.ControladorLogIn;
 import excepciones.ExcepcionNoSeEncuentraElUsuario;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import src.Cliente;
 import src.Local;
 
 /**
@@ -60,11 +61,13 @@ public class LogIn extends javax.swing.JFrame {
         txtCorreo.setForeground(new java.awt.Color(153, 153, 153));
         txtCorreo.setText("Correo");
         txtCorreo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCorreoFocusGained(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCorreoFocusLost(evt);
+            }
+        });
+        txtCorreo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCorreoMouseClicked(evt);
             }
         });
 
@@ -193,13 +196,6 @@ public class LogIn extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtContrasenaFocusLost
 
-    private void txtCorreoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusGained
-        if (txtCorreo.getText().equals("Correo")) {
-            txtCorreo.setText("");
-            txtCorreo.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtCorreoFocusGained
-
     private void txtCorreoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusLost
         if (txtCorreo.getText().equals("")) {
             txtCorreo.setText("Correo");
@@ -226,7 +222,8 @@ public class LogIn extends javax.swing.JFrame {
                 ventanaAdministradorNegocio.setVisible(true);
                 this.dispose();
             } else if (tipo == 3) {
-                VentanaCliente ventanaCliente = new VentanaCliente(this);
+                Cliente cliente = controlador.buscarCliente(correo, contrasena);
+                VentanaCliente ventanaCliente = new VentanaCliente(this, cliente);
                 ventanaCliente.setVisible(true);
                 this.dispose();
             } else if (tipo == 4) {
@@ -251,6 +248,13 @@ public class LogIn extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtCorreoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCorreoMouseClicked
+        if (txtCorreo.getText().equals("Correo")) {
+            txtCorreo.setText("");
+            txtCorreo.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtCorreoMouseClicked
 
     public void reinciarLogIn() {
         txtCorreo.setText("Correo");

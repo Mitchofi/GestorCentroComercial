@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import src.Articulo;
 import src.CentroComercial;
+import src.Cliente;
 import src.Empleado;
 import src.Vehiculo;
 
@@ -24,14 +25,16 @@ public class VentanaCliente extends javax.swing.JFrame {
      */
     private LogIn ventanaLogIn;
     private ControladorVentanaAdministrador controlador;
-    private DefaultTableModel modelo;
+    private DefaultTableModel modeloArticulosEnVenta;
+    private Cliente cliente;
 
-    public VentanaCliente(LogIn logIn) {
+    public VentanaCliente(LogIn logIn, Cliente cliente) {
         initComponents();
         setLocationRelativeTo(this);
         this.ventanaLogIn = logIn;
         this.controlador = new ControladorVentanaAdministrador();
-        modelo = new DefaultTableModel();
+        modeloArticulosEnVenta = new DefaultTableModel();
+        jLabel6.setText(cliente.getNombre());
         limpiarTabla();
         cargar();
     }
@@ -52,44 +55,32 @@ public class VentanaCliente extends javax.swing.JFrame {
         jLabelEmpleados = new javax.swing.JLabel();
         jLabelClientes = new javax.swing.JLabel();
         jLabelVentas = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabelRegistrar2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableArticulos = new javax.swing.JTable();
         jPanel11 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         txtCantidad = new javax.swing.JTextField();
         txtCategoria = new javax.swing.JTextField();
         txtValor = new javax.swing.JTextField();
-        txtPlacaVehiculo1 = new javax.swing.JTextField();
         txtArticulo = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        txtTipoDeVehiculo1 = new javax.swing.JTextField();
+        jTextDescripcion = new javax.swing.JTextArea();
+        txtLocal = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabelRegistrar1 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        txtTelefono = new javax.swing.JTextField();
-        txtEdad = new javax.swing.JTextField();
-        txtCedula = new javax.swing.JTextField();
-        txtCorreo = new javax.swing.JTextField();
-        txtContrasena = new javax.swing.JPasswordField();
-        checkVehiculo = new java.awt.Checkbox();
-        txtPlacaVehiculo = new javax.swing.JTextField();
-        txtTipoDeVehiculo = new javax.swing.JTextField();
-        txtNombre = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel6 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabelRegistrar3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTableHistorialArticulos = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabelRegistrar5 = new javax.swing.JLabel();
@@ -101,7 +92,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         jPanel2.setForeground(new java.awt.Color(153, 153, 153));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel2.setText("BIENVENIDO");
+        jLabel2.setText("CLIENTE:");
 
         jLabelLocales.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabelLocales.setForeground(new java.awt.Color(51, 153, 255));
@@ -143,29 +134,44 @@ public class VentanaCliente extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel6.setText("Nombre cliente:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(jLabelClientes)
-                .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabelEmpleados)
-                    .addComponent(jLabelLocales)
-                    .addComponent(jLabelVentas))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelEmpleados)
+                                    .addComponent(jLabelLocales)
+                                    .addComponent(jLabelVentas)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel2)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 8, Short.MAX_VALUE)
+                                .addComponent(jLabelClientes))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(53, 53, 53)
                 .addComponent(jLabel2)
-                .addGap(85, 85, 85)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addGap(43, 43, 43)
                 .addComponent(jLabelLocales)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelEmpleados)
@@ -190,7 +196,7 @@ public class VentanaCliente extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableArticulos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -206,13 +212,20 @@ public class VentanaCliente extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable2.setToolTipText("");
-        jScrollPane2.setViewportView(jTable2);
+        jTableArticulos.setToolTipText("");
+        jScrollPane2.setViewportView(jTableArticulos);
+        if (jTableArticulos.getColumnModel().getColumnCount() > 0) {
+            jTableArticulos.getColumnModel().getColumn(0).setResizable(false);
+            jTableArticulos.getColumnModel().getColumn(1).setResizable(false);
+            jTableArticulos.getColumnModel().getColumn(2).setResizable(false);
+            jTableArticulos.getColumnModel().getColumn(3).setResizable(false);
+            jTableArticulos.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.MatteBorder(null), "Comprar Articulo"));
 
-        jButton2.setText("Registrar");
+        jButton2.setText("Comprar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -252,42 +265,40 @@ public class VentanaCliente extends javax.swing.JFrame {
             }
         });
 
-        txtPlacaVehiculo1.setForeground(new java.awt.Color(153, 153, 153));
-        txtPlacaVehiculo1.setText("Placa del vehiculo");
-        txtPlacaVehiculo1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtPlacaVehiculo1FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPlacaVehiculo1FocusLost(evt);
-            }
-        });
-
         txtArticulo.setForeground(new java.awt.Color(153, 153, 153));
         txtArticulo.setText("Articulo");
         txtArticulo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtArticuloFocusGained(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtArticuloFocusLost(evt);
             }
         });
+        txtArticulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtArticuloMouseClicked(evt);
+            }
+        });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cargo", "Encargado parqueadero" }));
+        jTextDescripcion.setColumns(20);
+        jTextDescripcion.setForeground(new java.awt.Color(153, 153, 153));
+        jTextDescripcion.setRows(5);
+        jTextDescripcion.setText("Descripcion");
+        jScrollPane3.setViewportView(jTextDescripcion);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane3.setViewportView(jTextArea1);
-
-        txtTipoDeVehiculo1.setForeground(new java.awt.Color(153, 153, 153));
-        txtTipoDeVehiculo1.setText("Local");
-        txtTipoDeVehiculo1.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtLocal.setForeground(new java.awt.Color(153, 153, 153));
+        txtLocal.setText("Local");
+        txtLocal.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtTipoDeVehiculo1FocusGained(evt);
+                txtLocalFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTipoDeVehiculo1FocusLost(evt);
+                txtLocalFocusLost(evt);
+            }
+        });
+
+        jButton3.setText("Separar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -299,14 +310,15 @@ public class VentanaCliente extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtCantidad)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtCategoria, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtCategoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                     .addComponent(txtValor)
-                    .addComponent(txtPlacaVehiculo1)
                     .addComponent(txtArticulo)
-                    .addComponent(jComboBox2, 0, 192, Short.MAX_VALUE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(txtTipoDeVehiculo1))
+                    .addComponent(txtLocal)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
@@ -319,18 +331,16 @@ public class VentanaCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTipoDeVehiculo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPlacaVehiculo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(19, 19, 19))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -344,20 +354,23 @@ public class VentanaCliente extends javax.swing.JFrame {
                 .addComponent(jLabelRegistrar2)
                 .addGap(23, 23, 23))
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(16, 16, 16)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(100, 100, 100)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabelRegistrar2))
@@ -378,186 +391,25 @@ public class VentanaCliente extends javax.swing.JFrame {
             }
         });
 
-        jPanel10.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.MatteBorder(null), "Registrar empleado"));
-
-        jButton1.setText("Registrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        txtTelefono.setForeground(new java.awt.Color(153, 153, 153));
-        txtTelefono.setText("Numero movil");
-        txtTelefono.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtTelefonoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTelefonoFocusLost(evt);
-            }
-        });
-
-        txtEdad.setForeground(new java.awt.Color(153, 153, 153));
-        txtEdad.setText("Edad");
-        txtEdad.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtEdadFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtEdadFocusLost(evt);
-            }
-        });
-
-        txtCedula.setForeground(new java.awt.Color(153, 153, 153));
-        txtCedula.setText("Cedula");
-        txtCedula.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCedulaFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCedulaFocusLost(evt);
-            }
-        });
-
-        txtCorreo.setForeground(new java.awt.Color(153, 153, 153));
-        txtCorreo.setText("Correo");
-        txtCorreo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCorreoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCorreoFocusLost(evt);
-            }
-        });
-
-        txtContrasena.setForeground(new java.awt.Color(153, 153, 153));
-        txtContrasena.setText("******");
-        txtContrasena.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtContrasenaFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtContrasenaFocusLost(evt);
-            }
-        });
-
-        checkVehiculo.setLabel("¿Tiene Vehiculo?");
-        checkVehiculo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                checkVehiculoItemStateChanged(evt);
-            }
-        });
-
-        txtPlacaVehiculo.setForeground(new java.awt.Color(153, 153, 153));
-        txtPlacaVehiculo.setText("Placa del vehiculo");
-        txtPlacaVehiculo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtPlacaVehiculoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPlacaVehiculoFocusLost(evt);
-            }
-        });
-
-        txtTipoDeVehiculo.setForeground(new java.awt.Color(153, 153, 153));
-        txtTipoDeVehiculo.setText("Tipo de vehiculo");
-        txtTipoDeVehiculo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtTipoDeVehiculoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTipoDeVehiculoFocusLost(evt);
-            }
-        });
-
-        txtNombre.setForeground(new java.awt.Color(153, 153, 153));
-        txtNombre.setText("Nombre completo");
-        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombreFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNombreFocusLost(evt);
-            }
-        });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cargo", "Encargado parqueadero" }));
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(checkVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTelefono)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtEdad)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtCorreo)
-                    .addComponent(txtContrasena)
-                    .addComponent(txtTipoDeVehiculo)
-                    .addComponent(txtPlacaVehiculo, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                    .addComponent(txtNombre)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(46, Short.MAX_VALUE))
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(checkVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTipoDeVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPlacaVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(19, 19, 19))
-        );
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(556, Short.MAX_VALUE)
+                .addContainerGap(547, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelRegistrar1)
-                .addGap(14, 14, 14))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(196, 196, 196)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                .addContainerGap(531, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabelRegistrar1))
-                .addContainerGap())
+                .addGap(22, 22, 22))
         );
 
         jTabbedPane1.addTab("Separados", jPanel5);
@@ -574,12 +426,12 @@ public class VentanaCliente extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableHistorialArticulos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nombre", "Correo", "Cedula", "Edad", "Multa"
+                "Articulo", "Categoria", "Valor", "Cantidad", "Local"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -590,7 +442,15 @@ public class VentanaCliente extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jTableHistorialArticulos.setToolTipText("");
+        jScrollPane6.setViewportView(jTableHistorialArticulos);
+        if (jTableHistorialArticulos.getColumnModel().getColumnCount() > 0) {
+            jTableHistorialArticulos.getColumnModel().getColumn(0).setResizable(false);
+            jTableHistorialArticulos.getColumnModel().getColumn(1).setResizable(false);
+            jTableHistorialArticulos.getColumnModel().getColumn(2).setResizable(false);
+            jTableHistorialArticulos.getColumnModel().getColumn(3).setResizable(false);
+            jTableHistorialArticulos.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -603,16 +463,16 @@ public class VentanaCliente extends javax.swing.JFrame {
                 .addComponent(jLabelRegistrar3)
                 .addGap(14, 14, 14))
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(133, 133, 133)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 273, Short.MAX_VALUE)
+                .addGap(114, 114, 114)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 280, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabelRegistrar3))
@@ -718,174 +578,6 @@ public class VentanaCliente extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabelRegistrar3MouseClicked
 
-    private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
-        if (txtNombre.getText().equals("")) {
-            txtNombre.setText("Nombre completo");
-            txtNombre.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtNombreFocusLost
-
-    private void txtNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusGained
-        if (txtNombre.getText().equals("Nombre completo")) {
-            txtNombre.setText("");
-            txtNombre.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtNombreFocusGained
-
-    private void txtTipoDeVehiculoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeVehiculoFocusLost
-        if (txtTipoDeVehiculo.getText().equals("")) {
-            txtTipoDeVehiculo.setText("Tipo de vehiculo");
-            txtTipoDeVehiculo.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtTipoDeVehiculoFocusLost
-
-    private void txtTipoDeVehiculoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeVehiculoFocusGained
-        if (txtTipoDeVehiculo.getText().equals("Tipo de vehiculo")) {
-            txtTipoDeVehiculo.setText("");
-            txtTipoDeVehiculo.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtTipoDeVehiculoFocusGained
-
-    private void txtPlacaVehiculoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaVehiculoFocusLost
-        if (txtPlacaVehiculo.getText().equals("")) {
-            txtPlacaVehiculo.setText("Placa del vehiculo");
-            txtPlacaVehiculo.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtPlacaVehiculoFocusLost
-
-    private void txtPlacaVehiculoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaVehiculoFocusGained
-        if (txtPlacaVehiculo.getText().equals("Placa del vehiculo")) {
-            txtPlacaVehiculo.setText("");
-            txtPlacaVehiculo.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtPlacaVehiculoFocusGained
-
-    private void checkVehiculoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkVehiculoItemStateChanged
-        if (checkVehiculo.getState()) {
-            txtTipoDeVehiculo.setEnabled(true);
-            txtPlacaVehiculo.setEnabled(true);
-        } else {
-            txtTipoDeVehiculo.setEnabled(false);
-            txtPlacaVehiculo.setEnabled(false);
-            txtTipoDeVehiculo.setText("Tipo de vehiculo");
-            txtTipoDeVehiculo.setForeground(Color.gray);
-            txtPlacaVehiculo.setText("Placa del vehiculo");
-            txtPlacaVehiculo.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_checkVehiculoItemStateChanged
-
-    private void txtContrasenaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaFocusLost
-        if (String.valueOf(txtContrasena.getPassword()).equals("")) {
-            txtContrasena.setText("******");
-            txtContrasena.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtContrasenaFocusLost
-
-    private void txtContrasenaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaFocusGained
-        if (String.valueOf(txtContrasena.getPassword()).equals("******")) {
-            txtContrasena.setText("");
-            txtContrasena.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtContrasenaFocusGained
-
-    private void txtCorreoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusLost
-        if (txtCorreo.getText().equals("")) {
-            txtCorreo.setText("Correo");
-            txtCorreo.setForeground(Color.gray);
-
-        }
-    }//GEN-LAST:event_txtCorreoFocusLost
-
-    private void txtCorreoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusGained
-        if (txtCorreo.getText().equals("Correo")) {
-            txtCorreo.setText("");
-            txtCorreo.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtCorreoFocusGained
-
-    private void txtCedulaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaFocusLost
-        if (txtCedula.getText().equals("")) {
-            txtCedula.setText("Cedula");
-            txtCedula.setForeground(Color.gray);
-        }
-        if (!validarNumeros(txtCedula.getText()) && !txtCedula.getText().equals("Cedula")) {
-            txtCedula.setBackground(Color.red);
-        } else {
-            txtCedula.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtCedulaFocusLost
-
-    private void txtCedulaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaFocusGained
-        if (txtCedula.getText().equals("Cedula")) {
-            txtCedula.setText("");
-            txtCedula.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtCedulaFocusGained
-
-    private void txtEdadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdadFocusLost
-        if (txtEdad.getText().equals("")) {
-            txtEdad.setText("Edad");
-            txtEdad.setForeground(Color.gray);
-        }
-        if (!validarNumeros(txtEdad.getText()) && !txtEdad.getText().equals("Edad")) {
-            txtEdad.setBackground(Color.red);
-        } else {
-            txtEdad.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtEdadFocusLost
-
-    private void txtEdadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdadFocusGained
-        if (txtEdad.getText().equals("Edad")) {
-            txtEdad.setText("");
-            txtEdad.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtEdadFocusGained
-
-    private void txtTelefonoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusLost
-        if (txtTelefono.getText().equals("")) {
-            txtTelefono.setText("Numero movil");
-            txtTelefono.setForeground(Color.gray);
-        }
-        if (!validarNumeros(txtTelefono.getText()) && !txtTelefono.getText().equals("Numero movil")) {
-            txtTelefono.setBackground(Color.red);
-        } else {
-            txtTelefono.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtTelefonoFocusLost
-
-    private void txtTelefonoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusGained
-        if (txtTelefono.getText().equals("Numero movil")) {
-            txtTelefono.setText("");
-            txtTelefono.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtTelefonoFocusGained
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (txtCorreo.getText().equals("") || txtCorreo.getText().equals("Correo")
-                || String.valueOf(txtContrasena.getPassword()).equals("")
-                || String.valueOf(txtContrasena.getPassword()).equals("******")
-                || txtCedula.getText().equals("") || txtCedula.getText().equals("Cedula")
-                || txtEdad.getText().equals("") || txtEdad.getText().equals("Edad")
-                || txtNombre.getText().equals("") || txtNombre.getText().equals("Nombre completo")
-                || txtTelefono.getText().equals("") || txtTelefono.getText().equals("Numero movil")
-                || jComboBox1.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
-        } else {
-            String telefono = txtTelefono.getText();
-            String nombre = txtNombre.getText();
-            short edad = Short.parseShort(txtEdad.getText());
-            String cedula = txtCedula.getText();
-            String correo = txtCorreo.getText();
-            String contrasena = String.valueOf(txtContrasena.getPassword());
-            Vehiculo vehiculo = vehiculo();
-            String rol = String.valueOf(jComboBox1.getSelectedItem());
-            Empleado empleado = new Empleado(vehiculo, rol, nombre, cedula, telefono, correo, contrasena, edad);
-            if (controlador.anadirEmpleado(empleado)) {
-                JOptionPane.showMessageDialog(this, "Registrado correctamente");
-            }
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jLabelRegistrar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar1MouseClicked
         ventanaLogIn.reinciarLogIn();
         ventanaLogIn.setVisible(true);
@@ -899,127 +591,102 @@ public class VentanaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelRegistrar2MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (txtCorreo.getText().equals("") || txtCorreo.getText().equals("Correo")
-                || String.valueOf(txtContrasena.getPassword()).equals("")
-                || String.valueOf(txtContrasena.getPassword()).equals("******")
-                || txtCedula.getText().equals("") || txtCedula.getText().equals("Cedula")
-                || txtEdad.getText().equals("") || txtEdad.getText().equals("Edad")
-                || txtNombre.getText().equals("") || txtNombre.getText().equals("Nombre completo")
-                || txtTelefono.getText().equals("") || txtTelefono.getText().equals("Numero movil")
-                || jComboBox1.getSelectedIndex() == 0) {
+        if (txtArticulo.getText().equals("") || txtArticulo.getText().equals("Articulo")
+                || txtValor.getText().equals("") || txtValor.getText().equals("Valor")
+                || txtCantidad.getText().equals("") || txtCantidad.getText().equals("Cantidad")
+                || txtCategoria.equals("") || txtCategoria.getText().equals("Categoria")
+                || txtLocal.equals("") || txtLocal.getText().equals("Local")) {
             JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
         } else {
-            String telefono = txtTelefono.getText();
-            String nombre = txtNombre.getText();
-            short edad = Short.parseShort(txtEdad.getText());
-            String cedula = txtCedula.getText();
-            String correo = txtCorreo.getText();
-            String contrasena = String.valueOf(txtContrasena.getPassword());
-            Vehiculo vehiculo = vehiculo();
-            String rol = String.valueOf(jComboBox1.getSelectedItem());
-            Empleado empleado = new Empleado(vehiculo, rol, nombre, cedula, telefono, correo, contrasena, edad);
-            if (controlador.anadirEmpleado(empleado)) {
-                JOptionPane.showMessageDialog(this, "Registrado correctamente");
+            String nombreArticulo = txtArticulo.getText();
+            String categoriaCompra = txtCategoria.getText();
+            String local = txtLocal.getText();
+            String descripcion = "";
+            if (!jTextDescripcion.getText().equals("Descripcion articulo")) {
+                descripcion = jTextDescripcion.getText();
             }
+            float valor = Float.parseFloat(txtValor.getText());
+            int cantidad = Integer.parseInt(txtCantidad.getText());
+            cleanTextField();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtCantidadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadFocusGained
-        if (txtTelefono.getText().equals("Numero movil")) {
-            txtTelefono.setText("");
-            txtTelefono.setForeground(Color.black);
+        if (txtCantidad.getText().equals("Cantidad")) {
+            txtCantidad.setText("");
+            txtCantidad.setForeground(Color.black);
         }
     }//GEN-LAST:event_txtCantidadFocusGained
 
     private void txtCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadFocusLost
-        if (txtTelefono.getText().equals("")) {
-            txtTelefono.setText("Numero movil");
-            txtTelefono.setForeground(Color.gray);
-        }
-        if (!validarNumeros(txtTelefono.getText()) && !txtTelefono.getText().equals("Numero movil")) {
-            txtTelefono.setBackground(Color.red);
-        } else {
-            txtTelefono.setBackground(Color.white);
+        if (txtCantidad.getText().equals("")) {
+            txtCantidad.setText("Cantidad");
+            txtCantidad.setForeground(Color.gray);
         }
     }//GEN-LAST:event_txtCantidadFocusLost
 
     private void txtCategoriaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCategoriaFocusGained
-        if (txtCedula.getText().equals("Cedula")) {
-            txtCedula.setText("");
-            txtCedula.setForeground(Color.black);
+        if (txtCategoria.getText().equals("Categoria")) {
+            txtCategoria.setText("");
+            txtCategoria.setForeground(Color.black);
         }
     }//GEN-LAST:event_txtCategoriaFocusGained
 
     private void txtCategoriaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCategoriaFocusLost
-        if (txtCedula.getText().equals("")) {
-            txtCedula.setText("Cedula");
-            txtCedula.setForeground(Color.gray);
-        }
-        if (!validarNumeros(txtCedula.getText()) && !txtCedula.getText().equals("Cedula")) {
-            txtCedula.setBackground(Color.red);
-        } else {
-            txtCedula.setBackground(Color.white);
+        if (txtCategoria.getText().equals("")) {
+            txtCategoria.setText("Categoria");
+            txtCategoria.setForeground(Color.gray);
         }
     }//GEN-LAST:event_txtCategoriaFocusLost
 
     private void txtValorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusGained
-        if (txtCorreo.getText().equals("Correo")) {
-            txtCorreo.setText("");
-            txtCorreo.setForeground(Color.black);
+        if (txtValor.getText().equals("Valor")) {
+            txtValor.setText("");
+            txtValor.setForeground(Color.black);
         }
     }//GEN-LAST:event_txtValorFocusGained
 
     private void txtValorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusLost
-        if (txtCorreo.getText().equals("")) {
-            txtCorreo.setText("Correo");
-            txtCorreo.setForeground(Color.gray);
+        if (txtValor.getText().equals("")) {
+            txtValor.setText("Valor");
+            txtValor.setForeground(Color.gray);
 
         }
     }//GEN-LAST:event_txtValorFocusLost
 
-    private void txtPlacaVehiculo1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaVehiculo1FocusGained
-        if (txtPlacaVehiculo.getText().equals("Placa del vehiculo")) {
-            txtPlacaVehiculo.setText("");
-            txtPlacaVehiculo.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtPlacaVehiculo1FocusGained
-
-    private void txtPlacaVehiculo1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaVehiculo1FocusLost
-        if (txtPlacaVehiculo.getText().equals("")) {
-            txtPlacaVehiculo.setText("Placa del vehiculo");
-            txtPlacaVehiculo.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtPlacaVehiculo1FocusLost
-
-    private void txtArticuloFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtArticuloFocusGained
-        if (txtNombre.getText().equals("Nombre completo")) {
-            txtNombre.setText("");
-            txtNombre.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtArticuloFocusGained
-
     private void txtArticuloFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtArticuloFocusLost
-        if (txtNombre.getText().equals("")) {
-            txtNombre.setText("Nombre completo");
-            txtNombre.setForeground(Color.gray);
+        if (txtArticulo.getText().equals("")) {
+            txtArticulo.setText("Articulo");
+            txtArticulo.setForeground(Color.gray);
         }
     }//GEN-LAST:event_txtArticuloFocusLost
 
-    private void txtTipoDeVehiculo1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeVehiculo1FocusLost
-        if (txtTipoDeVehiculo.getText().equals("")) {
-            txtTipoDeVehiculo.setText("Tipo de vehiculo");
-            txtTipoDeVehiculo.setForeground(Color.gray);
+    private void txtLocalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtLocalFocusLost
+        if (txtLocal.getText().equals("")) {
+            txtLocal.setText("Local");
+            txtLocal.setForeground(Color.gray);
         }
-    }//GEN-LAST:event_txtTipoDeVehiculo1FocusLost
+    }//GEN-LAST:event_txtLocalFocusLost
 
-    private void txtTipoDeVehiculo1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeVehiculo1FocusGained
-        if (txtTipoDeVehiculo.getText().equals("Tipo de vehiculo")) {
-            txtTipoDeVehiculo.setText("");
-            txtTipoDeVehiculo.setForeground(Color.black);
+    private void txtLocalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtLocalFocusGained
+        if (txtLocal.getText().equals("Local")) {
+            txtLocal.setText("");
+            txtLocal.setForeground(Color.black);
         }
-    }//GEN-LAST:event_txtTipoDeVehiculo1FocusGained
+    }//GEN-LAST:event_txtLocalFocusGained
 
-    public Vehiculo vehiculo() {
+    private void txtArticuloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtArticuloMouseClicked
+        if (txtArticulo.getText().equals("Articulo")) {
+            txtArticulo.setText("");
+            txtArticulo.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtArticuloMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    /*public Vehiculo vehiculo() {
         Vehiculo vehiculo = null;
         if (checkVehiculo.getState()) {
             if (txtPlacaVehiculo.getText().equals("Placa del vehiculo") || txtTipoDeVehiculo.getText().equals("Tipo de vehiculo")
@@ -1033,8 +700,7 @@ public class VentanaCliente extends javax.swing.JFrame {
             }
         }
         return vehiculo;
-    }
-
+    }*/
     public void llenarArticulos() {
         for (int i = 0; i < CentroComercial.locales.length; i++) {
             for (int j = 0; j < CentroComercial.locales[i].length; j++) {
@@ -1056,7 +722,7 @@ public class VentanaCliente extends javax.swing.JFrame {
     }
 
     public void cargar() {
-        modelo = (DefaultTableModel) jTable1.getModel();
+        modeloArticulosEnVenta = (DefaultTableModel) jTableArticulos.getModel();
         Object[] ob = new Object[6];
         for (int i = 0; i < CentroComercial.locales.length; i++) {
             for (int j = 0; j < CentroComercial.locales[i].length; j++) {
@@ -1064,25 +730,42 @@ public class VentanaCliente extends javax.swing.JFrame {
                     if (CentroComercial.locales[i][j].getNegocio().getArticulos() != null) {
                         for (int k = 0; k < CentroComercial.locales[i][j].getNegocio().getArticulos().Size(); k++) {
                             Articulo arti = (Articulo) CentroComercial.locales[i][j].getNegocio().getArticulos().obtenerDato(k);
-                            ob[0] = arti.getNombreProducto();
-                            ob[1] = arti.getNombreCategoria();
-                            ob[2] = arti.getValorDelProducto();
-                            ob[3] = arti.getCantidadProducto();
-                            ob[4] = CentroComercial.locales[i][j].getNegocio().getNombre();
-                            modelo.addRow(ob);
+                            if (arti.getCantidadProducto() != 0) {
+                                ob[0] = arti.getNombreProducto();
+                                ob[1] = arti.getNombreCategoria();
+                                ob[2] = arti.getValorDelProducto();
+                                ob[3] = arti.getCantidadProducto();
+                                ob[4] = CentroComercial.locales[i][j].getNegocio().getNombre();
+                                modeloArticulosEnVenta.addRow(ob);
+                            }
                         }
                     }
                 }
             }
         }
-        jTable1.setModel(modelo);
+        jTableArticulos.setModel(modeloArticulosEnVenta);
     }
 
     public void limpiarTabla() {
-        for (int i = 0; i < modelo.getRowCount(); i++) {
-            modelo.removeRow(i);
+        for (int i = 0; i < modeloArticulosEnVenta.getRowCount(); i++) {
+            modeloArticulosEnVenta.removeRow(i);
             i = i - 1;
         }
+    }
+
+    public void cleanTextField() {
+        txtArticulo.setText("Articulo");
+        txtArticulo.setForeground(Color.gray);
+        txtCategoria.setText("Categoria");
+        txtCategoria.setForeground(Color.gray);
+        txtValor.setText("Valor");
+        txtValor.setForeground(Color.gray);
+        txtLocal.setText("Local");
+        txtLocal.setForeground(Color.gray);
+        jTextDescripcion.setText("Descripcion");
+        jTextDescripcion.setForeground(Color.gray);
+        txtCantidad.setText("Cantidad");
+        txtCantidad.setForeground(Color.gray);
     }
 
     /**
@@ -1118,15 +801,13 @@ public class VentanaCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Checkbox checkVehiculo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelClientes;
     private javax.swing.JLabel jLabelEmpleados;
@@ -1137,7 +818,6 @@ public class VentanaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelRegistrar5;
     private javax.swing.JLabel jLabelVentas;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1145,26 +825,17 @@ public class VentanaCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTable jTableArticulos;
+    private javax.swing.JTable jTableHistorialArticulos;
+    private javax.swing.JTextArea jTextDescripcion;
     private javax.swing.JTextField txtArticulo;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCategoria;
-    private javax.swing.JTextField txtCedula;
-    private javax.swing.JPasswordField txtContrasena;
-    private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtEdad;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPlacaVehiculo;
-    private javax.swing.JTextField txtPlacaVehiculo1;
-    private javax.swing.JTextField txtTelefono;
-    private javax.swing.JTextField txtTipoDeVehiculo;
-    private javax.swing.JTextField txtTipoDeVehiculo1;
+    private javax.swing.JTextField txtLocal;
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }

@@ -273,11 +273,93 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLabelRegistrar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar2MouseClicked
+        ventanaLogIn.reinciarLogIn();
+        ventanaLogIn.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabelRegistrar2MouseClicked
+
+    private void checkVehiculoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkVehiculoItemStateChanged
+        if (checkVehiculo.getState()) {
+            txtDescuento.setEnabled(true);
+        } else {
+            txtDescuento.setEnabled(false);
+            txtDescuento.setText("Porcentaje de descuento");
+            txtDescuento.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_checkVehiculoItemStateChanged
+
+    private void txtDescuentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescuentoFocusLost
+        if (txtDescuento.getText().equals("")) {
+            txtDescuento.setText("Tipo de vehiculo");
+            txtDescuento.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtDescuentoFocusLost
+
+    private void txtDescuentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescuentoFocusGained
+        if (txtDescuento.getText().equals("Tipo de vehiculo")) {
+            txtDescuento.setText("");
+            txtDescuento.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtDescuentoFocusGained
+
+    private void txtArticuloFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtArticuloFocusLost
+        if (txtArticulo.getText().equals("")) {
+            txtArticulo.setText("Nombre articulo");
+            txtArticulo.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtArticuloFocusLost
+
+    private void txtArticuloFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtArticuloFocusGained
+        if (txtArticulo.getText().equals("Nombre articulo")) {
+            txtArticulo.setText("");
+            txtArticulo.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtArticuloFocusGained
+
+    private void txtValorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusLost
+        if (txtValor.getText().equals("")) {
+            txtValor.setText("Valor");
+            txtValor.setForeground(Color.gray);
+        }
+        if (!validarNumeros(txtValor.getText()) && !txtValor.getText().equals("Valor")) {
+            txtValor.setBackground(Color.red);
+        } else {
+            txtValor.setBackground(Color.white);
+        }
+    }//GEN-LAST:event_txtValorFocusLost
+
+    private void txtValorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusGained
+        if (txtValor.getText().equals("Valor")) {
+            txtValor.setText("");
+            txtValor.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtValorFocusGained
+
+    private void txtCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadFocusLost
+        if (txtCantidad.getText().equals("")) {
+            txtCantidad.setText("Cantidad");
+            txtCantidad.setForeground(Color.gray);
+        }
+        if (!validarNumeros(txtCantidad.getText()) && !txtCantidad.getText().equals("Cantidad")) {
+            txtCantidad.setBackground(Color.red);
+        } else {
+            txtCantidad.setBackground(Color.white);
+        }
+    }//GEN-LAST:event_txtCantidadFocusLost
+
+    private void txtCantidadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadFocusGained
+        if (txtCantidad.getText().equals("Cantidad")) {
+            txtCantidad.setText("");
+            txtCantidad.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtCantidadFocusGained
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (txtArticulo.getText().equals("") || txtArticulo.getText().equals("Nombre articulo")
-                || txtValor.getText().equals("") || txtValor.getText().equals("Valor")
-                || txtCantidad.getText().equals("") || txtCantidad.getText().equals("Cantidad")
-                || jComboBox3.getSelectedIndex() == 0) {
+            || txtValor.getText().equals("") || txtValor.getText().equals("Valor")
+            || txtCantidad.getText().equals("") || txtCantidad.getText().equals("Cantidad")
+            || jComboBox3.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
         } else {
             String nombreArticulo = txtArticulo.getText();
@@ -297,88 +379,6 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Registrado correctamente");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void txtCantidadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadFocusGained
-        if (txtCantidad.getText().equals("Cantidad")) {
-            txtCantidad.setText("");
-            txtCantidad.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtCantidadFocusGained
-
-    private void txtCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadFocusLost
-        if (txtCantidad.getText().equals("")) {
-            txtCantidad.setText("Cantidad");
-            txtCantidad.setForeground(Color.gray);
-        }
-        if (!validarNumeros(txtCantidad.getText()) && !txtCantidad.getText().equals("Cantidad")) {
-            txtCantidad.setBackground(Color.red);
-        } else {
-            txtCantidad.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtCantidadFocusLost
-
-    private void txtValorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusGained
-        if (txtValor.getText().equals("Valor")) {
-            txtValor.setText("");
-            txtValor.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtValorFocusGained
-
-    private void txtValorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusLost
-        if (txtValor.getText().equals("")) {
-            txtValor.setText("Valor");
-            txtValor.setForeground(Color.gray);
-        }
-        if (!validarNumeros(txtValor.getText()) && !txtValor.getText().equals("Valor")) {
-            txtValor.setBackground(Color.red);
-        } else {
-            txtValor.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtValorFocusLost
-
-    private void txtArticuloFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtArticuloFocusGained
-        if (txtArticulo.getText().equals("Nombre articulo")) {
-            txtArticulo.setText("");
-            txtArticulo.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtArticuloFocusGained
-
-    private void txtArticuloFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtArticuloFocusLost
-        if (txtArticulo.getText().equals("")) {
-            txtArticulo.setText("Nombre articulo");
-            txtArticulo.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtArticuloFocusLost
-
-    private void txtDescuentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescuentoFocusGained
-        if (txtDescuento.getText().equals("Tipo de vehiculo")) {
-            txtDescuento.setText("");
-            txtDescuento.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtDescuentoFocusGained
-
-    private void txtDescuentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescuentoFocusLost
-        if (txtDescuento.getText().equals("")) {
-            txtDescuento.setText("Tipo de vehiculo");
-            txtDescuento.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtDescuentoFocusLost
-
-    private void checkVehiculoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkVehiculoItemStateChanged
-        if (checkVehiculo.getState()) {
-            txtDescuento.setEnabled(true);
-        } else {
-            txtDescuento.setEnabled(false);
-            txtDescuento.setText("Porcentaje de descuento");
-            txtDescuento.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_checkVehiculoItemStateChanged
-
-    private void jLabelRegistrar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar2MouseClicked
-        ventanaLogIn.reinciarLogIn();
-        ventanaLogIn.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabelRegistrar2MouseClicked
 
     public void llenarArticulos() {
         for (int i = 0; i < CentroComercial.locales.length; i++) {

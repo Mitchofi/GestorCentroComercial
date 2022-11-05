@@ -188,11 +188,13 @@ public class VentanaContrato extends javax.swing.JFrame {
         txtNombre.setForeground(new java.awt.Color(153, 153, 153));
         txtNombre.setText("Nombre completo");
         txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombreFocusGained(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtNombreFocusLost(evt);
+            }
+        });
+        txtNombre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtNombreMouseClicked(evt);
             }
         });
 
@@ -329,7 +331,7 @@ public class VentanaContrato extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 968, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
@@ -463,13 +465,6 @@ public class VentanaContrato extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtNombreFocusLost
 
-    private void txtNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusGained
-        if (txtNombre.getText().equals("Nombre completo")) {
-            txtNombre.setText("");
-            txtNombre.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtNombreFocusGained
-
     private void txtTelefonoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusLost
         if (txtTelefono.getText().isEmpty()) {
             txtTelefono.setText("Numero movil");
@@ -521,6 +516,13 @@ public class VentanaContrato extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtContratoFocusLost
 
+    private void txtNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNombreMouseClicked
+        if (txtNombre.getText().equals("Nombre completo")) {
+            txtNombre.setText("");
+            txtNombre.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtNombreMouseClicked
+
     public static boolean validarNumeros(String datos) {
         return datos.matches("[0-9]*");
     }
@@ -530,6 +532,12 @@ public class VentanaContrato extends javax.swing.JFrame {
     }
 
     public void cleanTextField() {
+        jDateInicio.setDate(null);
+        jDateFinal.setDate(null);
+        txtContrato.setText("Condiciones de contrato");
+        txtContrato.setForeground(Color.gray);
+        txtNombreNegocio.setText("Nombre negocio");
+        txtNombreNegocio.setForeground(Color.gray);
         txtTelefono.setText("Numero movil");
         txtTelefono.setForeground(Color.gray);
         txtNombre.setText("Nombre completo");

@@ -34,7 +34,9 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
         this.ventanaLogIn = logIn;
         this.controlador = new ControladorVentanaAdministradorNegocio();
         this.local = local;
-        modelo = new DefaultTableModel();
+        this.modelo = new DefaultTableModel();
+        this.txtTipoDeVehiculo.setEnabled(false);
+        this.txtPlacaVehiculo.setEnabled(false);
         limpiarTabla();
         cargar();
     }
@@ -381,9 +383,9 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegistrar)
-                    .addComponent(btnModificar))
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnModificar)
+                    .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEliminar)
                 .addContainerGap(8, Short.MAX_VALUE))

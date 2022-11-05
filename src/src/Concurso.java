@@ -10,6 +10,7 @@ import util.Lista;
  */
 public class Concurso implements Serializable {
 
+    private int codigo;
     private float valorMinimo;
     private boolean estado;
     private String nombreConcurso;
@@ -21,7 +22,8 @@ public class Concurso implements Serializable {
 
     public Concurso(float valorMinimo, boolean estado, String nombreConcurso,
             String premioConcurso, Date fechaIncioConcurso,
-            Date fechaFinConcurso, Cliente ganador) {
+            Date fechaFinConcurso) {
+        this.codigo++;
         this.valorMinimo = valorMinimo;
         this.estado = true;
         this.nombreConcurso = nombreConcurso;
@@ -94,6 +96,14 @@ public class Concurso implements Serializable {
 
     public void setParticipantes(Lista<Cliente> participantes) {
         this.participantes = participantes;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
 }

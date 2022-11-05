@@ -7,7 +7,7 @@ import util.Lista;
  *
  * @author Acer
  */
-public class HistorialConcurso implements Serializable{
+public class HistorialConcurso implements Serializable {
 
     private Lista<Concurso> concursos;
 

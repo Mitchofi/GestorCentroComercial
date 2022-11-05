@@ -1,6 +1,7 @@
 package controlador;
 
 import src.CentroComercial;
+import src.Cliente;
 import src.Local;
 
 public class ControladorLogIn {
@@ -22,4 +23,8 @@ public class ControladorLogIn {
     public Local returnLocalEmpleado(String correo, String contrasena) {
         return controlador.returnLocalEmpleado(correo, contrasena);
     }
+        public Cliente buscarCliente(String correo, String contrasena) {
+            return controlador.buscarCliente(correo, contrasena);
+        }
+ 
 }

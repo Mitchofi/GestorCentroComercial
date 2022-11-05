@@ -6,6 +6,7 @@ package ventana;
 
 import controlador.ControladorVentanaAdministrador;
 import excepciones.ExcepcionClienteDuplicado;
+import excepciones.ExcepcionConcursoDuplicado;
 import excepciones.ExcepcionCorreoDuplicado;
 import excepciones.ExcepcionEmpleadoDuplicado;
 import java.awt.Color;
@@ -14,14 +15,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import src.CentroComercial;
 import src.Cliente;
+import src.Concurso;
 import src.Empleado;
 import src.Local;
+import src.Persona;
 import src.Vehiculo;
 
 /**
@@ -39,6 +43,8 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
     private DefaultTableModel modeloTablaEmpleado;
     private DefaultTableModel modeloTablaCliente;
     private DefaultTableModel modeloTablaVentas;
+    private DefaultTableModel modeloTablaConcurso;
+    private DefaultTableModel modeloTablaHistorialConcurso;
 
     public VentanaAdministrador(LogIn logIn) {
         initComponents();
@@ -49,20 +55,28 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         this.modeloTablaEmpleado = new DefaultTableModel();
         this.modeloTablaCliente = new DefaultTableModel();
         this.modeloTablaVentas = new DefaultTableModel();
-        this.txtTipoDeVehiculo1.setEnabled(false);
-        this.txtPlacaVehiculo1.setEnabled(false);
-        this.txtTipoDeVehiculo.setEnabled(false);
-        this.txtPlacaVehiculo.setEnabled(false);
+        this.modeloTablaConcurso = new DefaultTableModel();
+        this.modeloTablaHistorialConcurso = new DefaultTableModel();
+        this.txtTipoDeVehiculoCliente.setEnabled(false);
+        this.txtPlacaVehiculoCliente.setEnabled(false);
+        this.txtTipoDeVehiculoEmpleado.setEnabled(false);
+        this.txtPlacaVehiculoEmpleado.setEnabled(false);
+        this.txtCodigoConcurso.setEnabled(false);
         initBotones();
         validarPosiciones();
         limpiarTablaCliente();
         limpiarTablaEmpleados();
         limpiarTablaVentas();
+        limpiarTablaConcurso();
+        limpiarTablaConcursoHistorial();
         cargarCliente();
         cargarTablaEmpleados();
         cargarTablaVentas();
+        cargarTablaConcurso();
+        cargarTablaConcursoHistorial();
         mouseTableCliente();
         mouseTablEmpleado();
+        mouseTableConcurso();
     }
 
     /**
@@ -93,16 +107,16 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jLabelRegistrar1 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         btnRegistrarEmpleado = new javax.swing.JButton();
-        txtTelefono = new javax.swing.JTextField();
-        txtEdad = new javax.swing.JTextField();
-        txtCedula = new javax.swing.JTextField();
-        txtCorreo = new javax.swing.JTextField();
-        txtContrasena = new javax.swing.JPasswordField();
-        checkVehiculo = new java.awt.Checkbox();
-        txtPlacaVehiculo = new javax.swing.JTextField();
-        txtTipoDeVehiculo = new javax.swing.JTextField();
-        txtNombre = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        txtTelefonoEmpleado = new javax.swing.JTextField();
+        txtEdadEmpleado = new javax.swing.JTextField();
+        txtCedulaEmpleado = new javax.swing.JTextField();
+        txtCorreoEmpleado = new javax.swing.JTextField();
+        txtContrasenaEmpleado = new javax.swing.JPasswordField();
+        checkVehiculoEmpleado = new java.awt.Checkbox();
+        txtPlacaVehiculoEmpleado = new javax.swing.JTextField();
+        txtTipoDeVehiculoEmpleado = new javax.swing.JTextField();
+        txtNombreEmpleado = new javax.swing.JTextField();
+        jComboBoxEmpleado = new javax.swing.JComboBox<>();
         btnModificarEmpleado = new javax.swing.JButton();
         btnEliminarEmpleado = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
@@ -113,15 +127,15 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jLabelRegistrar3 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         btnRegistrarCliente = new javax.swing.JButton();
-        txtTelefono1 = new javax.swing.JTextField();
-        txtEdad1 = new javax.swing.JTextField();
-        txtCedula1 = new javax.swing.JTextField();
-        txtCorreo1 = new javax.swing.JTextField();
-        txtContrasena1 = new javax.swing.JPasswordField();
-        checkVehiculo1 = new java.awt.Checkbox();
-        txtPlacaVehiculo1 = new javax.swing.JTextField();
-        txtTipoDeVehiculo1 = new javax.swing.JTextField();
-        txtNombre1 = new javax.swing.JTextField();
+        txtTelefonoCliente = new javax.swing.JTextField();
+        txtEdadCliente = new javax.swing.JTextField();
+        txtCedulaCliente = new javax.swing.JTextField();
+        txtCorreoCliente = new javax.swing.JTextField();
+        txtContrasenaCliente = new javax.swing.JPasswordField();
+        checkVehiculoCliente = new java.awt.Checkbox();
+        txtPlacaVehiculoCliente = new javax.swing.JTextField();
+        txtTipoDeVehiculoCliente = new javax.swing.JTextField();
+        txtNombreCliente = new javax.swing.JTextField();
         btnModificarCliente = new javax.swing.JButton();
         btnEliminarCliente = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
@@ -138,12 +152,12 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jLabelRegistrar5 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTableEmpleados1 = new javax.swing.JTable();
+        jTableConcurso = new javax.swing.JTable();
         jPanel16 = new javax.swing.JPanel();
         btnRegistrarConcurso = new javax.swing.JButton();
         txtPremioConcurso = new javax.swing.JTextField();
         txtValorMinimoConcurso = new javax.swing.JTextField();
-        checkVehiculo2 = new java.awt.Checkbox();
+        checkConcurso = new java.awt.Checkbox();
         txtNombreConcurso = new javax.swing.JTextField();
         btnModificarConcurso = new javax.swing.JButton();
         btnEliminarConcurso = new javax.swing.JButton();
@@ -151,12 +165,28 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jDateChooserConcursoIni = new com.toedter.calendar.JDateChooser();
         jLabel9 = new javax.swing.JLabel();
         jDateChooserConcursoFin = new com.toedter.calendar.JDateChooser();
+        txtCodigoConcurso = new javax.swing.JTextField();
+        btnRegistrarConcurso1 = new javax.swing.JButton();
+        jPanel17 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTableConcursoHistorial = new javax.swing.JTable();
+        jPanel18 = new javax.swing.JPanel();
+        txtNombreGanadorConcurso = new javax.swing.JTextField();
+        txtCodigoGanadorConcurso = new javax.swing.JTextField();
+        txtCedulaGanadorConcurso = new javax.swing.JTextField();
+        txtNombrePremioConcurso = new javax.swing.JTextField();
+        txtNombreConcurso1 = new javax.swing.JTextField();
+        btnRegistrarGanadorDeConcurso = new javax.swing.JButton();
+        btnModificarGanadorDeConcurso = new javax.swing.JButton();
+        btnEliminarGanadorDeConcurso = new javax.swing.JButton();
+        btnRegistrarDatosGanadorDeConcurso = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabelRegistrar6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administrador");
+        setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setForeground(new java.awt.Color(153, 153, 153));
@@ -279,7 +309,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(496, Short.MAX_VALUE)
+                .addContainerGap(516, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelRegistrar2)
@@ -288,7 +318,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(547, Short.MAX_VALUE)
+                .addContainerGap(572, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabelRegistrar2))
@@ -319,102 +349,102 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             }
         });
 
-        txtTelefono.setForeground(new java.awt.Color(153, 153, 153));
-        txtTelefono.setText("Numero movil");
-        txtTelefono.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtTelefonoEmpleado.setForeground(new java.awt.Color(153, 153, 153));
+        txtTelefonoEmpleado.setText("Numero movil");
+        txtTelefonoEmpleado.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtTelefonoFocusGained(evt);
+                txtTelefonoEmpleadoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTelefonoFocusLost(evt);
+                txtTelefonoEmpleadoFocusLost(evt);
             }
         });
 
-        txtEdad.setForeground(new java.awt.Color(153, 153, 153));
-        txtEdad.setText("Edad");
-        txtEdad.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtEdadEmpleado.setForeground(new java.awt.Color(153, 153, 153));
+        txtEdadEmpleado.setText("Edad");
+        txtEdadEmpleado.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtEdadFocusGained(evt);
+                txtEdadEmpleadoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtEdadFocusLost(evt);
+                txtEdadEmpleadoFocusLost(evt);
             }
         });
 
-        txtCedula.setForeground(new java.awt.Color(153, 153, 153));
-        txtCedula.setText("Cedula");
-        txtCedula.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtCedulaEmpleado.setForeground(new java.awt.Color(153, 153, 153));
+        txtCedulaEmpleado.setText("Cedula");
+        txtCedulaEmpleado.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCedulaFocusGained(evt);
+                txtCedulaEmpleadoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCedulaFocusLost(evt);
+                txtCedulaEmpleadoFocusLost(evt);
             }
         });
 
-        txtCorreo.setForeground(new java.awt.Color(153, 153, 153));
-        txtCorreo.setText("Correo");
-        txtCorreo.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtCorreoEmpleado.setForeground(new java.awt.Color(153, 153, 153));
+        txtCorreoEmpleado.setText("Correo");
+        txtCorreoEmpleado.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCorreoFocusGained(evt);
+                txtCorreoEmpleadoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCorreoFocusLost(evt);
+                txtCorreoEmpleadoFocusLost(evt);
             }
         });
 
-        txtContrasena.setForeground(new java.awt.Color(153, 153, 153));
-        txtContrasena.setText("******");
-        txtContrasena.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtContrasenaEmpleado.setForeground(new java.awt.Color(153, 153, 153));
+        txtContrasenaEmpleado.setText("******");
+        txtContrasenaEmpleado.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtContrasenaFocusGained(evt);
+                txtContrasenaEmpleadoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtContrasenaFocusLost(evt);
+                txtContrasenaEmpleadoFocusLost(evt);
             }
         });
 
-        checkVehiculo.setLabel("¿Tiene Vehiculo?");
-        checkVehiculo.addItemListener(new java.awt.event.ItemListener() {
+        checkVehiculoEmpleado.setLabel("¿Tiene Vehiculo?");
+        checkVehiculoEmpleado.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                checkVehiculoItemStateChanged(evt);
+                checkVehiculoEmpleadoItemStateChanged(evt);
             }
         });
 
-        txtPlacaVehiculo.setForeground(new java.awt.Color(153, 153, 153));
-        txtPlacaVehiculo.setText("Placa del vehiculo");
-        txtPlacaVehiculo.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtPlacaVehiculoEmpleado.setForeground(new java.awt.Color(153, 153, 153));
+        txtPlacaVehiculoEmpleado.setText("Placa del vehiculo");
+        txtPlacaVehiculoEmpleado.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtPlacaVehiculoFocusGained(evt);
+                txtPlacaVehiculoEmpleadoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPlacaVehiculoFocusLost(evt);
+                txtPlacaVehiculoEmpleadoFocusLost(evt);
             }
         });
 
-        txtTipoDeVehiculo.setForeground(new java.awt.Color(153, 153, 153));
-        txtTipoDeVehiculo.setText("Tipo de vehiculo");
-        txtTipoDeVehiculo.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtTipoDeVehiculoEmpleado.setForeground(new java.awt.Color(153, 153, 153));
+        txtTipoDeVehiculoEmpleado.setText("Tipo de vehiculo");
+        txtTipoDeVehiculoEmpleado.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtTipoDeVehiculoFocusGained(evt);
+                txtTipoDeVehiculoEmpleadoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTipoDeVehiculoFocusLost(evt);
+                txtTipoDeVehiculoEmpleadoFocusLost(evt);
             }
         });
 
-        txtNombre.setForeground(new java.awt.Color(153, 153, 153));
-        txtNombre.setText("Nombre completo");
-        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtNombreEmpleado.setForeground(new java.awt.Color(153, 153, 153));
+        txtNombreEmpleado.setText("Nombre completo");
+        txtNombreEmpleado.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombreFocusGained(evt);
+                txtNombreEmpleadoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNombreFocusLost(evt);
+                txtNombreEmpleadoFocusLost(evt);
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cargo", "Encargado parqueadero" }));
+        jComboBoxEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cargo", "Encargado parqueadero" }));
 
         btnModificarEmpleado.setText("Modificar");
         btnModificarEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -436,20 +466,20 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(checkVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTelefono)
-                    .addComponent(txtEdad)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtCorreo)
-                    .addComponent(txtContrasena)
-                    .addComponent(txtTipoDeVehiculo)
-                    .addComponent(txtPlacaVehiculo)
-                    .addComponent(jComboBox1, 0, 192, Short.MAX_VALUE)
+                    .addComponent(checkVehiculoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTelefonoEmpleado)
+                    .addComponent(txtEdadEmpleado)
+                    .addComponent(txtCedulaEmpleado, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtCorreoEmpleado)
+                    .addComponent(txtContrasenaEmpleado)
+                    .addComponent(txtTipoDeVehiculoEmpleado)
+                    .addComponent(txtPlacaVehiculoEmpleado)
+                    .addComponent(jComboBoxEmpleado, 0, 192, Short.MAX_VALUE)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(btnRegistrarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnModificarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtNombre))
+                    .addComponent(txtNombreEmpleado))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
@@ -460,25 +490,25 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNombreEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCedulaEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCorreoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtContrasenaEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTelefonoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEdadEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(checkVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(checkVehiculoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTipoDeVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTipoDeVehiculoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPlacaVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPlacaVehiculoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnModificarEmpleado)
@@ -540,7 +570,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                         .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 21, Short.MAX_VALUE))))
+                        .addGap(0, 41, Short.MAX_VALUE))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -549,7 +579,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabelRegistrar1))
@@ -580,98 +610,98 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             }
         });
 
-        txtTelefono1.setForeground(new java.awt.Color(153, 153, 153));
-        txtTelefono1.setText("Numero movil");
-        txtTelefono1.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtTelefonoCliente.setForeground(new java.awt.Color(153, 153, 153));
+        txtTelefonoCliente.setText("Numero movil");
+        txtTelefonoCliente.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtTelefono1FocusGained(evt);
+                txtTelefonoClienteFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTelefono1FocusLost(evt);
+                txtTelefonoClienteFocusLost(evt);
             }
         });
 
-        txtEdad1.setForeground(new java.awt.Color(153, 153, 153));
-        txtEdad1.setText("Edad");
-        txtEdad1.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtEdadCliente.setForeground(new java.awt.Color(153, 153, 153));
+        txtEdadCliente.setText("Edad");
+        txtEdadCliente.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtEdad1FocusGained(evt);
+                txtEdadClienteFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtEdad1FocusLost(evt);
+                txtEdadClienteFocusLost(evt);
             }
         });
 
-        txtCedula1.setForeground(new java.awt.Color(153, 153, 153));
-        txtCedula1.setText("Cedula");
-        txtCedula1.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtCedulaCliente.setForeground(new java.awt.Color(153, 153, 153));
+        txtCedulaCliente.setText("Cedula");
+        txtCedulaCliente.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCedula1FocusGained(evt);
+                txtCedulaClienteFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCedula1FocusLost(evt);
+                txtCedulaClienteFocusLost(evt);
             }
         });
 
-        txtCorreo1.setForeground(new java.awt.Color(153, 153, 153));
-        txtCorreo1.setText("Correo");
-        txtCorreo1.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtCorreoCliente.setForeground(new java.awt.Color(153, 153, 153));
+        txtCorreoCliente.setText("Correo");
+        txtCorreoCliente.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCorreo1FocusGained(evt);
+                txtCorreoClienteFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCorreo1FocusLost(evt);
+                txtCorreoClienteFocusLost(evt);
             }
         });
 
-        txtContrasena1.setForeground(new java.awt.Color(153, 153, 153));
-        txtContrasena1.setText("******");
-        txtContrasena1.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtContrasenaCliente.setForeground(new java.awt.Color(153, 153, 153));
+        txtContrasenaCliente.setText("******");
+        txtContrasenaCliente.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtContrasena1FocusGained(evt);
+                txtContrasenaClienteFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtContrasena1FocusLost(evt);
+                txtContrasenaClienteFocusLost(evt);
             }
         });
 
-        checkVehiculo1.setLabel("¿Tiene Vehiculo?");
-        checkVehiculo1.addItemListener(new java.awt.event.ItemListener() {
+        checkVehiculoCliente.setLabel("¿Tiene Vehiculo?");
+        checkVehiculoCliente.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                checkVehiculo1ItemStateChanged(evt);
+                checkVehiculoClienteItemStateChanged(evt);
             }
         });
 
-        txtPlacaVehiculo1.setForeground(new java.awt.Color(153, 153, 153));
-        txtPlacaVehiculo1.setText("Placa del vehiculo");
-        txtPlacaVehiculo1.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtPlacaVehiculoCliente.setForeground(new java.awt.Color(153, 153, 153));
+        txtPlacaVehiculoCliente.setText("Placa del vehiculo");
+        txtPlacaVehiculoCliente.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtPlacaVehiculo1FocusGained(evt);
+                txtPlacaVehiculoClienteFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPlacaVehiculo1FocusLost(evt);
+                txtPlacaVehiculoClienteFocusLost(evt);
             }
         });
 
-        txtTipoDeVehiculo1.setForeground(new java.awt.Color(153, 153, 153));
-        txtTipoDeVehiculo1.setText("Tipo de vehiculo");
-        txtTipoDeVehiculo1.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtTipoDeVehiculoCliente.setForeground(new java.awt.Color(153, 153, 153));
+        txtTipoDeVehiculoCliente.setText("Tipo de vehiculo");
+        txtTipoDeVehiculoCliente.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtTipoDeVehiculo1FocusGained(evt);
+                txtTipoDeVehiculoClienteFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTipoDeVehiculo1FocusLost(evt);
+                txtTipoDeVehiculoClienteFocusLost(evt);
             }
         });
 
-        txtNombre1.setForeground(new java.awt.Color(153, 153, 153));
-        txtNombre1.setText("Nombre completo");
-        txtNombre1.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtNombreCliente.setForeground(new java.awt.Color(153, 153, 153));
+        txtNombreCliente.setText("Nombre completo");
+        txtNombreCliente.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombre1FocusGained(evt);
+                txtNombreClienteFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNombre1FocusLost(evt);
+                txtNombreClienteFocusLost(evt);
             }
         });
 
@@ -694,16 +724,16 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addComponent(txtPlacaVehiculo1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                .addComponent(txtTipoDeVehiculo1, javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(txtEdad1, javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(txtTelefono1, javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(txtContrasena1, javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(txtCorreo1, javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(txtCedula1, javax.swing.GroupLayout.Alignment.LEADING))
+                .addComponent(txtPlacaVehiculoCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                .addComponent(txtTipoDeVehiculoCliente, javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(txtEdadCliente, javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(txtTelefonoCliente, javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(txtContrasenaCliente, javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(txtCorreoCliente, javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(txtCedulaCliente, javax.swing.GroupLayout.Alignment.LEADING))
             .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel11Layout.createSequentialGroup()
-                    .addComponent(checkVehiculo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkVehiculoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE))
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                     .addGap(0, 4, Short.MAX_VALUE)
@@ -715,29 +745,29 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                             .addComponent(btnRegistrarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(btnModificarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addComponent(txtNombre1))
+                .addComponent(txtNombreCliente))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCedula1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCedulaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCorreo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCorreoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtContrasena1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtContrasenaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTelefono1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTelefonoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtEdad1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEdadCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(checkVehiculo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(checkVehiculoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTipoDeVehiculo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTipoDeVehiculoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPlacaVehiculo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPlacaVehiculoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrarCliente)
@@ -789,20 +819,18 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelRegistrar3)
-                        .addGap(48, 48, 48))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(9, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelRegistrar3)
+                .addGap(20, 20, 20))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -811,7 +839,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabelRegistrar3))
@@ -875,7 +903,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(496, Short.MAX_VALUE)
+                .addContainerGap(516, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelRegistrar4)
@@ -914,40 +942,38 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jPanel15.setBackground(new java.awt.Color(255, 255, 255));
         jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder("Concursos vigentes"));
 
-        jTableEmpleados1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableConcurso.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nombre", "Premio", "valor minimo", "Fecha inicio", "Fecha fin", "Participantes"
+                "Codigo", "Nombre", "Premio", "valor minimo", "Fecha inicio", "Fecha fin", "Participantes"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(jTableEmpleados1);
+        jScrollPane4.setViewportView(jTableConcurso);
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+            .addComponent(jScrollPane4)
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
         );
 
         jPanel16.setBackground(new java.awt.Color(255, 255, 255));
         jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.MatteBorder(null), "Gestionar concurso"));
+        jPanel16.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnRegistrarConcurso.setText("Registrar");
         btnRegistrarConcurso.addActionListener(new java.awt.event.ActionListener() {
@@ -955,6 +981,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                 btnRegistrarConcursoActionPerformed(evt);
             }
         });
+        jPanel16.add(btnRegistrarConcurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 282, 92, -1));
 
         txtPremioConcurso.setForeground(new java.awt.Color(153, 153, 153));
         txtPremioConcurso.setText("Premio concurso");
@@ -966,6 +993,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                 txtPremioConcursoFocusLost(evt);
             }
         });
+        jPanel16.add(txtPremioConcurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 84, 190, -1));
 
         txtValorMinimoConcurso.setForeground(new java.awt.Color(153, 153, 153));
         txtValorMinimoConcurso.setText("Valor minimo para participar");
@@ -977,8 +1005,10 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                 txtValorMinimoConcursoFocusLost(evt);
             }
         });
+        jPanel16.add(txtValorMinimoConcurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 114, 190, -1));
 
-        checkVehiculo2.setLabel("¿Vigente?");
+        checkConcurso.setLabel("¿Vigente?");
+        jPanel16.add(checkConcurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 252, -1, -1));
 
         txtNombreConcurso.setForeground(new java.awt.Color(153, 153, 153));
         txtNombreConcurso.setText("Nombre concurso");
@@ -990,6 +1020,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                 txtNombreConcursoFocusLost(evt);
             }
         });
+        jPanel16.add(txtNombreConcurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 54, 190, -1));
 
         btnModificarConcurso.setText("Modificar");
         btnModificarConcurso.addActionListener(new java.awt.event.ActionListener() {
@@ -997,6 +1028,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                 btnModificarConcursoActionPerformed(evt);
             }
         });
+        jPanel16.add(btnModificarConcurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 282, 92, -1));
 
         btnEliminarConcurso.setText("Eliminar");
         btnEliminarConcurso.addActionListener(new java.awt.event.ActionListener() {
@@ -1004,96 +1036,237 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                 btnEliminarConcursoActionPerformed(evt);
             }
         });
+        jPanel16.add(btnEliminarConcurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 312, 92, -1));
 
         jLabel1.setText("Fecha inicio:");
+        jPanel16.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 144, -1, -1));
+        jPanel16.add(jDateChooserConcursoIni, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 166, 190, -1));
 
         jLabel9.setText("Fecha de finalizacion:");
+        jPanel16.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 196, -1, -1));
+        jPanel16.add(jDateChooserConcursoFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 218, 190, -1));
 
-        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
-        jPanel16.setLayout(jPanel16Layout);
-        jPanel16Layout.setHorizontalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel9)
-                            .addComponent(checkVehiculo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPremioConcurso)
-                            .addComponent(txtValorMinimoConcurso, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                            .addComponent(jDateChooserConcursoIni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jDateChooserConcursoFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtNombreConcurso))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel16Layout.createSequentialGroup()
-                                .addGap(45, 45, 45)
-                                .addComponent(btnEliminarConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel16Layout.createSequentialGroup()
-                                .addComponent(btnRegistrarConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnModificarConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
+        txtCodigoConcurso.setForeground(new java.awt.Color(153, 153, 153));
+        txtCodigoConcurso.setText("Codigo concurso");
+        jPanel16.add(txtCodigoConcurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 24, 190, -1));
+
+        btnRegistrarConcurso1.setText("Limpiar datos");
+        btnRegistrarConcurso1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarConcurso1ActionPerformed(evt);
+            }
+        });
+        jPanel16.add(btnRegistrarConcurso1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 312, 92, -1));
+
+        jPanel17.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel17.setBorder(javax.swing.BorderFactory.createTitledBorder("Historial de concursos"));
+
+        jTableConcursoHistorial.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo", "Nombre", "Premio", "valor minimo", "Fecha inicio", "Fecha fin", "Participantes", "Ganador"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane5.setViewportView(jTableConcursoHistorial);
+        if (jTableConcursoHistorial.getColumnModel().getColumnCount() > 0) {
+            jTableConcursoHistorial.getColumnModel().getColumn(0).setResizable(false);
+            jTableConcursoHistorial.getColumnModel().getColumn(1).setResizable(false);
+            jTableConcursoHistorial.getColumnModel().getColumn(2).setResizable(false);
+            jTableConcursoHistorial.getColumnModel().getColumn(3).setResizable(false);
+            jTableConcursoHistorial.getColumnModel().getColumn(4).setResizable(false);
+            jTableConcursoHistorial.getColumnModel().getColumn(5).setResizable(false);
+            jTableConcursoHistorial.getColumnModel().getColumn(6).setResizable(false);
+            jTableConcursoHistorial.getColumnModel().getColumn(7).setResizable(false);
+        }
+
+        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
+        jPanel17.setLayout(jPanel17Layout);
+        jPanel17Layout.setHorizontalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane5)
         );
-        jPanel16Layout.setVerticalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtNombreConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        jPanel17Layout.setVerticalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+        );
+
+        jPanel18.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel18.setBorder(javax.swing.BorderFactory.createTitledBorder("Informacion del ganador"));
+
+        txtNombreGanadorConcurso.setForeground(new java.awt.Color(153, 153, 153));
+        txtNombreGanadorConcurso.setText("Nombre ganador");
+        txtNombreGanadorConcurso.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNombreGanadorConcursoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNombreGanadorConcursoFocusLost(evt);
+            }
+        });
+
+        txtCodigoGanadorConcurso.setForeground(new java.awt.Color(153, 153, 153));
+        txtCodigoGanadorConcurso.setText("Codigo concurso");
+        txtCodigoGanadorConcurso.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCodigoGanadorConcursoFocusGained(evt);
+            }
+        });
+
+        txtCedulaGanadorConcurso.setForeground(new java.awt.Color(153, 153, 153));
+        txtCedulaGanadorConcurso.setText("Cedula del ganador");
+        txtCedulaGanadorConcurso.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCedulaGanadorConcursoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCedulaGanadorConcursoFocusLost(evt);
+            }
+        });
+
+        txtNombrePremioConcurso.setForeground(new java.awt.Color(153, 153, 153));
+        txtNombrePremioConcurso.setText("Premio concurso");
+        txtNombrePremioConcurso.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNombrePremioConcursoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNombrePremioConcursoFocusLost(evt);
+            }
+        });
+
+        txtNombreConcurso1.setForeground(new java.awt.Color(153, 153, 153));
+        txtNombreConcurso1.setText("Usuario ganador");
+        txtNombreConcurso1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNombreConcurso1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNombreConcurso1FocusLost(evt);
+            }
+        });
+
+        btnRegistrarGanadorDeConcurso.setText("Registrar");
+        btnRegistrarGanadorDeConcurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarGanadorDeConcursoActionPerformed(evt);
+            }
+        });
+
+        btnModificarGanadorDeConcurso.setText("Modificar");
+        btnModificarGanadorDeConcurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarGanadorDeConcursoActionPerformed(evt);
+            }
+        });
+
+        btnEliminarGanadorDeConcurso.setText("Eliminar");
+        btnEliminarGanadorDeConcurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarGanadorDeConcursoActionPerformed(evt);
+            }
+        });
+
+        btnRegistrarDatosGanadorDeConcurso.setText("Limpiar datos");
+        btnRegistrarDatosGanadorDeConcurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarDatosGanadorDeConcursoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtNombreConcurso1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCodigoGanadorConcurso, javax.swing.GroupLayout.Alignment.LEADING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPremioConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtCedulaGanadorConcurso)
+                    .addComponent(txtNombrePremioConcurso))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtValorMinimoConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooserConcursoIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooserConcursoFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(checkVehiculo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnModificarConcurso)
-                    .addComponent(btnRegistrarConcurso))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEliminarConcurso)
+                .addComponent(txtNombreGanadorConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnRegistrarGanadorDeConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnModificarGanadorDeConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRegistrarDatosGanadorDeConcurso)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEliminarGanadorDeConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49))
+        );
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCodigoGanadorConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombrePremioConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtNombreGanadorConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCedulaGanadorConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombreConcurso1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminarGanadorDeConcurso)
+                    .addComponent(btnRegistrarGanadorDeConcurso)
+                    .addComponent(btnModificarGanadorDeConcurso)
+                    .addComponent(btnRegistrarDatosGanadorDeConcurso))
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(496, Short.MAX_VALUE)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelRegistrar5)
-                .addGap(14, 14, 14))
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelRegistrar5)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabelRegistrar5))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabelRegistrar5)))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -1116,7 +1289,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(496, Short.MAX_VALUE)
+                .addContainerGap(516, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelRegistrar6)
@@ -1125,7 +1298,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(547, Short.MAX_VALUE)
+                .addContainerGap(572, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jLabelRegistrar6))
@@ -1134,7 +1307,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
 
         jTabbedPane1.addTab("Solicitudes", jPanel9);
 
-        jPanel3.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 63, 690, 595));
+        jPanel3.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 63, 710, 620));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1143,7 +1316,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1191,29 +1364,215 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jTabbedPane1.setSelectedIndex(5);
     }//GEN-LAST:event_jLabelSolicitudesMouseClicked
 
-    private void jLabelRegistrar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar1MouseClicked
+    private void jLabelRegistrar6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar6MouseClicked
         ventanaLogIn.reinciarLogIn();
         ventanaLogIn.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jLabelRegistrar1MouseClicked
+    }//GEN-LAST:event_jLabelRegistrar6MouseClicked
 
-    private void jLabelRegistrar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar2MouseClicked
-        ventanaLogIn.reinciarLogIn();
-        ventanaLogIn.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabelRegistrar2MouseClicked
+    private void btnRegistrarDatosGanadorDeConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarDatosGanadorDeConcursoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegistrarDatosGanadorDeConcursoActionPerformed
 
-    private void jLabelRegistrar3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar3MouseClicked
-        ventanaLogIn.reinciarLogIn();
-        ventanaLogIn.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabelRegistrar3MouseClicked
+    private void btnEliminarGanadorDeConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarGanadorDeConcursoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarGanadorDeConcursoActionPerformed
 
-    private void jLabelRegistrar4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar4MouseClicked
-        ventanaLogIn.reinciarLogIn();
-        ventanaLogIn.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabelRegistrar4MouseClicked
+    private void btnModificarGanadorDeConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarGanadorDeConcursoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarGanadorDeConcursoActionPerformed
+
+    private void btnRegistrarGanadorDeConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarGanadorDeConcursoActionPerformed
+        int codigoConcurso = Integer.parseInt(txtCodigoGanadorConcurso.getText());
+        String cedulaCliente = txtCedulaGanadorConcurso.getText();
+        if (txtCedulaGanadorConcurso.getText().equals("") || txtCedulaGanadorConcurso.getText().equals("Cedula del ganador")
+                || txtCodigoGanadorConcurso.getText().equals("") || txtCodigoGanadorConcurso.getText().equals("Codigo concurso")) {
+            JOptionPane.showMessageDialog(this, "Rellena los campos de datos");
+        } else {
+            Persona persona = controlador.buscarPorCedula(cedulaCliente);
+            Concurso concurso = controlador.buscarPorConcurso(codigoConcurso);
+            if (persona == null) {
+                JOptionPane.showMessageDialog(this, "No se encuentra ninguna "
+                        + "persona con la cedula: " + cedulaCliente + " "
+                        + "registrado en el sistema");
+            } else {
+                if (persona instanceof Cliente) {
+                    Cliente cliente = (Cliente) persona;
+                    if (concurso == null) {
+                        JOptionPane.showMessageDialog(this, "No se encuentra ningun "
+                                + "concurso con el codigo: " + codigoConcurso + " "
+                                + "registrado en el sistema");
+                    } else {
+                        concurso.setGanador(cliente);
+                        JOptionPane.showMessageDialog(this, "El cliente: " + cliente.getNombre() + " "
+                                + "es el ganador del concurso de un/una: " + concurso.getPremioConcurso());
+                        limpiarTablaConcursoHistorial();
+                        cargarTablaConcursoHistorial();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "La persona con la "
+                            + "cedula: " + cedulaCliente + " no esta registrado "
+                            + "como cliente en el sistema");
+                }
+            }
+        }
+    }//GEN-LAST:event_btnRegistrarGanadorDeConcursoActionPerformed
+
+    private void txtNombreConcurso1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreConcurso1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreConcurso1FocusLost
+
+    private void txtNombreConcurso1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreConcurso1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreConcurso1FocusGained
+
+    private void txtNombrePremioConcursoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombrePremioConcursoFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombrePremioConcursoFocusLost
+
+    private void txtNombrePremioConcursoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombrePremioConcursoFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombrePremioConcursoFocusGained
+
+    private void txtCedulaGanadorConcursoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaGanadorConcursoFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCedulaGanadorConcursoFocusLost
+
+    private void txtCedulaGanadorConcursoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaGanadorConcursoFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCedulaGanadorConcursoFocusGained
+
+    private void txtNombreGanadorConcursoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreGanadorConcursoFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreGanadorConcursoFocusLost
+
+    private void txtNombreGanadorConcursoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreGanadorConcursoFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreGanadorConcursoFocusGained
+
+    private void btnRegistrarConcurso1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarConcurso1ActionPerformed
+        cleanTextFieldConcurso();
+    }//GEN-LAST:event_btnRegistrarConcurso1ActionPerformed
+
+    private void btnEliminarConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarConcursoActionPerformed
+        if (txtCodigoConcurso.getText().equals("") || txtCodigoConcurso.getText().equals("Codigo concurso")) {
+            JOptionPane.showMessageDialog(this, "Por favor selecciona el concurso que deseas eliminar.");
+        } else {
+            int codigo = Integer.parseInt(txtCodigoConcurso.getText());
+            if (controlador.eliminarConcurso(codigo)) {
+                JOptionPane.showMessageDialog(this, "El concurso con codigo: " + codigo + " fue eliminado correctamente.");
+                limpiarTablaConcurso();
+                cargarTablaConcurso();
+                cleanTextFieldConcurso();
+            } else {
+                JOptionPane.showMessageDialog(this, "El concurso con codigo: " + codigo + " NO fue eliminado.");
+            }
+        }
+    }//GEN-LAST:event_btnEliminarConcursoActionPerformed
+
+    private void btnModificarConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarConcursoActionPerformed
+        if (txtNombreConcurso.getText().equals("")
+                || txtNombreConcurso.getText().equals("Nombre concurso")
+                || txtPremioConcurso.getText().equals("Premio concurso")
+                || txtPremioConcurso.getText().equals("")
+                || txtValorMinimoConcurso.getText().equals("Valor minimo para participar")
+                || txtValorMinimoConcurso.getText().equals("")
+                || jDateChooserConcursoFin.getDate() == null
+                || jDateChooserConcursoIni.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
+        } else {
+            String nombre = txtNombreConcurso.getText();
+            String premio = txtPremioConcurso.getText();
+            float valorMinimo = Float.parseFloat(txtValorMinimoConcurso.getText());
+            Date fechaInicio = jDateChooserConcursoIni.getDate();
+            Date fechaFin = jDateChooserConcursoFin.getDate();
+            boolean check = checkConcurso.getState();
+            Concurso concurso = new Concurso(valorMinimo, check, nombre, premio, fechaInicio, fechaFin);
+            if (controlador.modificarConcurso(concurso.getCodigo(), concurso)) {
+                JOptionPane.showMessageDialog(this, "El concurso con codigo: " + concurso.getCodigo() + " modificado correctamente.");
+                limpiarTablaConcurso();
+                cargarTablaConcurso();
+                cleanTextFieldConcurso();
+            } else {
+                JOptionPane.showMessageDialog(this, "El concurso con codigo: " + concurso.getCodigo() + " no fue modificado.");
+            }
+        }
+    }//GEN-LAST:event_btnModificarConcursoActionPerformed
+
+    private void txtNombreConcursoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreConcursoFocusLost
+        if (txtNombreConcurso.getText().equals("")) {
+            txtNombreConcurso.setText("Nombre concurso");
+            txtNombreConcurso.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtNombreConcursoFocusLost
+
+    private void txtNombreConcursoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreConcursoFocusGained
+        if (txtNombreConcurso.getText().equals("Nombre concurso")) {
+            txtNombreConcurso.setText("");
+            txtNombreConcurso.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtNombreConcursoFocusGained
+
+    private void txtValorMinimoConcursoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorMinimoConcursoFocusLost
+        if (txtValorMinimoConcurso.getText().equals("")) {
+            txtValorMinimoConcurso.setText("Valor minimo para participar");
+            txtValorMinimoConcurso.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtValorMinimoConcursoFocusLost
+
+    private void txtValorMinimoConcursoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorMinimoConcursoFocusGained
+        if (txtValorMinimoConcurso.getText().equals("Valor minimo para participar")) {
+            txtValorMinimoConcurso.setText("");
+            txtValorMinimoConcurso.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtValorMinimoConcursoFocusGained
+
+    private void txtPremioConcursoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPremioConcursoFocusLost
+        if (txtPremioConcurso.getText().equals("")) {
+            txtPremioConcurso.setText("Premio concurso");
+            txtPremioConcurso.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtPremioConcursoFocusLost
+
+    private void txtPremioConcursoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPremioConcursoFocusGained
+        if (txtPremioConcurso.getText().equals("Premio concurso")) {
+            txtPremioConcurso.setText("");
+            txtPremioConcurso.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtPremioConcursoFocusGained
+
+    private void btnRegistrarConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarConcursoActionPerformed
+        if (txtNombreConcurso.getText().equals("")
+                || txtNombreConcurso.getText().equals("Nombre concurso")
+                || txtPremioConcurso.getText().equals("Premio concurso")
+                || txtPremioConcurso.getText().equals("")
+                || txtValorMinimoConcurso.getText().equals("Valor minimo para participar")
+                || txtValorMinimoConcurso.getText().equals("")
+                || jDateChooserConcursoFin.getDate() == null
+                || jDateChooserConcursoIni.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
+        } else {
+            String nombre = txtNombreConcurso.getText();
+            String premio = txtPremioConcurso.getText();
+            float valorMinimo = Float.parseFloat(txtValorMinimoConcurso.getText());
+            Date fechaInicio = jDateChooserConcursoIni.getDate();
+            Date fechaFin = jDateChooserConcursoFin.getDate();
+            boolean check = checkConcurso.getState();
+            Concurso concurso = new Concurso(valorMinimo, check, nombre, premio, fechaInicio, fechaFin);
+            try {
+                if (controlador.anadirConcurso(concurso)) {
+                    JOptionPane.showMessageDialog(this, "Concurso llamado: " + concurso.getNombreConcurso() + " fue registrado correctamente");
+                    limpiarTablaConcurso();
+                    limpiarTablaConcursoHistorial();
+                    cargarTablaConcurso();
+                    cargarTablaConcursoHistorial();
+                    cleanTextFieldConcurso();
+                }
+            } catch (ExcepcionConcursoDuplicado ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnRegistrarConcursoActionPerformed
 
     private void jLabelRegistrar5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar5MouseClicked
         ventanaLogIn.reinciarLogIn();
@@ -1221,203 +1580,215 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         this.dispose();
     }//GEN-LAST:event_jLabelRegistrar5MouseClicked
 
-    private void jLabelRegistrar6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar6MouseClicked
+    private void jLabelRegistrar4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar4MouseClicked
         ventanaLogIn.reinciarLogIn();
         ventanaLogIn.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jLabelRegistrar6MouseClicked
+    }//GEN-LAST:event_jLabelRegistrar4MouseClicked
 
-    private void btnRegistrarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEmpleadoActionPerformed
-        if (txtCorreo.getText().equals("") || txtCorreo.getText().equals("Correo")
-                || String.valueOf(txtContrasena.getPassword()).equals("")
-                || String.valueOf(txtContrasena.getPassword()).equals("******")
-                || txtCedula.getText().equals("") || txtCedula.getText().equals("Cedula")
-                || txtEdad.getText().equals("") || txtEdad.getText().equals("Edad")
-                || txtNombre.getText().equals("") || txtNombre.getText().equals("Nombre completo")
-                || txtTelefono.getText().equals("") || txtTelefono.getText().equals("Numero movil")
-                || jComboBox1.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
+    private void btnEliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarClienteActionPerformed
+        if (txtCedulaCliente.getText().equals("") || txtCedulaCliente.getText().equals("Cedula")) {
+            JOptionPane.showMessageDialog(this, "Por favor rellena el campo de cedula para eliminar el empleado");
         } else {
-            String telefono = txtTelefono.getText();
-            String nombre = txtNombre.getText();
-            short edad = Short.parseShort(txtEdad.getText());
-            String cedula = txtCedula.getText();
-            String correo = txtCorreo.getText();
-            String contrasena = String.valueOf(txtContrasena.getPassword());
-            Vehiculo vehiculo = vehiculo();
-            String rol = String.valueOf(jComboBox1.getSelectedItem());
-            Empleado empleado = new Empleado(vehiculo, rol, nombre, cedula, telefono, correo, contrasena, edad);
-            try {
-                if (controlador.anadirEmpleadoCentroComercial(empleado)) {
-                    JOptionPane.showMessageDialog(this, "Registrado correctamente");
-                    limpiarTablaEmpleados();
-                    cargarTablaEmpleados();
-                    cleanTextFieldEmpleado();
-                }
-            } catch (ExcepcionEmpleadoDuplicado ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage());
+            String cedula = txtCedulaCliente.getText();
+            if (controlador.eliminarCliente(cedula)) {
+                JOptionPane.showMessageDialog(this, "El cliente con cedula: " + cedula + " fue eliminado correctamente.");
+                limpiarTablaCliente();
+                cargarCliente();
+                cleanTextFieldCliente();
+            } else {
+                JOptionPane.showMessageDialog(this, "El cliente con cedula: " + cedula + " NO fue eliminado.");
             }
         }
-    }//GEN-LAST:event_btnRegistrarEmpleadoActionPerformed
+    }//GEN-LAST:event_btnEliminarClienteActionPerformed
 
-    private void txtTelefonoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusGained
-        if (txtTelefono.getText().equals("Numero movil")) {
-            txtTelefono.setText("");
-            txtTelefono.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtTelefonoFocusGained
-
-    private void txtTelefonoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusLost
-        if (txtTelefono.getText().equals("")) {
-            txtTelefono.setText("Numero movil");
-            txtTelefono.setForeground(Color.gray);
-        }
-        if (!validarNumeros(txtTelefono.getText()) && !txtTelefono.getText().equals("Numero movil")) {
-            txtTelefono.setBackground(Color.red);
-        } else {
-            txtTelefono.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtTelefonoFocusLost
-
-    private void txtEdadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdadFocusGained
-        if (txtEdad.getText().equals("Edad")) {
-            txtEdad.setText("");
-            txtEdad.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtEdadFocusGained
-
-    private void txtEdadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdadFocusLost
-        if (txtEdad.getText().equals("")) {
-            txtEdad.setText("Edad");
-            txtEdad.setForeground(Color.gray);
-        }
-        if (!validarNumeros(txtEdad.getText()) && !txtEdad.getText().equals("Edad")) {
-            txtEdad.setBackground(Color.red);
-        } else {
-            txtEdad.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtEdadFocusLost
-
-    private void txtCedulaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaFocusGained
-        if (txtCedula.getText().equals("Cedula")) {
-            txtCedula.setText("");
-            txtCedula.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtCedulaFocusGained
-
-    private void txtCedulaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaFocusLost
-        if (txtCedula.getText().equals("")) {
-            txtCedula.setText("Cedula");
-            txtCedula.setForeground(Color.gray);
-        }
-        if (!validarNumeros(txtCedula.getText()) && !txtCedula.getText().equals("Cedula")) {
-            txtCedula.setBackground(Color.red);
-        } else {
-            txtCedula.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtCedulaFocusLost
-
-    private void txtCorreoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusGained
-        if (txtCorreo.getText().equals("Correo")) {
-            txtCorreo.setText("");
-            txtCorreo.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtCorreoFocusGained
-
-    private void txtCorreoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusLost
-        if (txtCorreo.getText().equals("")) {
-            txtCorreo.setText("Correo");
-            txtCorreo.setForeground(Color.gray);
-
-        }
-    }//GEN-LAST:event_txtCorreoFocusLost
-
-    private void txtContrasenaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaFocusGained
-        if (String.valueOf(txtContrasena.getPassword()).equals("******")) {
-            txtContrasena.setText("");
-            txtContrasena.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtContrasenaFocusGained
-
-    private void txtContrasenaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaFocusLost
-        if (String.valueOf(txtContrasena.getPassword()).equals("")) {
-            txtContrasena.setText("******");
-            txtContrasena.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtContrasenaFocusLost
-
-    private void checkVehiculoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkVehiculoItemStateChanged
-        if (checkVehiculo.getState()) {
-            txtTipoDeVehiculo.setEnabled(true);
-            txtPlacaVehiculo.setEnabled(true);
-        } else {
-            txtTipoDeVehiculo.setEnabled(false);
-            txtPlacaVehiculo.setEnabled(false);
-            txtTipoDeVehiculo.setText("Tipo de vehiculo");
-            txtTipoDeVehiculo.setForeground(Color.gray);
-            txtPlacaVehiculo.setText("Placa del vehiculo");
-            txtPlacaVehiculo.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_checkVehiculoItemStateChanged
-
-    private void txtPlacaVehiculoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaVehiculoFocusGained
-        if (txtPlacaVehiculo.getText().equals("Placa del vehiculo")) {
-            txtPlacaVehiculo.setText("");
-            txtPlacaVehiculo.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtPlacaVehiculoFocusGained
-
-    private void txtPlacaVehiculoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaVehiculoFocusLost
-        if (txtPlacaVehiculo.getText().equals("")) {
-            txtPlacaVehiculo.setText("Placa del vehiculo");
-            txtPlacaVehiculo.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtPlacaVehiculoFocusLost
-
-    private void txtTipoDeVehiculoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeVehiculoFocusGained
-        if (txtTipoDeVehiculo.getText().equals("Tipo de vehiculo")) {
-            txtTipoDeVehiculo.setText("");
-            txtTipoDeVehiculo.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtTipoDeVehiculoFocusGained
-
-    private void txtTipoDeVehiculoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeVehiculoFocusLost
-        if (txtTipoDeVehiculo.getText().equals("")) {
-            txtTipoDeVehiculo.setText("Tipo de vehiculo");
-            txtTipoDeVehiculo.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtTipoDeVehiculoFocusLost
-
-    private void txtNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusGained
-        if (txtNombre.getText().equals("Nombre completo")) {
-            txtNombre.setText("");
-            txtNombre.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtNombreFocusGained
-
-    private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
-        if (txtNombre.getText().equals("")) {
-            txtNombre.setText("Nombre completo");
-            txtNombre.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtNombreFocusLost
-
-    private void btnRegistrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarClienteActionPerformed
-        if (txtCorreo1.getText().equals("") || txtCorreo1.getText().equals("Correo")
-                || String.valueOf(txtContrasena1.getPassword()).equals("")
-                || String.valueOf(txtContrasena1.getPassword()).equals("******")
-                || txtCedula1.getText().equals("") || txtCedula1.getText().equals("Cedula")
-                || txtEdad1.getText().equals("") || txtEdad1.getText().equals("Edad")
-                || txtNombre1.getText().equals("") || txtNombre1.getText().equals("Nombre completo")
-                || txtTelefono1.getText().equals("") || txtTelefono1.getText().equals("Numero movil")) {
+    private void btnModificarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarClienteActionPerformed
+        if (txtCorreoCliente.getText().equals("") || txtCorreoCliente.getText().equals("Correo")
+                || String.valueOf(txtContrasenaCliente.getPassword()).equals("")
+                || String.valueOf(txtContrasenaCliente.getPassword()).equals("******")
+                || txtCedulaCliente.getText().equals("") || txtCedulaCliente.getText().equals("Cedula")
+                || txtEdadCliente.getText().equals("") || txtEdadCliente.getText().equals("Edad")
+                || txtNombreCliente.getText().equals("") || txtNombreCliente.getText().equals("Nombre completo")
+                || txtTelefonoCliente.getText().equals("") || txtTelefonoCliente.getText().equals("Numero movil")) {
             JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
         } else {
-            String telefono = txtTelefono1.getText();
-            String nombre = txtNombre1.getText();
-            short edad = Short.parseShort(txtEdad1.getText());
-            String cedula = txtCedula1.getText();
-            String correo = txtCorreo1.getText();
-            String contrasena = String.valueOf(txtContrasena1.getPassword());
+            String telefono = txtTelefonoCliente.getText();
+            String nombre = txtNombreCliente.getText();
+            short edad = Short.parseShort(txtEdadCliente.getText());
+            String cedula = txtCedulaCliente.getText();
+            String correo = txtCorreoCliente.getText();
+            String contrasena = String.valueOf(txtContrasenaCliente.getPassword());
+            Vehiculo vehiculo = vehiculo1();
+            Cliente cliente = new Cliente(vehiculo, nombre, cedula, telefono, correo, contrasena, edad);
+            if (controlador.modificarCliente(cedula, cliente)) {
+                JOptionPane.showMessageDialog(this, "El cliente con cedula: " + cedula + " modificado correctamente");
+                limpiarTablaCliente();
+                cargarCliente();
+                cleanTextFieldCliente();
+            } else {
+                JOptionPane.showMessageDialog(this, "El cliente con cedula: " + cedula + " no fue modificado debido a que hay un usuario con esos datos");
+            }
+        }
+    }//GEN-LAST:event_btnModificarClienteActionPerformed
+
+    private void txtNombreClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreClienteFocusLost
+        if (txtNombreCliente.getText().equals("")) {
+            txtNombreCliente.setText("Nombre completo");
+            txtNombreCliente.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtNombreClienteFocusLost
+
+    private void txtNombreClienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreClienteFocusGained
+        if (txtNombreCliente.getText().equals("Nombre completo")) {
+            txtNombreCliente.setText("");
+            txtNombreCliente.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtNombreClienteFocusGained
+
+    private void txtTipoDeVehiculoClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeVehiculoClienteFocusLost
+        if (txtTipoDeVehiculoCliente.getText().equals("")) {
+            txtTipoDeVehiculoCliente.setText("Tipo de vehiculo");
+            txtTipoDeVehiculoCliente.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtTipoDeVehiculoClienteFocusLost
+
+    private void txtTipoDeVehiculoClienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeVehiculoClienteFocusGained
+        if (txtTipoDeVehiculoCliente.getText().equals("Tipo de vehiculo")) {
+            txtTipoDeVehiculoCliente.setText("");
+            txtTipoDeVehiculoCliente.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtTipoDeVehiculoClienteFocusGained
+
+    private void txtPlacaVehiculoClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaVehiculoClienteFocusLost
+        if (txtPlacaVehiculoCliente.getText().equals("")) {
+            txtPlacaVehiculoCliente.setText("Placa del vehiculo");
+            txtPlacaVehiculoCliente.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtPlacaVehiculoClienteFocusLost
+
+    private void txtPlacaVehiculoClienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaVehiculoClienteFocusGained
+        if (txtPlacaVehiculoCliente.getText().equals("Placa del vehiculo")) {
+            txtPlacaVehiculoCliente.setText("");
+            txtPlacaVehiculoCliente.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtPlacaVehiculoClienteFocusGained
+
+    private void checkVehiculoClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkVehiculoClienteItemStateChanged
+        if (checkVehiculoCliente.getState()) {
+            txtTipoDeVehiculoCliente.setEnabled(true);
+            txtPlacaVehiculoCliente.setEnabled(true);
+        } else {
+            txtTipoDeVehiculoCliente.setEnabled(false);
+            txtPlacaVehiculoCliente.setEnabled(false);
+            txtTipoDeVehiculoCliente.setText("Tipo de vehiculo");
+            txtTipoDeVehiculoCliente.setForeground(Color.gray);
+            txtPlacaVehiculoCliente.setText("Placa del vehiculo");
+            txtPlacaVehiculoCliente.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_checkVehiculoClienteItemStateChanged
+
+    private void txtContrasenaClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaClienteFocusLost
+        if (String.valueOf(txtContrasenaEmpleado.getPassword()).equals("")) {
+            txtContrasenaCliente.setText("******");
+            txtContrasenaCliente.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtContrasenaClienteFocusLost
+
+    private void txtContrasenaClienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaClienteFocusGained
+        if (String.valueOf(txtContrasenaEmpleado.getPassword()).equals("******")) {
+            txtContrasenaCliente.setText("");
+            txtContrasenaCliente.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtContrasenaClienteFocusGained
+
+    private void txtCorreoClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoClienteFocusLost
+        if (txtCorreoCliente.getText().equals("")) {
+            txtCorreoCliente.setText("Correo");
+            txtCorreoCliente.setForeground(Color.gray);
+
+        }
+    }//GEN-LAST:event_txtCorreoClienteFocusLost
+
+    private void txtCorreoClienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoClienteFocusGained
+        if (txtCorreoCliente.getText().equals("Correo")) {
+            txtCorreoCliente.setText("");
+            txtCorreoCliente.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtCorreoClienteFocusGained
+
+    private void txtCedulaClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaClienteFocusLost
+        if (txtCedulaCliente.getText().equals("")) {
+            txtCedulaCliente.setText("Cedula");
+            txtCedulaCliente.setForeground(Color.gray);
+        }
+        if (!validarNumeros(txtCedulaCliente.getText()) && !txtCedulaEmpleado.getText().equals("Cedula")) {
+            txtCedulaCliente.setBackground(Color.red);
+        } else {
+            txtCedulaCliente.setBackground(Color.white);
+        }
+    }//GEN-LAST:event_txtCedulaClienteFocusLost
+
+    private void txtCedulaClienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaClienteFocusGained
+        if (txtCedulaCliente.getText().equals("Cedula")) {
+            txtCedulaCliente.setText("");
+            txtCedulaCliente.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtCedulaClienteFocusGained
+
+    private void txtEdadClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdadClienteFocusLost
+        if (txtEdadCliente.getText().equals("")) {
+            txtEdadCliente.setText("Edad");
+            txtEdadCliente.setForeground(Color.gray);
+        }
+        if (!validarNumeros(txtEdadCliente.getText()) && !txtEdadCliente.getText().equals("Edad")) {
+            txtEdadCliente.setBackground(Color.red);
+        } else {
+            txtEdadCliente.setBackground(Color.white);
+        }
+    }//GEN-LAST:event_txtEdadClienteFocusLost
+
+    private void txtEdadClienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdadClienteFocusGained
+        if (txtEdadCliente.getText().equals("Edad")) {
+            txtEdadCliente.setText("");
+            txtEdadCliente.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtEdadClienteFocusGained
+
+    private void txtTelefonoClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoClienteFocusLost
+        if (txtTelefonoCliente.getText().equals("")) {
+            txtTelefonoCliente.setText("Numero movil");
+            txtTelefonoCliente.setForeground(Color.gray);
+        }
+        if (!validarNumeros(txtTelefonoCliente.getText()) && !txtTelefonoCliente.getText().equals("Numero movil")) {
+            txtTelefonoCliente.setBackground(Color.red);
+        } else {
+            txtTelefonoCliente.setBackground(Color.white);
+        }
+    }//GEN-LAST:event_txtTelefonoClienteFocusLost
+
+    private void txtTelefonoClienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoClienteFocusGained
+        if (txtTelefonoCliente.getText().equals("Numero movil")) {
+            txtTelefonoCliente.setText("");
+            txtTelefonoCliente.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtTelefonoClienteFocusGained
+
+    private void btnRegistrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarClienteActionPerformed
+        if (txtCorreoCliente.getText().equals("") || txtCorreoCliente.getText().equals("Correo")
+                || String.valueOf(txtContrasenaCliente.getPassword()).equals("")
+                || String.valueOf(txtContrasenaCliente.getPassword()).equals("******")
+                || txtCedulaCliente.getText().equals("") || txtCedulaCliente.getText().equals("Cedula")
+                || txtEdadCliente.getText().equals("") || txtEdadCliente.getText().equals("Edad")
+                || txtNombreCliente.getText().equals("") || txtNombreCliente.getText().equals("Nombre completo")
+                || txtTelefonoCliente.getText().equals("") || txtTelefonoCliente.getText().equals("Numero movil")) {
+            JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
+        } else {
+            String telefono = txtTelefonoCliente.getText();
+            String nombre = txtNombreCliente.getText();
+            short edad = Short.parseShort(txtEdadCliente.getText());
+            String cedula = txtCedulaCliente.getText();
+            String correo = txtCorreoCliente.getText();
+            String contrasena = String.valueOf(txtContrasenaCliente.getPassword());
             Vehiculo vehiculo = vehiculo1();
             Cliente cliente = new Cliente(vehiculo, nombre, cedula, telefono, correo, contrasena, edad);
             try {
@@ -1433,211 +1804,46 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         }
     }//GEN-LAST:event_btnRegistrarClienteActionPerformed
 
-    private void txtTelefono1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefono1FocusGained
-        if (txtTelefono1.getText().equals("Numero movil")) {
-            txtTelefono1.setText("");
-            txtTelefono1.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtTelefono1FocusGained
+    private void jLabelRegistrar3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar3MouseClicked
+        ventanaLogIn.reinciarLogIn();
+        ventanaLogIn.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabelRegistrar3MouseClicked
 
-    private void txtTelefono1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefono1FocusLost
-        if (txtTelefono1.getText().equals("")) {
-            txtTelefono1.setText("Numero movil");
-            txtTelefono1.setForeground(Color.gray);
-        }
-        if (!validarNumeros(txtTelefono1.getText()) && !txtTelefono1.getText().equals("Numero movil")) {
-            txtTelefono1.setBackground(Color.red);
-        } else {
-            txtTelefono1.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtTelefono1FocusLost
-
-    private void txtEdad1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdad1FocusGained
-        if (txtEdad1.getText().equals("Edad")) {
-            txtEdad1.setText("");
-            txtEdad1.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtEdad1FocusGained
-
-    private void txtEdad1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdad1FocusLost
-        if (txtEdad1.getText().equals("")) {
-            txtEdad1.setText("Edad");
-            txtEdad1.setForeground(Color.gray);
-        }
-        if (!validarNumeros(txtEdad1.getText()) && !txtEdad1.getText().equals("Edad")) {
-            txtEdad1.setBackground(Color.red);
-        } else {
-            txtEdad1.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtEdad1FocusLost
-
-    private void txtCedula1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedula1FocusGained
-        if (txtCedula1.getText().equals("Cedula")) {
-            txtCedula1.setText("");
-            txtCedula1.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtCedula1FocusGained
-
-    private void txtCedula1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedula1FocusLost
-        if (txtCedula1.getText().equals("")) {
-            txtCedula1.setText("Cedula");
-            txtCedula1.setForeground(Color.gray);
-        }
-        if (!validarNumeros(txtCedula1.getText()) && !txtCedula.getText().equals("Cedula")) {
-            txtCedula1.setBackground(Color.red);
-        } else {
-            txtCedula1.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtCedula1FocusLost
-
-    private void txtCorreo1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreo1FocusGained
-        if (txtCorreo1.getText().equals("Correo")) {
-            txtCorreo1.setText("");
-            txtCorreo1.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtCorreo1FocusGained
-
-    private void txtCorreo1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreo1FocusLost
-        if (txtCorreo1.getText().equals("")) {
-            txtCorreo1.setText("Correo");
-            txtCorreo1.setForeground(Color.gray);
-
-        }
-    }//GEN-LAST:event_txtCorreo1FocusLost
-
-    private void txtContrasena1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasena1FocusGained
-        if (String.valueOf(txtContrasena.getPassword()).equals("******")) {
-            txtContrasena1.setText("");
-            txtContrasena1.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtContrasena1FocusGained
-
-    private void txtContrasena1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasena1FocusLost
-        if (String.valueOf(txtContrasena.getPassword()).equals("")) {
-            txtContrasena1.setText("******");
-            txtContrasena1.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtContrasena1FocusLost
-
-    private void checkVehiculo1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkVehiculo1ItemStateChanged
-        if (checkVehiculo1.getState()) {
-            txtTipoDeVehiculo1.setEnabled(true);
-            txtPlacaVehiculo1.setEnabled(true);
-        } else {
-            txtTipoDeVehiculo1.setEnabled(false);
-            txtPlacaVehiculo1.setEnabled(false);
-            txtTipoDeVehiculo1.setText("Tipo de vehiculo");
-            txtTipoDeVehiculo1.setForeground(Color.gray);
-            txtPlacaVehiculo1.setText("Placa del vehiculo");
-            txtPlacaVehiculo1.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_checkVehiculo1ItemStateChanged
-
-    private void txtPlacaVehiculo1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaVehiculo1FocusGained
-        if (txtPlacaVehiculo1.getText().equals("Placa del vehiculo")) {
-            txtPlacaVehiculo1.setText("");
-            txtPlacaVehiculo1.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtPlacaVehiculo1FocusGained
-
-    private void txtPlacaVehiculo1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaVehiculo1FocusLost
-        if (txtPlacaVehiculo1.getText().equals("")) {
-            txtPlacaVehiculo1.setText("Placa del vehiculo");
-            txtPlacaVehiculo1.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtPlacaVehiculo1FocusLost
-
-    private void txtTipoDeVehiculo1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeVehiculo1FocusGained
-        if (txtTipoDeVehiculo1.getText().equals("Tipo de vehiculo")) {
-            txtTipoDeVehiculo1.setText("");
-            txtTipoDeVehiculo1.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtTipoDeVehiculo1FocusGained
-
-    private void txtTipoDeVehiculo1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeVehiculo1FocusLost
-        if (txtTipoDeVehiculo1.getText().equals("")) {
-            txtTipoDeVehiculo1.setText("Tipo de vehiculo");
-            txtTipoDeVehiculo1.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtTipoDeVehiculo1FocusLost
-
-    private void txtNombre1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombre1FocusGained
-        if (txtNombre1.getText().equals("Nombre completo")) {
-            txtNombre1.setText("");
-            txtNombre1.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtNombre1FocusGained
-
-    private void txtNombre1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombre1FocusLost
-        if (txtNombre1.getText().equals("")) {
-            txtNombre1.setText("Nombre completo");
-            txtNombre1.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtNombre1FocusLost
-
-    private void btnModificarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarClienteActionPerformed
-        if (txtCorreo1.getText().equals("") || txtCorreo1.getText().equals("Correo")
-                || String.valueOf(txtContrasena1.getPassword()).equals("")
-                || String.valueOf(txtContrasena1.getPassword()).equals("******")
-                || txtCedula1.getText().equals("") || txtCedula1.getText().equals("Cedula")
-                || txtEdad1.getText().equals("") || txtEdad1.getText().equals("Edad")
-                || txtNombre1.getText().equals("") || txtNombre1.getText().equals("Nombre completo")
-                || txtTelefono1.getText().equals("") || txtTelefono1.getText().equals("Numero movil")) {
-            JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
-        } else {
-            String telefono = txtTelefono1.getText();
-            String nombre = txtNombre1.getText();
-            short edad = Short.parseShort(txtEdad1.getText());
-            String cedula = txtCedula1.getText();
-            String correo = txtCorreo1.getText();
-            String contrasena = String.valueOf(txtContrasena1.getPassword());
-            Vehiculo vehiculo = vehiculo1();
-            Cliente cliente = new Cliente(vehiculo, nombre, cedula, telefono, correo, contrasena, edad);
-            if (controlador.modificarCliente(cedula, cliente)) {
-                JOptionPane.showMessageDialog(this, "El cliente con cedula: " + cedula + " modificado correctamente");
-                limpiarTablaCliente();
-                cargarCliente();
-                cleanTextFieldCliente();
-            } else {
-                JOptionPane.showMessageDialog(this, "El cliente con cedula: " + cedula + " no fue modificado debido a que hay un usuario con esos datos");
-            }
-        }
-    }//GEN-LAST:event_btnModificarClienteActionPerformed
-
-    private void btnEliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarClienteActionPerformed
-        if (txtCedula1.getText().equals("") || txtCedula1.getText().equals("Cedula")) {
+    private void btnEliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEmpleadoActionPerformed
+        if (txtCedulaEmpleado.getText().equals("") || txtCedulaEmpleado.getText().equals("Cedula")) {
             JOptionPane.showMessageDialog(this, "Por favor rellena el campo de cedula para eliminar el empleado");
         } else {
-            String cedula = txtCedula1.getText();
-            if (controlador.eliminarCliente(cedula)) {
-                JOptionPane.showMessageDialog(this, "El cliente con cedula: " + cedula + " fue eliminado correctamente.");
-                limpiarTablaCliente();
-                cargarCliente();
-                cleanTextFieldCliente();
+            String cedula = txtCedulaEmpleado.getText();
+            if (controlador.eliminarEmpleadoCentroComercial(cedula)) {
+                JOptionPane.showMessageDialog(this, "El empleado con cedula: " + cedula + " fue eliminado correctamente.");
+                limpiarTablaEmpleados();
+                cargarTablaEmpleados();
+                cleanTextFieldEmpleado();
             } else {
-                JOptionPane.showMessageDialog(this, "El cliente con cedula: " + cedula + " NO fue eliminado.");
+                JOptionPane.showMessageDialog(this, "El empleado con cedula: " + cedula + " NO fue eliminado.");
             }
         }
-    }//GEN-LAST:event_btnEliminarClienteActionPerformed
+    }//GEN-LAST:event_btnEliminarEmpleadoActionPerformed
 
     private void btnModificarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarEmpleadoActionPerformed
-        if (txtCorreo.getText().equals("") || txtCorreo.getText().equals("Correo")
-                || String.valueOf(txtContrasena.getPassword()).equals("")
-                || String.valueOf(txtContrasena.getPassword()).equals("******")
-                || txtCedula.getText().equals("") || txtCedula.getText().equals("Cedula")
-                || txtEdad.getText().equals("") || txtEdad.getText().equals("Edad")
-                || txtNombre.getText().equals("") || txtNombre.getText().equals("Nombre completo")
-                || txtTelefono.getText().equals("") || txtTelefono.getText().equals("Numero movil")
-                || jComboBox1.getSelectedIndex() == 0) {
+        if (txtCorreoEmpleado.getText().equals("") || txtCorreoEmpleado.getText().equals("Correo")
+                || String.valueOf(txtContrasenaEmpleado.getPassword()).equals("")
+                || String.valueOf(txtContrasenaEmpleado.getPassword()).equals("******")
+                || txtCedulaEmpleado.getText().equals("") || txtCedulaEmpleado.getText().equals("Cedula")
+                || txtEdadEmpleado.getText().equals("") || txtEdadEmpleado.getText().equals("Edad")
+                || txtNombreEmpleado.getText().equals("") || txtNombreEmpleado.getText().equals("Nombre completo")
+                || txtTelefonoEmpleado.getText().equals("") || txtTelefonoEmpleado.getText().equals("Numero movil")
+                || jComboBoxEmpleado.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
         } else {
-            String rol = String.valueOf(jComboBox1.getSelectedItem());
-            String telefono = txtTelefono.getText();
-            String nombre = txtNombre.getText();
-            short edad = Short.parseShort(txtEdad.getText());
-            String cedula = txtCedula.getText();
-            String correo = txtCorreo.getText();
-            String contrasena = String.valueOf(txtContrasena.getPassword());
+            String rol = String.valueOf(jComboBoxEmpleado.getSelectedItem());
+            String telefono = txtTelefonoEmpleado.getText();
+            String nombre = txtNombreEmpleado.getText();
+            short edad = Short.parseShort(txtEdadEmpleado.getText());
+            String cedula = txtCedulaEmpleado.getText();
+            String correo = txtCorreoEmpleado.getText();
+            String contrasena = String.valueOf(txtContrasenaEmpleado.getPassword());
             Vehiculo vehiculo = vehiculo();
             Empleado empleado = new Empleado(vehiculo, rol, nombre, cedula, telefono, correo, contrasena, edad);
             if (controlador.modificarEmpleadoCentroComercial(cedula, empleado)) {
@@ -1651,96 +1857,196 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         }
     }//GEN-LAST:event_btnModificarEmpleadoActionPerformed
 
-    private void btnEliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEmpleadoActionPerformed
-        if (txtCedula.getText().equals("") || txtCedula.getText().equals("Cedula")) {
-            JOptionPane.showMessageDialog(this, "Por favor rellena el campo de cedula para eliminar el empleado");
-        } else {
-            String cedula = txtCedula.getText();
-            if (controlador.eliminarEmpleadoCentroComercial(cedula)) {
-                JOptionPane.showMessageDialog(this, "El empleado con cedula: " + cedula + " fue eliminado correctamente.");
-                limpiarTablaEmpleados();
-                cargarTablaEmpleados();
-                cleanTextFieldEmpleado();
-            } else {
-                JOptionPane.showMessageDialog(this, "El empleado con cedula: " + cedula + " NO fue eliminado.");
-            }
+    private void txtNombreEmpleadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreEmpleadoFocusLost
+        if (txtNombreEmpleado.getText().equals("")) {
+            txtNombreEmpleado.setText("Nombre completo");
+            txtNombreEmpleado.setForeground(Color.gray);
         }
-    }//GEN-LAST:event_btnEliminarEmpleadoActionPerformed
+    }//GEN-LAST:event_txtNombreEmpleadoFocusLost
 
-    private void btnRegistrarConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarConcursoActionPerformed
-        if (txtNombreConcurso.getText().equals("")
-                || txtNombreConcurso.getText().equals("Nombre concurso")
-                || txtPremioConcurso.getText().equals("Premio concurso")
-                || txtPremioConcurso.getText().equals("")
-                || txtValorMinimoConcurso.getText().equals("Valor minimo para participar")
-                || txtValorMinimoConcurso.getText().equals("")
-                || jDateChooserConcursoFin.getDate() == null
-                || jDateChooserConcursoIni.getDate() == null) {
+    private void txtNombreEmpleadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreEmpleadoFocusGained
+        if (txtNombreEmpleado.getText().equals("Nombre completo")) {
+            txtNombreEmpleado.setText("");
+            txtNombreEmpleado.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtNombreEmpleadoFocusGained
+
+    private void txtTipoDeVehiculoEmpleadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeVehiculoEmpleadoFocusLost
+        if (txtTipoDeVehiculoEmpleado.getText().equals("")) {
+            txtTipoDeVehiculoEmpleado.setText("Tipo de vehiculo");
+            txtTipoDeVehiculoEmpleado.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtTipoDeVehiculoEmpleadoFocusLost
+
+    private void txtTipoDeVehiculoEmpleadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeVehiculoEmpleadoFocusGained
+        if (txtTipoDeVehiculoEmpleado.getText().equals("Tipo de vehiculo")) {
+            txtTipoDeVehiculoEmpleado.setText("");
+            txtTipoDeVehiculoEmpleado.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtTipoDeVehiculoEmpleadoFocusGained
+
+    private void txtPlacaVehiculoEmpleadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaVehiculoEmpleadoFocusLost
+        if (txtPlacaVehiculoEmpleado.getText().equals("")) {
+            txtPlacaVehiculoEmpleado.setText("Placa del vehiculo");
+            txtPlacaVehiculoEmpleado.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtPlacaVehiculoEmpleadoFocusLost
+
+    private void txtPlacaVehiculoEmpleadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaVehiculoEmpleadoFocusGained
+        if (txtPlacaVehiculoEmpleado.getText().equals("Placa del vehiculo")) {
+            txtPlacaVehiculoEmpleado.setText("");
+            txtPlacaVehiculoEmpleado.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtPlacaVehiculoEmpleadoFocusGained
+
+    private void checkVehiculoEmpleadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkVehiculoEmpleadoItemStateChanged
+        if (checkVehiculoEmpleado.getState()) {
+            txtTipoDeVehiculoEmpleado.setEnabled(true);
+            txtPlacaVehiculoEmpleado.setEnabled(true);
+        } else {
+            txtTipoDeVehiculoEmpleado.setEnabled(false);
+            txtPlacaVehiculoEmpleado.setEnabled(false);
+            txtTipoDeVehiculoEmpleado.setText("Tipo de vehiculo");
+            txtTipoDeVehiculoEmpleado.setForeground(Color.gray);
+            txtPlacaVehiculoEmpleado.setText("Placa del vehiculo");
+            txtPlacaVehiculoEmpleado.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_checkVehiculoEmpleadoItemStateChanged
+
+    private void txtContrasenaEmpleadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaEmpleadoFocusLost
+        if (String.valueOf(txtContrasenaEmpleado.getPassword()).equals("")) {
+            txtContrasenaEmpleado.setText("******");
+            txtContrasenaEmpleado.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtContrasenaEmpleadoFocusLost
+
+    private void txtContrasenaEmpleadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaEmpleadoFocusGained
+        if (String.valueOf(txtContrasenaEmpleado.getPassword()).equals("******")) {
+            txtContrasenaEmpleado.setText("");
+            txtContrasenaEmpleado.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtContrasenaEmpleadoFocusGained
+
+    private void txtCorreoEmpleadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoEmpleadoFocusLost
+        if (txtCorreoEmpleado.getText().equals("")) {
+            txtCorreoEmpleado.setText("Correo");
+            txtCorreoEmpleado.setForeground(Color.gray);
+
+        }
+    }//GEN-LAST:event_txtCorreoEmpleadoFocusLost
+
+    private void txtCorreoEmpleadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoEmpleadoFocusGained
+        if (txtCorreoEmpleado.getText().equals("Correo")) {
+            txtCorreoEmpleado.setText("");
+            txtCorreoEmpleado.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtCorreoEmpleadoFocusGained
+
+    private void txtCedulaEmpleadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaEmpleadoFocusLost
+        if (txtCedulaEmpleado.getText().equals("")) {
+            txtCedulaEmpleado.setText("Cedula");
+            txtCedulaEmpleado.setForeground(Color.gray);
+        }
+        if (!validarNumeros(txtCedulaEmpleado.getText()) && !txtCedulaEmpleado.getText().equals("Cedula")) {
+            txtCedulaEmpleado.setBackground(Color.red);
+        } else {
+            txtCedulaEmpleado.setBackground(Color.white);
+        }
+    }//GEN-LAST:event_txtCedulaEmpleadoFocusLost
+
+    private void txtCedulaEmpleadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaEmpleadoFocusGained
+        if (txtCedulaEmpleado.getText().equals("Cedula")) {
+            txtCedulaEmpleado.setText("");
+            txtCedulaEmpleado.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtCedulaEmpleadoFocusGained
+
+    private void txtEdadEmpleadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdadEmpleadoFocusLost
+        if (txtEdadEmpleado.getText().equals("")) {
+            txtEdadEmpleado.setText("Edad");
+            txtEdadEmpleado.setForeground(Color.gray);
+        }
+        if (!validarNumeros(txtEdadEmpleado.getText()) && !txtEdadEmpleado.getText().equals("Edad")) {
+            txtEdadEmpleado.setBackground(Color.red);
+        } else {
+            txtEdadEmpleado.setBackground(Color.white);
+        }
+    }//GEN-LAST:event_txtEdadEmpleadoFocusLost
+
+    private void txtEdadEmpleadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdadEmpleadoFocusGained
+        if (txtEdadEmpleado.getText().equals("Edad")) {
+            txtEdadEmpleado.setText("");
+            txtEdadEmpleado.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtEdadEmpleadoFocusGained
+
+    private void txtTelefonoEmpleadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoEmpleadoFocusLost
+        if (txtTelefonoEmpleado.getText().equals("")) {
+            txtTelefonoEmpleado.setText("Numero movil");
+            txtTelefonoEmpleado.setForeground(Color.gray);
+        }
+        if (!validarNumeros(txtTelefonoEmpleado.getText()) && !txtTelefonoEmpleado.getText().equals("Numero movil")) {
+            txtTelefonoEmpleado.setBackground(Color.red);
+        } else {
+            txtTelefonoEmpleado.setBackground(Color.white);
+        }
+    }//GEN-LAST:event_txtTelefonoEmpleadoFocusLost
+
+    private void txtTelefonoEmpleadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoEmpleadoFocusGained
+        if (txtTelefonoEmpleado.getText().equals("Numero movil")) {
+            txtTelefonoEmpleado.setText("");
+            txtTelefonoEmpleado.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtTelefonoEmpleadoFocusGained
+
+    private void btnRegistrarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEmpleadoActionPerformed
+        if (txtCorreoEmpleado.getText().equals("") || txtCorreoEmpleado.getText().equals("Correo")
+                || String.valueOf(txtContrasenaEmpleado.getPassword()).equals("")
+                || String.valueOf(txtContrasenaEmpleado.getPassword()).equals("******")
+                || txtCedulaEmpleado.getText().equals("") || txtCedulaEmpleado.getText().equals("Cedula")
+                || txtEdadEmpleado.getText().equals("") || txtEdadEmpleado.getText().equals("Edad")
+                || txtNombreEmpleado.getText().equals("") || txtNombreEmpleado.getText().equals("Nombre completo")
+                || txtTelefonoEmpleado.getText().equals("") || txtTelefonoEmpleado.getText().equals("Numero movil")
+                || jComboBoxEmpleado.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
         } else {
-            String nombre = txtNombreConcurso.getText();
-            String telefono = txtPremioConcurso.getText();
-            float valorMinimo = Float.parseFloat(txtValorMinimoConcurso.getText());
-            String cedula = txtCedula1.getText();
-            String correo = txtCorreo1.getText();
-            String contrasena = String.valueOf(txtContrasena1.getPassword());
-            Vehiculo vehiculo = vehiculo1();
-            Cliente cliente = new Cliente(vehiculo, nombre, cedula, telefono, correo, contrasena, edad);
+            String telefono = txtTelefonoEmpleado.getText();
+            String nombre = txtNombreEmpleado.getText();
+            short edad = Short.parseShort(txtEdadEmpleado.getText());
+            String cedula = txtCedulaEmpleado.getText();
+            String correo = txtCorreoEmpleado.getText();
+            String contrasena = String.valueOf(txtContrasenaEmpleado.getPassword());
+            Vehiculo vehiculo = vehiculo();
+            String rol = String.valueOf(jComboBoxEmpleado.getSelectedItem());
+            Empleado empleado = new Empleado(vehiculo, rol, nombre, cedula, telefono, correo, contrasena, edad);
             try {
+                if (controlador.anadirEmpleadoCentroComercial(empleado)) {
+                    JOptionPane.showMessageDialog(this, "Registrado correctamente");
+                    limpiarTablaEmpleados();
+                    cargarTablaEmpleados();
+                    cleanTextFieldEmpleado();
+                }
+            } catch (ExcepcionEmpleadoDuplicado ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
             }
-
         }
-    }//GEN-LAST:event_btnRegistrarConcursoActionPerformed
+    }//GEN-LAST:event_btnRegistrarEmpleadoActionPerformed
 
-    private void txtPremioConcursoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPremioConcursoFocusGained
-        if (txtPremioConcurso.getText().equals("Premio concurso")) {
-            txtPremioConcurso.setText("");
-            txtPremioConcurso.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtPremioConcursoFocusGained
+    private void jLabelRegistrar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar1MouseClicked
+        ventanaLogIn.reinciarLogIn();
+        ventanaLogIn.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabelRegistrar1MouseClicked
 
-    private void txtPremioConcursoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPremioConcursoFocusLost
-        if (txtPremioConcurso.getText().equals("")) {
-            txtPremioConcurso.setText("Premio concurso");
-            txtPremioConcurso.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtPremioConcursoFocusLost
+    private void jLabelRegistrar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar2MouseClicked
+        ventanaLogIn.reinciarLogIn();
+        ventanaLogIn.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabelRegistrar2MouseClicked
 
-    private void txtValorMinimoConcursoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorMinimoConcursoFocusGained
-        if (txtValorMinimoConcurso.getText().equals("Valor minimo para participar")) {
-            txtValorMinimoConcurso.setText("");
-            txtValorMinimoConcurso.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtValorMinimoConcursoFocusGained
-
-    private void txtValorMinimoConcursoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorMinimoConcursoFocusLost
-        if (txtValorMinimoConcurso.getText().equals("")) {
-            txtValorMinimoConcurso.setText("Valor minimo para participar");
-            txtValorMinimoConcurso.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtValorMinimoConcursoFocusLost
-
-    private void txtNombreConcursoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreConcursoFocusGained
-        if (txtNombreConcurso.getText().equals("Nombre concurso")) {
-            txtNombreConcurso.setText("");
-            txtNombreConcurso.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtNombreConcursoFocusGained
-
-    private void txtNombreConcursoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreConcursoFocusLost
-        if (txtNombreConcurso.getText().equals("")) {
-            txtNombreConcurso.setText("Nombre concurso");
-            txtNombreConcurso.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtNombreConcursoFocusLost
-
-    private void btnModificarConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarConcursoActionPerformed
+    private void txtCodigoGanadorConcursoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoGanadorConcursoFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnModificarConcursoActionPerformed
-
-    private void btnEliminarConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarConcursoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarConcursoActionPerformed
+    }//GEN-LAST:event_txtCodigoGanadorConcursoFocusGained
 
     private void initBotones() {
         int ancho = 90;
@@ -1775,14 +2081,14 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
 
     public Vehiculo vehiculo() {
         Vehiculo vehiculo = null;
-        if (checkVehiculo.getState()) {
-            if (txtPlacaVehiculo.getText().equals("Placa del vehiculo") || txtTipoDeVehiculo.getText().equals("Tipo de vehiculo")
-                    || txtPlacaVehiculo.getText().equals("")
-                    || txtTipoDeVehiculo.getText().equals("")) {
+        if (checkVehiculoEmpleado.getState()) {
+            if (txtPlacaVehiculoEmpleado.getText().equals("Placa del vehiculo") || txtTipoDeVehiculoEmpleado.getText().equals("Tipo de vehiculo")
+                    || txtPlacaVehiculoEmpleado.getText().equals("")
+                    || txtTipoDeVehiculoEmpleado.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
             } else {
-                String tipoVehiculo = txtTipoDeVehiculo.getText();
-                String placa = txtPlacaVehiculo.getText();
+                String tipoVehiculo = txtTipoDeVehiculoEmpleado.getText();
+                String placa = txtPlacaVehiculoEmpleado.getText();
                 vehiculo = new Vehiculo(tipoVehiculo, placa);
             }
         }
@@ -1791,14 +2097,14 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
 
     public Vehiculo vehiculo1() {
         Vehiculo vehiculo = null;
-        if (checkVehiculo1.getState()) {
-            if (txtPlacaVehiculo1.getText().equals("Placa del vehiculo") || txtTipoDeVehiculo1.getText().equals("Tipo de vehiculo")
-                    || txtPlacaVehiculo1.getText().equals("")
-                    || txtTipoDeVehiculo1.getText().equals("")) {
+        if (checkVehiculoCliente.getState()) {
+            if (txtPlacaVehiculoCliente.getText().equals("Placa del vehiculo") || txtTipoDeVehiculoCliente.getText().equals("Tipo de vehiculo")
+                    || txtPlacaVehiculoCliente.getText().equals("")
+                    || txtTipoDeVehiculoCliente.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
             } else {
-                String tipoVehiculo = txtTipoDeVehiculo1.getText();
-                String placa = txtPlacaVehiculo1.getText();
+                String tipoVehiculo = txtTipoDeVehiculoCliente.getText();
+                String placa = txtPlacaVehiculoCliente.getText();
                 vehiculo = new Vehiculo(tipoVehiculo, placa);
             }
         }
@@ -1909,47 +2215,116 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         }
     }
 
+    public void cargarTablaConcurso() {
+        modeloTablaConcurso = (DefaultTableModel) jTableConcurso.getModel();
+        Object[] ob = new Object[7];
+        for (int i = 0; i < CentroComercial.concursos.Size(); i++) {
+            if (CentroComercial.concursos.obtenerDato(i).isEstado()) {
+                ob[0] = CentroComercial.concursos.obtenerDato(i).getCodigo();
+                ob[1] = CentroComercial.concursos.obtenerDato(i).getNombreConcurso();
+                ob[2] = CentroComercial.concursos.obtenerDato(i).getPremioConcurso();
+                ob[3] = CentroComercial.concursos.obtenerDato(i).getValorMinimo();
+                ob[4] = CentroComercial.concursos.obtenerDato(i).getFechaIncioConcurso();
+                ob[5] = CentroComercial.concursos.obtenerDato(i).getFechaFinConcurso();
+                ob[6] = CentroComercial.concursos.obtenerDato(i).getParticipantes().Size();
+                modeloTablaConcurso.addRow(ob);
+            }
+        }
+        jTableConcurso.setModel(modeloTablaConcurso);
+    }
+
+    public void limpiarTablaConcurso() {
+        for (int i = 0; i < modeloTablaConcurso.getRowCount(); i++) {
+            modeloTablaConcurso.removeRow(i);
+            i = i - 1;
+        }
+    }
+
+    public void cargarTablaConcursoHistorial() {
+        modeloTablaHistorialConcurso = (DefaultTableModel) jTableConcursoHistorial.getModel();
+        Object[] ob = new Object[8];
+        for (int i = 0; i < CentroComercial.historialConcursos.getConcursos().Size(); i++) {
+            if (CentroComercial.historialConcursos.getConcursos().obtenerDato(i).isEstado()) {
+                ob[0] = CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getCodigo();
+                ob[1] = CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getNombreConcurso();
+                ob[2] = CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getPremioConcurso();
+                ob[3] = CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getValorMinimo();
+                ob[4] = CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getFechaIncioConcurso();
+                ob[5] = CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getFechaFinConcurso();
+                ob[6] = CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getParticipantes().Size();
+                if (CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getGanador() == null) {
+                    ob[7] = "";
+                } else {
+                    ob[7] = CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getGanador().getNombre();
+                }
+                modeloTablaHistorialConcurso.addRow(ob);
+            }
+        }
+        jTableConcursoHistorial.setModel(modeloTablaHistorialConcurso);
+    }
+
+    public void limpiarTablaConcursoHistorial() {
+        for (int i = 0; i < modeloTablaHistorialConcurso.getRowCount(); i++) {
+            modeloTablaHistorialConcurso.removeRow(i);
+            i = i - 1;
+        }
+    }
+
     public void cleanTextFieldEmpleado() {
-        txtPlacaVehiculo.setText("Placa del vehiculo");
-        txtPlacaVehiculo.setForeground(Color.gray);
-        txtTipoDeVehiculo.setText("Tipo de vehiculo");
-        txtTipoDeVehiculo.setForeground(Color.gray);
-        txtTelefono.setText("Numero movil");
-        txtTelefono.setForeground(Color.gray);
-        txtNombre.setText("Nombre completo");
-        txtNombre.setForeground(Color.gray);
-        txtEdad.setText("Edad");
-        txtEdad.setForeground(Color.gray);
-        txtCedula.setText("Cedula");
-        txtCedula.setForeground(Color.gray);
-        txtCorreo.setText("Correo");
-        txtCorreo.setForeground(Color.gray);
-        txtContrasena.setText("******");
-        txtContrasena.setForeground(Color.gray);
-        jComboBox1.setSelectedIndex(0);
-        checkVehiculo.setState(false);
-        txtTipoDeVehiculo.setEnabled(false);
-        txtPlacaVehiculo.setEnabled(false);
+        txtPlacaVehiculoEmpleado.setText("Placa del vehiculo");
+        txtPlacaVehiculoEmpleado.setForeground(Color.gray);
+        txtTipoDeVehiculoEmpleado.setText("Tipo de vehiculo");
+        txtTipoDeVehiculoEmpleado.setForeground(Color.gray);
+        txtTelefonoEmpleado.setText("Numero movil");
+        txtTelefonoEmpleado.setForeground(Color.gray);
+        txtNombreEmpleado.setText("Nombre completo");
+        txtNombreEmpleado.setForeground(Color.gray);
+        txtEdadEmpleado.setText("Edad");
+        txtEdadEmpleado.setForeground(Color.gray);
+        txtCedulaEmpleado.setText("Cedula");
+        txtCedulaEmpleado.setForeground(Color.gray);
+        txtCorreoEmpleado.setText("Correo");
+        txtCorreoEmpleado.setForeground(Color.gray);
+        txtContrasenaEmpleado.setText("******");
+        txtContrasenaEmpleado.setForeground(Color.gray);
+        jComboBoxEmpleado.setSelectedIndex(0);
+        checkVehiculoEmpleado.setState(false);
+        txtTipoDeVehiculoEmpleado.setEnabled(false);
+        txtPlacaVehiculoEmpleado.setEnabled(false);
     }
 
     public void cleanTextFieldCliente() {
-        txtTipoDeVehiculo1.setText("Tipo de vehiculo");
-        txtTipoDeVehiculo1.setForeground(Color.gray);
-        txtPlacaVehiculo1.setText("Placa del vehiculo");
-        txtPlacaVehiculo1.setForeground(Color.gray);
-        txtTelefono1.setText("Numero movil");
-        txtTelefono1.setForeground(Color.gray);
-        txtNombre1.setText("Nombre completo");
-        txtNombre1.setForeground(Color.gray);
-        txtEdad1.setText("Edad");
-        txtEdad1.setForeground(Color.gray);
-        txtCedula1.setText("Cedula");
-        txtCedula1.setForeground(Color.gray);
-        txtCorreo1.setText("Correo");
-        txtCorreo1.setForeground(Color.gray);
-        txtContrasena1.setText("******");
-        txtContrasena1.setForeground(Color.gray);
-        checkVehiculo1.setState(false);
+        txtTipoDeVehiculoCliente.setText("Tipo de vehiculo");
+        txtTipoDeVehiculoCliente.setForeground(Color.gray);
+        txtPlacaVehiculoCliente.setText("Placa del vehiculo");
+        txtPlacaVehiculoCliente.setForeground(Color.gray);
+        txtTelefonoCliente.setText("Numero movil");
+        txtTelefonoCliente.setForeground(Color.gray);
+        txtNombreCliente.setText("Nombre completo");
+        txtNombreCliente.setForeground(Color.gray);
+        txtEdadCliente.setText("Edad");
+        txtEdadCliente.setForeground(Color.gray);
+        txtCedulaCliente.setText("Cedula");
+        txtCedulaCliente.setForeground(Color.gray);
+        txtCorreoCliente.setText("Correo");
+        txtCorreoCliente.setForeground(Color.gray);
+        txtContrasenaCliente.setText("******");
+        txtContrasenaCliente.setForeground(Color.gray);
+        checkVehiculoCliente.setState(false);
+    }
+
+    public void cleanTextFieldConcurso() {
+        txtCodigoConcurso.setText("Codigo concurso");
+        txtCodigoConcurso.setForeground(Color.gray);
+        txtNombreConcurso.setText("Nombre concurso");
+        txtNombreConcurso.setForeground(Color.gray);
+        txtValorMinimoConcurso.setText("Valor minimo para participar");
+        txtValorMinimoConcurso.setForeground(Color.gray);
+        txtPremioConcurso.setText("Premio concurso");
+        txtPremioConcurso.setForeground(Color.gray);
+        jDateChooserConcursoIni.setDate(null);
+        jDateChooserConcursoFin.setDate(null);
+        checkConcurso.setState(false);
     }
 
     public void mouseTablEmpleado() {
@@ -1959,36 +2334,36 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                 Point point = Mouse_evt.getPoint();
                 int row = table.rowAtPoint(point);
                 if (Mouse_evt.getClickCount() == 1) {
-                    txtNombre.setText(jTableEmpleados.getValueAt(jTableEmpleados.getSelectedRow(), 1).toString());
-                    txtNombre.setForeground(Color.black);
-                    txtCorreo.setText(jTableEmpleados.getValueAt(jTableEmpleados.getSelectedRow(), 2).toString());
-                    txtCorreo.setForeground(Color.black);
-                    txtCedula.setText(jTableEmpleados.getValueAt(jTableEmpleados.getSelectedRow(), 3).toString());
-                    txtCedula.setForeground(Color.black);
-                    jComboBox1.setSelectedItem(jTableEmpleados.getValueAt(jTableEmpleados.getSelectedRow(), 4).toString());
-                    Empleado empleado = (Empleado) controlador.buscarPorCedula(txtCedula.getText());
-                    txtTelefono.setText(empleado.getNumeroCelular());
-                    txtEdad.setText(String.valueOf(empleado.getEdad()));
-                    txtEdad.setForeground(Color.black);
-                    txtTelefono.setForeground(Color.black);
-                    txtContrasena.setText(empleado.getContrasena());
-                    txtContrasena.setForeground(Color.black);
+                    txtNombreEmpleado.setText(jTableEmpleados.getValueAt(jTableEmpleados.getSelectedRow(), 0).toString());
+                    txtNombreEmpleado.setForeground(Color.black);
+                    txtCorreoEmpleado.setText(jTableEmpleados.getValueAt(jTableEmpleados.getSelectedRow(), 1).toString());
+                    txtCorreoEmpleado.setForeground(Color.black);
+                    txtCedulaEmpleado.setText(jTableEmpleados.getValueAt(jTableEmpleados.getSelectedRow(), 2).toString());
+                    txtCedulaEmpleado.setForeground(Color.black);
+                    jComboBoxEmpleado.setSelectedItem(jTableEmpleados.getValueAt(jTableEmpleados.getSelectedRow(), 3).toString());
+                    Empleado empleado = (Empleado) controlador.buscarPorCedula(txtCedulaEmpleado.getText());
+                    txtTelefonoEmpleado.setText(empleado.getNumeroCelular());
+                    txtEdadEmpleado.setText(String.valueOf(empleado.getEdad()));
+                    txtEdadEmpleado.setForeground(Color.black);
+                    txtTelefonoEmpleado.setForeground(Color.black);
+                    txtContrasenaEmpleado.setText(empleado.getContrasena());
+                    txtContrasenaEmpleado.setForeground(Color.black);
                     if (empleado.getVehiculo() != null) {
-                        checkVehiculo.setState(true);
-                        txtTipoDeVehiculo.setEnabled(true);
-                        txtPlacaVehiculo.setEnabled(true);
-                        txtTipoDeVehiculo.setText(empleado.getVehiculo().getTipo());
-                        txtTipoDeVehiculo.setForeground(Color.black);
-                        txtPlacaVehiculo.setText(empleado.getVehiculo().getPlaca());
-                        txtPlacaVehiculo.setForeground(Color.black);
+                        checkVehiculoEmpleado.setState(true);
+                        txtTipoDeVehiculoEmpleado.setEnabled(true);
+                        txtPlacaVehiculoEmpleado.setEnabled(true);
+                        txtTipoDeVehiculoEmpleado.setText(empleado.getVehiculo().getTipo());
+                        txtTipoDeVehiculoEmpleado.setForeground(Color.black);
+                        txtPlacaVehiculoEmpleado.setText(empleado.getVehiculo().getPlaca());
+                        txtPlacaVehiculoEmpleado.setForeground(Color.black);
                     } else {
-                        checkVehiculo.setState(false);
-                        txtTipoDeVehiculo.setEnabled(false);
-                        txtPlacaVehiculo.setEnabled(false);
-                        txtTipoDeVehiculo.setText("Tipo de vehiculo");
-                        txtTipoDeVehiculo.setForeground(Color.gray);
-                        txtPlacaVehiculo.setText("Placa del vehiculo");
-                        txtPlacaVehiculo.setForeground(Color.gray);
+                        checkVehiculoEmpleado.setState(false);
+                        txtTipoDeVehiculoEmpleado.setEnabled(false);
+                        txtPlacaVehiculoEmpleado.setEnabled(false);
+                        txtTipoDeVehiculoEmpleado.setText("Tipo de vehiculo");
+                        txtTipoDeVehiculoEmpleado.setForeground(Color.gray);
+                        txtPlacaVehiculoEmpleado.setText("Placa del vehiculo");
+                        txtPlacaVehiculoEmpleado.setForeground(Color.gray);
                     }
                 }
             }
@@ -2002,36 +2377,60 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                 Point point = Mouse_evt.getPoint();
                 int row = table.rowAtPoint(point);
                 if (Mouse_evt.getClickCount() == 1) {
-                    txtNombre1.setText(jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 1).toString());
-                    txtNombre1.setForeground(Color.black);
-                    txtCorreo1.setText(jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 2).toString());
-                    txtCorreo1.setForeground(Color.black);
-                    txtCedula1.setText(jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 3).toString());
-                    txtCedula1.setForeground(Color.black);
-                    Cliente cliente = (Cliente) controlador.buscarPorCedula(txtCedula1.getText());
-                    txtTelefono1.setText(cliente.getNumeroCelular());
-                    txtEdad1.setText(String.valueOf(cliente.getEdad()));
-                    txtEdad1.setForeground(Color.black);
-                    txtTelefono1.setForeground(Color.black);
-                    txtContrasena1.setText(cliente.getContrasena());
-                    txtContrasena1.setForeground(Color.black);
+                    txtNombreCliente.setText(jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 0).toString());
+                    txtNombreCliente.setForeground(Color.black);
+                    txtCorreoCliente.setText(jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 1).toString());
+                    txtCorreoCliente.setForeground(Color.black);
+                    txtCedulaCliente.setText(jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 2).toString());
+                    txtCedulaCliente.setForeground(Color.black);
+                    Cliente cliente = (Cliente) controlador.buscarPorCedula(txtCedulaCliente.getText());
+                    txtTelefonoCliente.setText(cliente.getNumeroCelular());
+                    txtEdadCliente.setText(String.valueOf(cliente.getEdad()));
+                    txtEdadCliente.setForeground(Color.black);
+                    txtTelefonoCliente.setForeground(Color.black);
+                    txtContrasenaCliente.setText(cliente.getContrasena());
+                    txtContrasenaCliente.setForeground(Color.black);
                     if (cliente.getVehiculo() != null) {
-                        checkVehiculo1.setState(true);
-                        txtTipoDeVehiculo1.setEnabled(true);
-                        txtPlacaVehiculo1.setEnabled(true);
-                        txtTipoDeVehiculo1.setText(cliente.getVehiculo().getTipo());
-                        txtTipoDeVehiculo1.setForeground(Color.black);
-                        txtPlacaVehiculo1.setText(cliente.getVehiculo().getPlaca());
-                        txtPlacaVehiculo1.setForeground(Color.black);
+                        checkVehiculoCliente.setState(true);
+                        txtTipoDeVehiculoCliente.setEnabled(true);
+                        txtPlacaVehiculoCliente.setEnabled(true);
+                        txtTipoDeVehiculoCliente.setText(cliente.getVehiculo().getTipo());
+                        txtTipoDeVehiculoCliente.setForeground(Color.black);
+                        txtPlacaVehiculoCliente.setText(cliente.getVehiculo().getPlaca());
+                        txtPlacaVehiculoCliente.setForeground(Color.black);
                     } else {
-                        checkVehiculo1.setState(false);
-                        txtTipoDeVehiculo1.setEnabled(false);
-                        txtPlacaVehiculo1.setEnabled(false);
-                        txtTipoDeVehiculo1.setText("Tipo de vehiculo");
-                        txtTipoDeVehiculo1.setForeground(Color.gray);
-                        txtPlacaVehiculo1.setText("Placa del vehiculo");
-                        txtPlacaVehiculo1.setForeground(Color.gray);
+                        checkVehiculoCliente.setState(false);
+                        txtTipoDeVehiculoCliente.setEnabled(false);
+                        txtPlacaVehiculoCliente.setEnabled(false);
+                        txtTipoDeVehiculoCliente.setText("Tipo de vehiculo");
+                        txtTipoDeVehiculoCliente.setForeground(Color.gray);
+                        txtPlacaVehiculoCliente.setText("Placa del vehiculo");
+                        txtPlacaVehiculoCliente.setForeground(Color.gray);
                     }
+                }
+            }
+        });
+    }
+
+    public void mouseTableConcurso() {
+        jTableConcurso.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent Mouse_evt) {
+                JTable table = (JTable) Mouse_evt.getSource();
+                Point point = Mouse_evt.getPoint();
+                int row = table.rowAtPoint(point);
+                if (Mouse_evt.getClickCount() == 1) {
+                    txtCodigoConcurso.setText(jTableConcurso.getValueAt(jTableConcurso.getSelectedRow(), 0).toString());
+                    txtCodigoConcurso.setForeground(Color.black);
+                    txtNombreConcurso.setText(jTableConcurso.getValueAt(jTableConcurso.getSelectedRow(), 1).toString());
+                    txtNombreConcurso.setForeground(Color.black);
+                    txtPremioConcurso.setText(jTableConcurso.getValueAt(jTableConcurso.getSelectedRow(), 2).toString());
+                    txtPremioConcurso.setForeground(Color.black);
+                    txtValorMinimoConcurso.setText(jTableConcurso.getValueAt(jTableConcurso.getSelectedRow(), 3).toString());
+                    txtValorMinimoConcurso.setForeground(Color.black);
+                    Concurso concurso = controlador.buscarPorConcurso(Integer.parseInt(txtCodigoConcurso.getText()));
+                    jDateChooserConcursoIni.setDate(concurso.getFechaIncioConcurso());
+                    jDateChooserConcursoFin.setDate(concurso.getFechaFinConcurso());
+                    checkConcurso.setState(concurso.isEstado());
                 }
             }
         });
@@ -2075,16 +2474,21 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
     private javax.swing.JButton btnEliminarCliente;
     private javax.swing.JButton btnEliminarConcurso;
     private javax.swing.JButton btnEliminarEmpleado;
+    private javax.swing.JButton btnEliminarGanadorDeConcurso;
     private javax.swing.JButton btnModificarCliente;
     private javax.swing.JButton btnModificarConcurso;
     private javax.swing.JButton btnModificarEmpleado;
+    private javax.swing.JButton btnModificarGanadorDeConcurso;
     private javax.swing.JButton btnRegistrarCliente;
     private javax.swing.JButton btnRegistrarConcurso;
+    private javax.swing.JButton btnRegistrarConcurso1;
+    private javax.swing.JButton btnRegistrarDatosGanadorDeConcurso;
     private javax.swing.JButton btnRegistrarEmpleado;
-    private java.awt.Checkbox checkVehiculo;
-    private java.awt.Checkbox checkVehiculo1;
-    private java.awt.Checkbox checkVehiculo2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnRegistrarGanadorDeConcurso;
+    private java.awt.Checkbox checkConcurso;
+    private java.awt.Checkbox checkVehiculoCliente;
+    private java.awt.Checkbox checkVehiculoEmpleado;
+    private javax.swing.JComboBox<String> jComboBoxEmpleado;
     private com.toedter.calendar.JDateChooser jDateChooserConcursoFin;
     private com.toedter.calendar.JDateChooser jDateChooserConcursoIni;
     private javax.swing.JLabel jLabel1;
@@ -2116,6 +2520,8 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -2128,29 +2534,37 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableClientes;
+    private javax.swing.JTable jTableConcurso;
+    private javax.swing.JTable jTableConcursoHistorial;
     private javax.swing.JTable jTableEmpleados;
-    private javax.swing.JTable jTableEmpleados1;
     private javax.swing.JTable jTableVentas;
-    private javax.swing.JTextField txtCedula;
-    private javax.swing.JTextField txtCedula1;
-    private javax.swing.JPasswordField txtContrasena;
-    private javax.swing.JPasswordField txtContrasena1;
-    private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtCorreo1;
-    private javax.swing.JTextField txtEdad;
-    private javax.swing.JTextField txtEdad1;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombre1;
+    private javax.swing.JTextField txtCedulaCliente;
+    private javax.swing.JTextField txtCedulaEmpleado;
+    private javax.swing.JTextField txtCedulaGanadorConcurso;
+    private javax.swing.JTextField txtCodigoConcurso;
+    private javax.swing.JTextField txtCodigoGanadorConcurso;
+    private javax.swing.JPasswordField txtContrasenaCliente;
+    private javax.swing.JPasswordField txtContrasenaEmpleado;
+    private javax.swing.JTextField txtCorreoCliente;
+    private javax.swing.JTextField txtCorreoEmpleado;
+    private javax.swing.JTextField txtEdadCliente;
+    private javax.swing.JTextField txtEdadEmpleado;
+    private javax.swing.JTextField txtNombreCliente;
     private javax.swing.JTextField txtNombreConcurso;
-    private javax.swing.JTextField txtPlacaVehiculo;
-    private javax.swing.JTextField txtPlacaVehiculo1;
+    private javax.swing.JTextField txtNombreConcurso1;
+    private javax.swing.JTextField txtNombreEmpleado;
+    private javax.swing.JTextField txtNombreGanadorConcurso;
+    private javax.swing.JTextField txtNombrePremioConcurso;
+    private javax.swing.JTextField txtPlacaVehiculoCliente;
+    private javax.swing.JTextField txtPlacaVehiculoEmpleado;
     private javax.swing.JTextField txtPremioConcurso;
-    private javax.swing.JTextField txtTelefono;
-    private javax.swing.JTextField txtTelefono1;
-    private javax.swing.JTextField txtTipoDeVehiculo;
-    private javax.swing.JTextField txtTipoDeVehiculo1;
+    private javax.swing.JTextField txtTelefonoCliente;
+    private javax.swing.JTextField txtTelefonoEmpleado;
+    private javax.swing.JTextField txtTipoDeVehiculoCliente;
+    private javax.swing.JTextField txtTipoDeVehiculoEmpleado;
     private javax.swing.JTextField txtValorMinimoConcurso;
     // End of variables declaration//GEN-END:variables
 }

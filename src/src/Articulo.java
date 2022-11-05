@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 public class Articulo implements Serializable {
 
+    private String codigo;
     private String nombreProducto;
     private String decripcionProducto;
     private String nombreCategoria;
@@ -15,13 +16,22 @@ public class Articulo implements Serializable {
     private int porcentajeDescuento;
     private int cantidadProducto;
 
-    public Articulo(String nombreProducto, String decripcionProducto, String nombreCategoria, float valorDelProducto, int porcentajeDescuento, int cantidadProducto) {
+    public Articulo(String codigo, String nombreProducto, String decripcionProducto, String nombreCategoria, float valorDelProducto, int porcentajeDescuento, int cantidadProducto) {
+        this.codigo = codigo;
         this.nombreProducto = nombreProducto;
         this.decripcionProducto = decripcionProducto;
         this.nombreCategoria = nombreCategoria;
         this.valorDelProducto = valorDelProducto;
         this.porcentajeDescuento = porcentajeDescuento;
         this.cantidadProducto = cantidadProducto;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getNombreProducto() {
@@ -71,5 +81,4 @@ public class Articulo implements Serializable {
     public void setCantidadProducto(int cantidadProducto) {
         this.cantidadProducto = cantidadProducto;
     }
-
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import src.CentroComercial;
 import src.Concurso;
+import src.HistorialConcurso;
 import src.Local;
 import src.Parqueadero;
 import src.Persona;
@@ -18,13 +19,15 @@ public class Singleton {
     private Lista<Persona> personas;
     private static Local[][] locales;
     private Lista<Concurso> concursos;
+    private HistorialConcurso historialConcursos;
     private Parqueadero parqueadero;
 
     private Singleton() {
         leerListaPersonas();
         leerListaLocales();
         leerListaConcursos();
-        leerListaParqueadero();
+        leerHistorialConcursos();
+        leerParqueadero();
     }
 
     public static Singleton getINSTANCIA() {
@@ -39,12 +42,16 @@ public class Singleton {
         return personas;
     }
 
+    public static Local[][] getLocales() {
+        return locales;
+    }
+
     public Lista<Concurso> getConcursos() {
         return concursos;
     }
 
-    public static Local[][] getLocales() {
-        return locales;
+    public HistorialConcurso getHistorialConcursos() {
+        return historialConcursos;
     }
 
     public Parqueadero getParqueadero() {
@@ -84,7 +91,18 @@ public class Singleton {
         }
     }
 
-    private void leerListaParqueadero() {
+    private void leerHistorialConcursos() {
+        try {
+            FileInputStream archivo = new FileInputStream("historialConcursos.dat");
+            ObjectInputStream lector = new ObjectInputStream(archivo);
+            historialConcursos = (HistorialConcurso) lector.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+            historialConcursos = new HistorialConcurso();
+        }
+    }
+
+    private void leerParqueadero() {
         try {
             FileInputStream archivo = new FileInputStream("parqueadero.dat");
             ObjectInputStream lector = new ObjectInputStream(archivo);

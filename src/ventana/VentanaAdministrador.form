@@ -4,6 +4,7 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="Administrador"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -45,7 +46,7 @@
               <Group type="102" attributes="0">
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                  <Component id="jPanel3" max="32767" attributes="0"/>
+                  <Component id="jPanel3" pref="718" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -229,7 +230,7 @@
             <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="0" y="63" width="690" height="595"/>
+                  <AbsoluteConstraints x="0" y="63" width="710" height="620"/>
                 </Constraint>
               </Constraints>
 
@@ -248,7 +249,7 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="496" max="32767" attributes="0"/>
+                              <EmptySpace pref="516" max="32767" attributes="0"/>
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabelRegistrar2" min="-2" max="-2" attributes="0"/>
@@ -259,7 +260,7 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="547" max="32767" attributes="0"/>
+                              <EmptySpace pref="572" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabelRegistrar2" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -320,7 +321,7 @@
                                       <Component id="jPanel13" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="21" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="41" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -334,7 +335,7 @@
                                   <Component id="jPanel13" max="32767" attributes="0"/>
                                   <Component id="jPanel10" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="113" max="32767" attributes="0"/>
+                              <EmptySpace pref="138" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabelRegistrar1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -388,21 +389,21 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="checkVehiculo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtTelefono" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtEdad" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtCedula" alignment="1" max="32767" attributes="0"/>
-                                      <Component id="txtCorreo" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtContrasena" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtTipoDeVehiculo" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtPlacaVehiculo" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jComboBox1" pref="192" max="32767" attributes="0"/>
+                                      <Component id="checkVehiculoEmpleado" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtTelefonoEmpleado" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtEdadEmpleado" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtCedulaEmpleado" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="txtCorreoEmpleado" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtContrasenaEmpleado" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtTipoDeVehiculoEmpleado" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtPlacaVehiculoEmpleado" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jComboBoxEmpleado" pref="192" max="32767" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="btnRegistrarEmpleado" min="-2" pref="92" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="btnModificarEmpleado" min="-2" pref="92" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="txtNombre" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtNombreEmpleado" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
@@ -417,25 +418,25 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtNombre" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtNombreEmpleado" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtCedula" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCedulaEmpleado" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtCorreo" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCorreoEmpleado" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtContrasena" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtContrasenaEmpleado" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtTelefono" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtTelefonoEmpleado" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtEdad" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtEdadEmpleado" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="checkVehiculo" min="-2" max="-2" attributes="0"/>
+                                  <Component id="checkVehiculoEmpleado" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtTipoDeVehiculo" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtTipoDeVehiculoEmpleado" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtPlacaVehiculo" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtPlacaVehiculoEmpleado" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jComboBoxEmpleado" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="btnModificarEmpleado" min="-2" max="-2" attributes="0"/>
@@ -457,7 +458,7 @@
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarEmpleadoActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtTelefono">
+                        <Component class="javax.swing.JTextField" name="txtTelefonoEmpleado">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -465,11 +466,11 @@
                             <Property name="text" type="java.lang.String" value="Numero movil"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTelefonoFocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTelefonoFocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTelefonoEmpleadoFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTelefonoEmpleadoFocusLost"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtEdad">
+                        <Component class="javax.swing.JTextField" name="txtEdadEmpleado">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -477,11 +478,11 @@
                             <Property name="text" type="java.lang.String" value="Edad"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtEdadFocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtEdadFocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtEdadEmpleadoFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtEdadEmpleadoFocusLost"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtCedula">
+                        <Component class="javax.swing.JTextField" name="txtCedulaEmpleado">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -489,11 +490,11 @@
                             <Property name="text" type="java.lang.String" value="Cedula"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCedulaFocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCedulaFocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCedulaEmpleadoFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCedulaEmpleadoFocusLost"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtCorreo">
+                        <Component class="javax.swing.JTextField" name="txtCorreoEmpleado">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -501,11 +502,11 @@
                             <Property name="text" type="java.lang.String" value="Correo"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCorreoFocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCorreoFocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCorreoEmpleadoFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCorreoEmpleadoFocusLost"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JPasswordField" name="txtContrasena">
+                        <Component class="javax.swing.JPasswordField" name="txtContrasenaEmpleado">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -513,19 +514,19 @@
                             <Property name="text" type="java.lang.String" value="******"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtContrasenaFocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtContrasenaFocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtContrasenaEmpleadoFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtContrasenaEmpleadoFocusLost"/>
                           </Events>
                         </Component>
-                        <Component class="java.awt.Checkbox" name="checkVehiculo">
+                        <Component class="java.awt.Checkbox" name="checkVehiculoEmpleado">
                           <Properties>
                             <Property name="label" type="java.lang.String" value="&#xbf;Tiene Vehiculo?"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="checkVehiculoItemStateChanged"/>
+                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="checkVehiculoEmpleadoItemStateChanged"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtPlacaVehiculo">
+                        <Component class="javax.swing.JTextField" name="txtPlacaVehiculoEmpleado">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -533,11 +534,11 @@
                             <Property name="text" type="java.lang.String" value="Placa del vehiculo"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPlacaVehiculoFocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPlacaVehiculoFocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPlacaVehiculoEmpleadoFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPlacaVehiculoEmpleadoFocusLost"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtTipoDeVehiculo">
+                        <Component class="javax.swing.JTextField" name="txtTipoDeVehiculoEmpleado">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -545,11 +546,11 @@
                             <Property name="text" type="java.lang.String" value="Tipo de vehiculo"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTipoDeVehiculoFocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTipoDeVehiculoFocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTipoDeVehiculoEmpleadoFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTipoDeVehiculoEmpleadoFocusLost"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtNombre">
+                        <Component class="javax.swing.JTextField" name="txtNombreEmpleado">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -557,11 +558,11 @@
                             <Property name="text" type="java.lang.String" value="Nombre completo"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreFocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreFocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreEmpleadoFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreEmpleadoFocusLost"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JComboBox" name="jComboBox1">
+                        <Component class="javax.swing.JComboBox" name="jComboBoxEmpleado">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                               <StringArray count="2">
@@ -659,23 +660,19 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jPanel11" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="29" max="32767" attributes="0"/>
+                          </Group>
                           <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabelRegistrar3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="jPanel11" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="9" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <Component id="jLabelRegistrar3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -687,7 +684,7 @@
                                   <Component id="jPanel12" max="32767" attributes="0"/>
                                   <Component id="jPanel11" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="134" max="32767" attributes="0"/>
+                              <EmptySpace pref="159" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabelRegistrar3" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -740,17 +737,17 @@
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="txtPlacaVehiculo1" alignment="0" pref="200" max="32767" attributes="0"/>
-                                  <Component id="txtTipoDeVehiculo1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtEdad1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtTelefono1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtContrasena1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtCorreo1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtCedula1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtPlacaVehiculoCliente" alignment="0" pref="200" max="32767" attributes="0"/>
+                                  <Component id="txtTipoDeVehiculoCliente" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtEdadCliente" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtTelefonoCliente" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtContrasenaCliente" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtCorreoCliente" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtCedulaCliente" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="checkVehiculo1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="checkVehiculoCliente" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
@@ -767,7 +764,7 @@
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <Component id="txtNombre1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtNombreCliente" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -775,23 +772,23 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtNombre1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtNombreCliente" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtCedula1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCedulaCliente" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtCorreo1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCorreoCliente" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtContrasena1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtContrasenaCliente" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtTelefono1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtTelefonoCliente" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtEdad1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtEdadCliente" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="checkVehiculo1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="checkVehiculoCliente" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtTipoDeVehiculo1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtTipoDeVehiculoCliente" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtPlacaVehiculo1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtPlacaVehiculoCliente" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="btnRegistrarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -813,7 +810,7 @@
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarClienteActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtTelefono1">
+                        <Component class="javax.swing.JTextField" name="txtTelefonoCliente">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -821,11 +818,11 @@
                             <Property name="text" type="java.lang.String" value="Numero movil"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTelefono1FocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTelefono1FocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTelefonoClienteFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTelefonoClienteFocusLost"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtEdad1">
+                        <Component class="javax.swing.JTextField" name="txtEdadCliente">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -833,11 +830,11 @@
                             <Property name="text" type="java.lang.String" value="Edad"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtEdad1FocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtEdad1FocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtEdadClienteFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtEdadClienteFocusLost"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtCedula1">
+                        <Component class="javax.swing.JTextField" name="txtCedulaCliente">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -845,11 +842,11 @@
                             <Property name="text" type="java.lang.String" value="Cedula"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCedula1FocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCedula1FocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCedulaClienteFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCedulaClienteFocusLost"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtCorreo1">
+                        <Component class="javax.swing.JTextField" name="txtCorreoCliente">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -857,11 +854,11 @@
                             <Property name="text" type="java.lang.String" value="Correo"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCorreo1FocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCorreo1FocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCorreoClienteFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCorreoClienteFocusLost"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JPasswordField" name="txtContrasena1">
+                        <Component class="javax.swing.JPasswordField" name="txtContrasenaCliente">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -869,19 +866,19 @@
                             <Property name="text" type="java.lang.String" value="******"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtContrasena1FocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtContrasena1FocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtContrasenaClienteFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtContrasenaClienteFocusLost"/>
                           </Events>
                         </Component>
-                        <Component class="java.awt.Checkbox" name="checkVehiculo1">
+                        <Component class="java.awt.Checkbox" name="checkVehiculoCliente">
                           <Properties>
                             <Property name="label" type="java.lang.String" value="&#xbf;Tiene Vehiculo?"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="checkVehiculo1ItemStateChanged"/>
+                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="checkVehiculoClienteItemStateChanged"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtPlacaVehiculo1">
+                        <Component class="javax.swing.JTextField" name="txtPlacaVehiculoCliente">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -889,11 +886,11 @@
                             <Property name="text" type="java.lang.String" value="Placa del vehiculo"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPlacaVehiculo1FocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPlacaVehiculo1FocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPlacaVehiculoClienteFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPlacaVehiculoClienteFocusLost"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtTipoDeVehiculo1">
+                        <Component class="javax.swing.JTextField" name="txtTipoDeVehiculoCliente">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -901,11 +898,11 @@
                             <Property name="text" type="java.lang.String" value="Tipo de vehiculo"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTipoDeVehiculo1FocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTipoDeVehiculo1FocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTipoDeVehiculoClienteFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTipoDeVehiculoClienteFocusLost"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtNombre1">
+                        <Component class="javax.swing.JTextField" name="txtNombreCliente">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -913,8 +910,8 @@
                             <Property name="text" type="java.lang.String" value="Nombre completo"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombre1FocusGained"/>
-                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombre1FocusLost"/>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreClienteFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreClienteFocusLost"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="btnModificarCliente">
@@ -1007,7 +1004,7 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="496" max="32767" attributes="0"/>
+                              <EmptySpace pref="516" max="32767" attributes="0"/>
                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabelRegistrar4" min="-2" max="-2" attributes="0"/>
@@ -1155,34 +1152,46 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="496" max="32767" attributes="0"/>
-                              <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabelRegistrar5" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jPanel15" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jPanel16" min="-2" pref="202" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jPanel18" max="32767" attributes="0"/>
+                                  <Component id="jPanel15" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jPanel17" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jPanel16" min="-2" pref="202" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jLabelRegistrar5" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace pref="25" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jPanel15" max="32767" attributes="0"/>
-                                  <Component id="jPanel16" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace pref="207" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelRegistrar5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jPanel16" min="-2" pref="428" max="-2" attributes="0"/>
+                                      <EmptySpace pref="120" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabelRegistrar5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jPanel15" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jPanel17" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jPanel18" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -1227,16 +1236,12 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane4" alignment="0" pref="443" max="32767" attributes="0"/>
+                              <Component id="jScrollPane4" alignment="0" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane4" min="-2" pref="186" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="jScrollPane4" alignment="0" pref="127" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                       </Layout>
@@ -1248,10 +1253,11 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                           <SubComponents>
-                            <Component class="javax.swing.JTable" name="jTableEmpleados1">
+                            <Component class="javax.swing.JTable" name="jTableConcurso">
                               <Properties>
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                  <Table columnCount="6" rowCount="0">
+                                  <Table columnCount="7" rowCount="0">
+                                    <Column editable="false" title="Codigo" type="java.lang.Object"/>
                                     <Column editable="false" title="Nombre" type="java.lang.Object"/>
                                     <Column editable="false" title="Premio" type="java.lang.Object"/>
                                     <Column editable="false" title="valor minimo" type="java.lang.Object"/>
@@ -1282,73 +1288,8 @@
                         </Property>
                       </Properties>
 
-                      <Layout>
-                        <DimensionLayout dim="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                              <Component id="checkVehiculo2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txtPremioConcurso" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="txtValorMinimoConcurso" alignment="0" pref="190" max="32767" attributes="0"/>
-                                              <Component id="jDateChooserConcursoIni" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jDateChooserConcursoFin" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="txtNombreConcurso" alignment="0" max="32767" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                                                  <Component id="btnEliminarConcurso" min="-2" pref="92" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="btnRegistrarConcurso" min="-2" pref="92" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="btnModificarConcurso" min="-2" pref="92" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                        </DimensionLayout>
-                        <DimensionLayout dim="1">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtNombreConcurso" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtPremioConcurso" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtValorMinimoConcurso" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jDateChooserConcursoIni" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jDateChooserConcursoFin" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="checkVehiculo2" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="btnModificarConcurso" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="btnRegistrarConcurso" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="btnEliminarConcurso" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                        </DimensionLayout>
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+                        <Property name="useNullLayout" type="boolean" value="false"/>
                       </Layout>
                       <SubComponents>
                         <Component class="javax.swing.JButton" name="btnRegistrarConcurso">
@@ -1358,6 +1299,11 @@
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarConcursoActionPerformed"/>
                           </Events>
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                              <AbsoluteConstraints x="5" y="282" width="92" height="-1"/>
+                            </Constraint>
+                          </Constraints>
                         </Component>
                         <Component class="javax.swing.JTextField" name="txtPremioConcurso">
                           <Properties>
@@ -1370,6 +1316,11 @@
                             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPremioConcursoFocusGained"/>
                             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPremioConcursoFocusLost"/>
                           </Events>
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                              <AbsoluteConstraints x="5" y="84" width="190" height="-1"/>
+                            </Constraint>
+                          </Constraints>
                         </Component>
                         <Component class="javax.swing.JTextField" name="txtValorMinimoConcurso">
                           <Properties>
@@ -1382,11 +1333,21 @@
                             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtValorMinimoConcursoFocusGained"/>
                             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtValorMinimoConcursoFocusLost"/>
                           </Events>
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                              <AbsoluteConstraints x="5" y="114" width="190" height="-1"/>
+                            </Constraint>
+                          </Constraints>
                         </Component>
-                        <Component class="java.awt.Checkbox" name="checkVehiculo2">
+                        <Component class="java.awt.Checkbox" name="checkConcurso">
                           <Properties>
                             <Property name="label" type="java.lang.String" value="&#xbf;Vigente?"/>
                           </Properties>
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                              <AbsoluteConstraints x="5" y="252" width="-1" height="-1"/>
+                            </Constraint>
+                          </Constraints>
                         </Component>
                         <Component class="javax.swing.JTextField" name="txtNombreConcurso">
                           <Properties>
@@ -1399,6 +1360,11 @@
                             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreConcursoFocusGained"/>
                             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreConcursoFocusLost"/>
                           </Events>
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                              <AbsoluteConstraints x="5" y="54" width="190" height="-1"/>
+                            </Constraint>
+                          </Constraints>
                         </Component>
                         <Component class="javax.swing.JButton" name="btnModificarConcurso">
                           <Properties>
@@ -1407,6 +1373,11 @@
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModificarConcursoActionPerformed"/>
                           </Events>
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                              <AbsoluteConstraints x="103" y="282" width="92" height="-1"/>
+                            </Constraint>
+                          </Constraints>
                         </Component>
                         <Component class="javax.swing.JButton" name="btnEliminarConcurso">
                           <Properties>
@@ -1415,20 +1386,334 @@
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarConcursoActionPerformed"/>
                           </Events>
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                              <AbsoluteConstraints x="103" y="312" width="92" height="-1"/>
+                            </Constraint>
+                          </Constraints>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel1">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Fecha inicio:"/>
                           </Properties>
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                              <AbsoluteConstraints x="5" y="144" width="-1" height="-1"/>
+                            </Constraint>
+                          </Constraints>
                         </Component>
                         <Component class="com.toedter.calendar.JDateChooser" name="jDateChooserConcursoIni">
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                              <AbsoluteConstraints x="5" y="166" width="190" height="-1"/>
+                            </Constraint>
+                          </Constraints>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel9">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Fecha de finalizacion:"/>
                           </Properties>
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                              <AbsoluteConstraints x="5" y="196" width="-1" height="-1"/>
+                            </Constraint>
+                          </Constraints>
                         </Component>
                         <Component class="com.toedter.calendar.JDateChooser" name="jDateChooserConcursoFin">
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                              <AbsoluteConstraints x="5" y="218" width="190" height="-1"/>
+                            </Constraint>
+                          </Constraints>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="txtCodigoConcurso">
+                          <Properties>
+                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="99" green="99" red="99" type="rgb"/>
+                            </Property>
+                            <Property name="text" type="java.lang.String" value="Codigo concurso"/>
+                          </Properties>
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                              <AbsoluteConstraints x="5" y="24" width="190" height="-1"/>
+                            </Constraint>
+                          </Constraints>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="btnRegistrarConcurso1">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Limpiar datos"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarConcurso1ActionPerformed"/>
+                          </Events>
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                              <AbsoluteConstraints x="5" y="312" width="92" height="-1"/>
+                            </Constraint>
+                          </Constraints>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Container class="javax.swing.JPanel" name="jPanel17">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                            <TitledBorder title="Historial de concursos"/>
+                          </Border>
+                        </Property>
+                      </Properties>
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jScrollPane5" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jScrollPane5" alignment="0" pref="127" max="32767" attributes="0"/>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Container class="javax.swing.JScrollPane" name="jScrollPane5">
+                          <AuxValues>
+                            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                          </AuxValues>
+
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                          <SubComponents>
+                            <Component class="javax.swing.JTable" name="jTableConcursoHistorial">
+                              <Properties>
+                                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                                  <Table columnCount="8" rowCount="0">
+                                    <Column editable="false" title="Codigo" type="java.lang.Object"/>
+                                    <Column editable="false" title="Nombre" type="java.lang.Object"/>
+                                    <Column editable="false" title="Premio" type="java.lang.Object"/>
+                                    <Column editable="false" title="valor minimo" type="java.lang.Object"/>
+                                    <Column editable="false" title="Fecha inicio" type="java.lang.Object"/>
+                                    <Column editable="false" title="Fecha fin" type="java.lang.Object"/>
+                                    <Column editable="false" title="Participantes" type="java.lang.Object"/>
+                                    <Column editable="false" title="Ganador" type="java.lang.Object"/>
+                                  </Table>
+                                </Property>
+                                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                                  <TableColumnModel selectionModel="0">
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                  </TableColumnModel>
+                                </Property>
+                                <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                                  <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                                </Property>
+                              </Properties>
+                            </Component>
+                          </SubComponents>
+                        </Container>
+                      </SubComponents>
+                    </Container>
+                    <Container class="javax.swing.JPanel" name="jPanel18">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                            <TitledBorder title="Informacion del ganador"/>
+                          </Border>
+                        </Property>
+                      </Properties>
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="txtNombreConcurso1" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtCodigoGanadorConcurso" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="txtCedulaGanadorConcurso" max="32767" attributes="0"/>
+                                      <Component id="txtNombrePremioConcurso" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="txtNombreGanadorConcurso" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="btnRegistrarGanadorDeConcurso" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnModificarGanadorDeConcurso" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnRegistrarDatosGanadorDeConcurso" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnEliminarGanadorDeConcurso" min="-2" pref="81" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="txtCodigoGanadorConcurso" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtNombrePremioConcurso" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="txtNombreGanadorConcurso" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtCedulaGanadorConcurso" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="txtNombreConcurso1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="btnEliminarGanadorDeConcurso" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnRegistrarGanadorDeConcurso" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnModificarGanadorDeConcurso" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnRegistrarDatosGanadorDeConcurso" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JTextField" name="txtNombreGanadorConcurso">
+                          <Properties>
+                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="99" green="99" red="99" type="rgb"/>
+                            </Property>
+                            <Property name="text" type="java.lang.String" value="Nombre ganador"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreGanadorConcursoFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreGanadorConcursoFocusLost"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="txtCodigoGanadorConcurso">
+                          <Properties>
+                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="99" green="99" red="99" type="rgb"/>
+                            </Property>
+                            <Property name="text" type="java.lang.String" value="Codigo concurso"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCodigoGanadorConcursoFocusGained"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="txtCedulaGanadorConcurso">
+                          <Properties>
+                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="99" green="99" red="99" type="rgb"/>
+                            </Property>
+                            <Property name="text" type="java.lang.String" value="Cedula del ganador"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCedulaGanadorConcursoFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCedulaGanadorConcursoFocusLost"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="txtNombrePremioConcurso">
+                          <Properties>
+                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="99" green="99" red="99" type="rgb"/>
+                            </Property>
+                            <Property name="text" type="java.lang.String" value="Premio concurso"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombrePremioConcursoFocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombrePremioConcursoFocusLost"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="txtNombreConcurso1">
+                          <Properties>
+                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="99" green="99" red="99" type="rgb"/>
+                            </Property>
+                            <Property name="text" type="java.lang.String" value="Usuario ganador"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreConcurso1FocusGained"/>
+                            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreConcurso1FocusLost"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="btnRegistrarGanadorDeConcurso">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Registrar"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarGanadorDeConcursoActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="btnModificarGanadorDeConcurso">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Modificar"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModificarGanadorDeConcursoActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="btnEliminarGanadorDeConcurso">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Eliminar"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarGanadorDeConcursoActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="btnRegistrarDatosGanadorDeConcurso">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Limpiar datos"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarDatosGanadorDeConcursoActionPerformed"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -1447,7 +1732,7 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="496" max="32767" attributes="0"/>
+                              <EmptySpace pref="516" max="32767" attributes="0"/>
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabelRegistrar6" min="-2" max="-2" attributes="0"/>
@@ -1458,7 +1743,7 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="547" max="32767" attributes="0"/>
+                              <EmptySpace pref="572" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabelRegistrar6" alignment="3" min="-2" max="-2" attributes="0"/>
