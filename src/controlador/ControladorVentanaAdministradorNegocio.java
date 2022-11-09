@@ -35,4 +35,8 @@ public class ControladorVentanaAdministradorNegocio {
     public boolean eliminarEmpleadoLocal(String cedula, Local local) {
         return controlador.eliminarEmpleadoLocal(cedula, local);
     }
+
+    public float ingresosGenerados() {
+        return controlador.ingresosGenerados();
+    }
 }

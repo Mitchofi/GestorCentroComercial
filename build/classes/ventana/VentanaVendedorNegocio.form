@@ -122,7 +122,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="510" y="60" width="-1" height="360"/>
+                  <AbsoluteConstraints x="490" y="60" width="-1" height="360"/>
                 </Constraint>
               </Constraints>
 
@@ -140,6 +140,7 @@
                               <Component id="jScrollPane3" pref="0" max="32767" attributes="0"/>
                               <Component id="jComboBox3" alignment="1" pref="192" max="32767" attributes="0"/>
                               <Component id="txtDescuento" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtNombreUsuario" alignment="1" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
                       </Group>
@@ -149,6 +150,8 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txtNombreUsuario" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="txtArticulo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jComboBox3" min="-2" max="-2" attributes="0"/>
@@ -162,7 +165,7 @@
                           <Component id="checkVehiculo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtDescuento" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -291,6 +294,18 @@
                   </Properties>
                   <Events>
                     <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="checkVehiculoItemStateChanged"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="txtNombreUsuario">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="99" green="99" red="99" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Nombre usuario"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreUsuarioFocusGained"/>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtNombreUsuarioFocusLost"/>
                   </Events>
                 </Component>
               </SubComponents>

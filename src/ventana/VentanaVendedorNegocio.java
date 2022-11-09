@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import src.Articulo;
 import src.CentroComercial;
 import src.Local;
+import src.Negocio;
 
 /**
  *
@@ -26,7 +27,7 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
     private DefaultTableModel modelo;
     private Local local;
 
-    public VentanaVendedorNegocio(LogIn logIn, Local local) {
+    public VentanaVendedorNegocio(LogIn logIn, Negocio negocio) {
         initComponents();
         setLocationRelativeTo(this);
         this.ventanaLogIn = logIn;
@@ -61,6 +62,7 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
         jComboBox3 = new javax.swing.JComboBox<>();
         txtDescuento = new javax.swing.JTextField();
         checkVehiculo = new java.awt.Checkbox();
+        txtNombreUsuario = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
@@ -162,6 +164,17 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
             }
         });
 
+        txtNombreUsuario.setForeground(new java.awt.Color(153, 153, 153));
+        txtNombreUsuario.setText("Nombre usuario");
+        txtNombreUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNombreUsuarioFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNombreUsuarioFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -176,13 +189,16 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
                     .addComponent(txtArticulo)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.TRAILING, 0, 192, Short.MAX_VALUE)
-                    .addComponent(txtDescuento))
+                    .addComponent(txtDescuento)
+                    .addComponent(txtNombreUsuario, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(0, 12, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(txtNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -196,12 +212,12 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
                 .addComponent(checkVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addContainerGap())
         );
 
-        jPanel3.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, -1, 360));
+        jPanel3.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 60, -1, 360));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -371,14 +387,20 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
             if (!txtDescuento.getText().equals("Porcentaje de descuento")) {
                 descuento = Integer.parseInt(txtDescuento.getText());
             }
-            Articulo articulo = new Articulo(nombreArticulo, descripcion, categoria, valor, descuento, cantidad);
-            local.getNegocio().getArticulos().add(articulo);
             limpiarTabla();
             cargar();
             CentroComercial.serializarListaLocales();
             JOptionPane.showMessageDialog(this, "Registrado correctamente");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtNombreUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreUsuarioFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreUsuarioFocusGained
+
+    private void txtNombreUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreUsuarioFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreUsuarioFocusLost
 
     public void llenarArticulos() {
         for (int i = 0; i < CentroComercial.locales.length; i++) {
@@ -492,6 +514,7 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
     private javax.swing.JTextField txtArticulo;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtDescuento;
+    private javax.swing.JTextField txtNombreUsuario;
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }

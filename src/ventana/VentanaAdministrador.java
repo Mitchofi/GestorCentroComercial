@@ -162,11 +162,12 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         btnModificarConcurso = new javax.swing.JButton();
         btnEliminarConcurso = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jDateChooserConcursoIni = new com.toedter.calendar.JDateChooser();
         jLabel9 = new javax.swing.JLabel();
-        jDateChooserConcursoFin = new com.toedter.calendar.JDateChooser();
         txtCodigoConcurso = new javax.swing.JTextField();
         btnRegistrarConcurso1 = new javax.swing.JButton();
+        jDateChooserConcursoIni = new com.toedter.calendar.JDateChooser();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jDateChooserConcursoFin = new com.toedter.calendar.JDateChooser();
         jPanel17 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTableConcursoHistorial = new javax.swing.JTable();
@@ -1040,11 +1041,9 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
 
         jLabel1.setText("Fecha inicio:");
         jPanel16.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 144, -1, -1));
-        jPanel16.add(jDateChooserConcursoIni, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 166, 190, -1));
 
         jLabel9.setText("Fecha de finalizacion:");
         jPanel16.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 196, -1, -1));
-        jPanel16.add(jDateChooserConcursoFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 218, 190, -1));
 
         txtCodigoConcurso.setForeground(new java.awt.Color(153, 153, 153));
         txtCodigoConcurso.setText("Codigo concurso");
@@ -1057,6 +1056,9 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             }
         });
         jPanel16.add(btnRegistrarConcurso1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 312, 92, -1));
+        jPanel16.add(jDateChooserConcursoIni, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 180, -1));
+        jPanel16.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 180, -1));
+        jPanel16.add(jDateChooserConcursoFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 180, -1));
 
         jPanel17.setBackground(new java.awt.Color(255, 255, 255));
         jPanel17.setBorder(javax.swing.BorderFactory.createTitledBorder("Historial de concursos"));
@@ -1248,7 +1250,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelRegistrar5)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2144,7 +2146,8 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             modeloTablaCliente = (DefaultTableModel) jTableClientes.getModel();
             Object[] ob = new Object[5];
             for (int i = 0; i < CentroComercial.personas.Size(); i++) {
-                if (CentroComercial.personas.obtenerDato(i) instanceof Cliente) {
+                if (!(CentroComercial.personas.obtenerDato(i) instanceof Cliente)) {
+                } else {
                     Cliente aux = (Cliente) CentroComercial.personas.obtenerDato(i);
                     ob[0] = aux.getNombre();
                     ob[1] = aux.getCorreo();
@@ -2170,7 +2173,8 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             modeloTablaEmpleado = (DefaultTableModel) jTableEmpleados.getModel();
             Object[] ob = new Object[5];
             for (int i = 0; i < CentroComercial.personas.Size(); i++) {
-                if (CentroComercial.personas.obtenerDato(i) instanceof Empleado) {
+                if (!(CentroComercial.personas.obtenerDato(i) instanceof Empleado)) {
+                } else {
                     Empleado aux = (Empleado) CentroComercial.personas.obtenerDato(i);
                     ob[0] = aux.getNombre();
                     ob[1] = aux.getCorreo();
@@ -2194,13 +2198,13 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
     public void cargarTablaVentas() {
         modeloTablaVentas = (DefaultTableModel) jTableVentas.getModel();
         Object[] ob = new Object[4];
-        for (int i = 0; i < CentroComercial.locales.length; i++) {
-            for (int j = 0; j < CentroComercial.locales[i].length; j++) {
-                if (CentroComercial.locales[i][j].getNegocio() != null) {
-                    ob[0] = CentroComercial.locales[i][j].getNegocio().getNombre();
-                    ob[1] = CentroComercial.locales[i][j].getNegocio().getAdministrador().getNombre();
-                    ob[2] = CentroComercial.locales[i][j].getNegocio().getVentas().Size();
-                    ob[3] = CentroComercial.locales[i][j].getNegocio().ingresosGenerados();
+        for (Local[] locale : CentroComercial.locales) {
+            for (Local locale1 : locale) {
+                if (locale1.getNegocio() != null) {
+                    ob[0] = locale1.getNegocio().getNombre();
+                    ob[1] = locale1.getNegocio().getAdministrador().getNombre();
+                    ob[2] = locale1.getNegocio().getVentas().Size();
+                    ob[3] = locale1.getNegocio().ingresosGenerados();
                     modeloTablaVentas.addRow(ob);
                 }
             }
@@ -2329,6 +2333,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
 
     public void mouseTablEmpleado() {
         jTableEmpleados.addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent Mouse_evt) {
                 JTable table = (JTable) Mouse_evt.getSource();
                 Point point = Mouse_evt.getPoint();
@@ -2372,6 +2377,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
 
     public void mouseTableCliente() {
         jTableClientes.addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent Mouse_evt) {
                 JTable table = (JTable) Mouse_evt.getSource();
                 Point point = Mouse_evt.getPoint();
@@ -2414,6 +2420,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
 
     public void mouseTableConcurso() {
         jTableConcurso.addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent Mouse_evt) {
                 JTable table = (JTable) Mouse_evt.getSource();
                 Point point = Mouse_evt.getPoint();
@@ -2489,6 +2496,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
     private java.awt.Checkbox checkVehiculoCliente;
     private java.awt.Checkbox checkVehiculoEmpleado;
     private javax.swing.JComboBox<String> jComboBoxEmpleado;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooserConcursoFin;
     private com.toedter.calendar.JDateChooser jDateChooserConcursoIni;
     private javax.swing.JLabel jLabel1;

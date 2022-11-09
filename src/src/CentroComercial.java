@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import javax.swing.JOptionPane;
 import util.Lista;
 import util.Queve;
 
@@ -116,23 +117,23 @@ public class CentroComercial implements Serializable {
         return resultado;
     }
     
-    public Local returnLocalAdmin(String correo, String contrasena) {
-        Local local = null;
+    public Negocio returnNegocio(String correo, String contrasena) {
+        Negocio negocio = null;
         for (int i = 0; i < locales.length; i++) {
             for (int j = 0; j < locales[i].length; j++) {
                 if (locales[i][j] != null && locales[i][j].getNegocio() != null) {
                     if (locales[i][j].getNegocio().getAdministrador().getCorreo().equals(correo)
                             && locales[i][j].getNegocio().getAdministrador().getContrasena().equals(contrasena)) {
-                        local = locales[i][j];
+                        negocio = locales[i][j].getNegocio();
                     }
                 }
             }
         }
-        return local;
+        return negocio;
     }
     
-    public Local returnLocalEmpleado(String correo, String contrasena) {
-        Local local = null;
+    public Negocio returnNegocioEmpleado(String correo, String contrasena) {
+        Negocio negocio = null;
         for (int i = 0; i < locales.length; i++) {
             for (int j = 0; j < locales[i].length; j++) {
                 if (locales[i][j].getNegocio() != null) {
@@ -141,13 +142,13 @@ public class CentroComercial implements Serializable {
                                 && locales[i][j].getNegocio().getAdministrador().getContrasena().equals(contrasena)
                                 || locales[i][j].getNegocio().getEmpleados().obtenerDato(k).getCorreo().equals(correo)
                                 && locales[i][j].getNegocio().getEmpleados().obtenerDato(k).getContrasena().equals(contrasena)) {
-                            local = locales[i][j];
+                            negocio = locales[i][j].getNegocio();
                         }
                     }
                 }
             }
         }
-        return local;
+        return negocio;
     }
     
     public Local obtenerLocal(int fila, int columna) {
@@ -415,6 +416,13 @@ public class CentroComercial implements Serializable {
         return registro;
     }
     
+    public boolean eliminarNegocio(Local local) {
+        local.setNegocio(null);
+        local.setDisponible(true);
+        serializarListaLocales();
+        return true;
+    }
+
     /*public boolean comprarArticulo(String nombreLocal, int cantidad) {
         boolean compraRealizada = false;
         for (int i = 0; i < locales.length; i++) {
@@ -430,7 +438,6 @@ public class CentroComercial implements Serializable {
         }
         return compraRealizada;
     }*/
-    
     public static void serializarListaPersonas() {
         try {
             FileOutputStream archivo = new FileOutputStream("personas.dat");

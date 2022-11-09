@@ -5,7 +5,7 @@ import excepciones.ExcepcionNoSeEncuentraElUsuario;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import src.Cliente;
-import src.Local;
+import src.Negocio;
 
 /**
  *
@@ -217,8 +217,8 @@ public class LogIn extends javax.swing.JFrame {
                 ventanaAdmin.setVisible(true);
                 this.dispose();
             } else if (tipo == 2) {
-                Local local = controlador.returnLocalAdmin(correo, contrasena);
-                VentanaAdministradorNegocio ventanaAdministradorNegocio = new VentanaAdministradorNegocio(this, local);
+                Negocio negocio = controlador.returnNegocio(correo, contrasena);
+                VentanaAdministradorNegocio ventanaAdministradorNegocio = new VentanaAdministradorNegocio(this, negocio);
                 ventanaAdministradorNegocio.setVisible(true);
                 this.dispose();
             } else if (tipo == 3) {
@@ -227,13 +227,13 @@ public class LogIn extends javax.swing.JFrame {
                 ventanaCliente.setVisible(true);
                 this.dispose();
             } else if (tipo == 4) {
-                Local local = controlador.returnLocalEmpleado(correo, contrasena);
-                VentanaEncargadoInventario ventanaEncargadoInventario = new VentanaEncargadoInventario(this, local);
+                Negocio negocio = controlador.returnNegocioEmpleado(correo, contrasena);
+                VentanaEncargadoInventario ventanaEncargadoInventario = new VentanaEncargadoInventario(this, negocio);
                 ventanaEncargadoInventario.setVisible(true);
                 this.dispose();
             } else if (tipo == 5) {
-                Local local = controlador.returnLocalEmpleado(correo, contrasena);
-                VentanaVendedorNegocio ventanaVendedorNegocio = new VentanaVendedorNegocio(this, local);
+                Negocio negocio = controlador.returnNegocioEmpleado(correo, contrasena);
+                VentanaVendedorNegocio ventanaVendedorNegocio = new VentanaVendedorNegocio(this, negocio);
                 ventanaVendedorNegocio.setVisible(true);
                 this.dispose();
             } else if (tipo == 6) {

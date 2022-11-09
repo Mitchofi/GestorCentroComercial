@@ -3,6 +3,7 @@ package controlador;
 import src.CentroComercial;
 import src.Cliente;
 import src.Local;
+import src.Negocio;
 
 public class ControladorLogIn {
 
@@ -16,12 +17,12 @@ public class ControladorLogIn {
         return controlador.iniciarSesion(correo, contrasena);
     }
 
-    public Local returnLocalAdmin(String correo, String contrasena) {
-        return controlador.returnLocalAdmin(correo, contrasena);
+    public Negocio returnNegocio(String correo, String contrasena) {
+        return controlador.returnNegocio(correo, contrasena);
     }
 
-    public Local returnLocalEmpleado(String correo, String contrasena) {
-        return controlador.returnLocalEmpleado(correo, contrasena);
+    public Negocio returnNegocioEmpleado(String correo, String contrasena) {
+        return controlador.returnNegocioEmpleado(correo, contrasena);
     }
         public Cliente buscarCliente(String correo, String contrasena) {
             return controlador.buscarCliente(correo, contrasena);

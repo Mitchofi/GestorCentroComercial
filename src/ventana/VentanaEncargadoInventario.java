@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import src.Articulo;
 import src.CentroComercial;
 import src.Local;
+import src.Negocio;
 
 /**
  *
@@ -26,7 +27,7 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
     private DefaultTableModel modelo;
     private Local local;
 
-    public VentanaEncargadoInventario(LogIn logIn, Local local) {
+    public VentanaEncargadoInventario(LogIn logIn, Negocio negocio) {
         initComponents();
         setLocationRelativeTo(this);
         this.ventanaLogIn = logIn;
