@@ -22,11 +22,11 @@ public class VentanaParqueadero extends javax.swing.JFrame implements ActionList
     /**
      * Creates new form VentanaAdministrador
      */
-    private LogIn ventanaLogIn;
+    private VentanaLogIn ventanaLogIn;
     private ControladorVentanaParqueadero controlador;
     private JButton[][] botones;
 
-    public VentanaParqueadero(LogIn logIn) {
+    public VentanaParqueadero(VentanaLogIn logIn) {
         initComponents();
         setLocationRelativeTo(this);
         this.botones = new JButton[5][10];

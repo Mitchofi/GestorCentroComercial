@@ -3,6 +3,7 @@ package Singleton;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
 import src.CentroComercial;
 import src.Concurso;
 import src.HistorialConcurso;
@@ -11,7 +12,7 @@ import src.Parqueadero;
 import src.Persona;
 import util.Lista;
 
-public class Singleton {
+public class Singleton implements Serializable {
 
     private static Singleton INSTANCIA = new Singleton();
     private static CentroComercial instanciaControlador = new CentroComercial();

@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import src.Articulo;
 import src.CentroComercial;
-import src.Local;
 import src.Negocio;
 
 /**
@@ -22,17 +21,17 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
     /**
      * Creates new form VentanaAdministrador
      */
-    private LogIn ventanaLogIn;
+    private VentanaLogIn ventanaLogIn;
     private ControladorVentanaAdministrador controlador;
     private DefaultTableModel modelo;
-    private Local local;
+    private Negocio negocio;
 
-    public VentanaEncargadoInventario(LogIn logIn, Negocio negocio) {
+    public VentanaEncargadoInventario(VentanaLogIn logIn, Negocio negocio) {
         initComponents();
         setLocationRelativeTo(this);
         this.ventanaLogIn = logIn;
         this.controlador = new ControladorVentanaAdministrador();
-        this.local = local;
+        this.negocio = negocio;
         modelo = new DefaultTableModel();
         limpiarTabla();
         cargar();
@@ -74,6 +73,7 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administrador");
+        setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setForeground(new java.awt.Color(153, 153, 153));
@@ -370,7 +370,7 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
                 descuento = Integer.parseInt(txtDescuento.getText());
             }
             Articulo articulo = new Articulo(codigo, nombreArticulo, descripcion, categoria, valor, descuento, cantidad);
-            local.getNegocio().getArticulos().add(articulo);
+            negocio.getArticulos().add(articulo);
             limpiarTabla();
             cargar();
             CentroComercial.serializarListaLocales();

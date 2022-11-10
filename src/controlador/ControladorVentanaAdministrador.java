@@ -8,7 +8,6 @@ import excepciones.ExcepcionClienteDuplicado;
 import src.CentroComercial;
 import src.Cliente;
 import src.Concurso;
-import src.Empleado;
 import src.Local;
 import src.Persona;
 
@@ -18,7 +17,7 @@ import src.Persona;
  */
 public class ControladorVentanaAdministrador {
 
-    CentroComercial controlador;
+    private CentroComercial controlador;
 
     public ControladorVentanaAdministrador() {
         this.controlador = new CentroComercial();
@@ -31,47 +30,7 @@ public class ControladorVentanaAdministrador {
     public boolean validarCorreo(String correo) {
         return controlador.validarCorreo(correo);
     }
-
-    public boolean anadirEmpleadoCentroComercial(Empleado empleado) {
-        return controlador.anadirEmpleadoCentroComercial(empleado);
-    }
-
-    public boolean modificarEmpleadoCentroComercial(String cedula, Empleado empleado) {
-        return controlador.modificarEmpleadoCentroComercial(cedula, empleado);
-    }
-
-    public boolean eliminarEmpleadoCentroComercial(String cedula) {
-        return controlador.eliminarEmpleadoCentroComercial(cedula);
-    }
-
-    public boolean anadirCliente(Cliente cliente) throws ExcepcionClienteDuplicado {
-        return controlador.anadirCliente(cliente);
-    }
-
-    public boolean modificarCliente(String cedula, Cliente cliente) {
-        return controlador.modificarCliente(cedula, cliente);
-    }
-
-    public boolean eliminarCliente(String cedula) {
-        return controlador.eliminarCliente(cedula);
-    }
-
-    public boolean anadirConcurso(Concurso concurso) {
-        return controlador.anadirConcurso(concurso);
-    }
-
-    public boolean modificarConcurso(int codigo, Concurso concurso) {
-        return controlador.modificarConcurso(codigo, concurso);
-    }
-
-    public boolean eliminarConcurso(int codigo) {
-        return controlador.eliminarConcurso(codigo);
-    }
-
-    public Concurso buscarPorConcurso(int codigo) {
-        return controlador.buscarPorConcurso(codigo);
-    }
-
+    
     public Persona buscarPorCedula(String cedula) {
         return controlador.buscarPorCedula(cedula);
     }

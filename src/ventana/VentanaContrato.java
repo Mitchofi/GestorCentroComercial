@@ -22,14 +22,12 @@ public class VentanaContrato extends javax.swing.JFrame {
     /**
      * Creates new form VentanaAdministrador
      */
-    private VentanaAdministrador ventanaAdministrador;
     private ControladorVentanaContrato controlador;
     private Local local;
 
-    public VentanaContrato(VentanaAdministrador ventanaAdministrador, Local local) {
+    public VentanaContrato(Local local) {
         initComponents();
         setLocationRelativeTo(this);
-        this.ventanaAdministrador = ventanaAdministrador;
         this.controlador = new ControladorVentanaContrato();
         this.local = local;
     }
@@ -356,6 +354,7 @@ public class VentanaContrato extends javax.swing.JFrame {
         } else {
             String telefono = txtTelefono.getText();
             String nombre = txtNombre.getText();
+            String nombreNegocio = txtNombreNegocio.getText();
             short edad = Short.parseShort(txtEdad.getText());
             String cedula = txtCedula.getText();
             String correo = txtCorreo.getText();
@@ -363,20 +362,17 @@ public class VentanaContrato extends javax.swing.JFrame {
             String descripcion = txtContrato.getText();
             Date fechaInicio = jDateInicio.getDate();
             Date fechaFinal = jDateFinal.getDate();
-            if (controlador.validarCorreo(correo)) {
+            if (controlador.validarCorreo(correo) || controlador.validarCorreoAdmin(correo)) {
                 JOptionPane.showMessageDialog(this, "Ya hay un usuario registrado con ese correo");
             } else {
                 AdministradorDeNegocio administradorNegocio = new AdministradorDeNegocio(nombre, cedula, telefono, correo, contrasena, edad);
                 Negocio negocio = new Negocio();
-                negocio.setNombre(nombre);
+                negocio.setNombre(nombreNegocio);
                 negocio.setAdministrador(administradorNegocio);
                 Contrato contrato = new Contrato(negocio, descripcion, fechaInicio, fechaFinal);
                 if (controlador.anadirNegocio(administradorNegocio, negocio, contrato, local)) {
                     JOptionPane.showMessageDialog(this, "Registrado correctamente");
                     cleanTextField();
-                    ventanaAdministrador.limpiarTablaVentas();
-                    ventanaAdministrador.cargarTablaVentas();
-                    ventanaAdministrador.validarPosiciones();
                 } else {
                     JOptionPane.showMessageDialog(this, "No pudiste ser registrado"
                             + " debido a que hay un usuario registrado con algunos de los datos que escribistes ");
@@ -485,6 +481,7 @@ public class VentanaContrato extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTelefonoFocusGained
 
     private void jLabelRegistrar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar2MouseClicked
+        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador();
         ventanaAdministrador.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabelRegistrar2MouseClicked

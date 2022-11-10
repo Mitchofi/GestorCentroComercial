@@ -10,12 +10,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import javax.swing.JOptionPane;
 import util.Lista;
 import util.Queve;
 
 public class CentroComercial implements Serializable {
-    
+
     public static Lista<Persona> personas;
     public static Local[][] locales;
     public static Parqueadero parqueadero;
@@ -23,7 +22,7 @@ public class CentroComercial implements Serializable {
     public static HistorialConcurso historialConcursos;
     public static Queve<Solicitud> solicitudes;
     AdministradorGCentroComercial administrador;
-    
+
     public CentroComercial() {
         this.personas = Singleton.getINSTANCIA().getPersonas();
         this.locales = Singleton.getINSTANCIA().getLocales();
@@ -37,7 +36,7 @@ public class CentroComercial implements Serializable {
             serializarListaLocales();
         }
     }
-    
+
     private void initLocales() {
         for (int i = 0; i < locales.length; i++) {
             for (int j = 0; j < locales[i].length; j++) {
@@ -45,7 +44,7 @@ public class CentroComercial implements Serializable {
             }
         }
     }
-    
+
     public int iniciarSesion(String correo, String contrasena) throws ExcepcionNoSeEncuentraElUsuario {
         int resultado = 0;
         if (administrador.getCorreo().equals(correo)
@@ -108,7 +107,7 @@ public class CentroComercial implements Serializable {
                         && personas.obtenerDato(k).getContrasena().equals(contrasena)) {
                     resultado = 6;
                 }
-                
+
             }
         }
         if (resultado == 0) {
@@ -116,7 +115,7 @@ public class CentroComercial implements Serializable {
         }
         return resultado;
     }
-    
+
     public Negocio returnNegocio(String correo, String contrasena) {
         Negocio negocio = null;
         for (int i = 0; i < locales.length; i++) {
@@ -131,7 +130,7 @@ public class CentroComercial implements Serializable {
         }
         return negocio;
     }
-    
+
     public Negocio returnNegocioEmpleado(String correo, String contrasena) {
         Negocio negocio = null;
         for (int i = 0; i < locales.length; i++) {
@@ -150,15 +149,15 @@ public class CentroComercial implements Serializable {
         }
         return negocio;
     }
-    
+
     public Local obtenerLocal(int fila, int columna) {
         return locales[fila][columna];
     }
-    
+
     public Parqueadero returnParqueadero() {
         return parqueadero;
     }
-    
+
     public boolean anadirCliente(Cliente cliente) throws ExcepcionClienteDuplicado {
         boolean existe = true;
         boolean registrado = false;
@@ -190,7 +189,7 @@ public class CentroComercial implements Serializable {
         }
         return registrado;
     }
-    
+
     public boolean modificarCliente(String cedula, Cliente cliente) {
         boolean modificado = false;
         boolean disponible = true;
@@ -220,7 +219,7 @@ public class CentroComercial implements Serializable {
         }
         return modificado;
     }
-    
+
     public boolean eliminarCliente(String cedula) {
         boolean eliminado = false;
         for (int i = 0; i < personas.Size(); i++) {
@@ -232,7 +231,7 @@ public class CentroComercial implements Serializable {
         }
         return eliminado;
     }
-    
+
     public Cliente buscarCliente(String correo, String contrasena) {
         Cliente cliente = null;
         for (int i = 0; i < personas.Size(); i++) {
@@ -243,7 +242,7 @@ public class CentroComercial implements Serializable {
         }
         return cliente;
     }
-    
+
     public boolean anadirEmpleadoCentroComercial(Empleado empleado) throws ExcepcionEmpleadoDuplicado {
         boolean existe = true;
         boolean registrado = false;
@@ -262,7 +261,7 @@ public class CentroComercial implements Serializable {
         }
         return registrado;
     }
-    
+
     public boolean modificarEmpleadoCentroComercial(String cedula, Empleado empleado) {
         boolean modificado = false;
         boolean disponible = true;
@@ -294,7 +293,7 @@ public class CentroComercial implements Serializable {
         }
         return modificado;
     }
-    
+
     public boolean eliminarEmpleadoCentroComercial(String cedula) {
         boolean eliminado = false;
         for (int i = 0; i < personas.Size(); i++) {
@@ -306,7 +305,7 @@ public class CentroComercial implements Serializable {
         }
         return eliminado;
     }
-    
+
     public boolean anadirConcurso(Concurso concurso) {
         boolean existe = true;
         boolean registrado = false;
@@ -325,7 +324,7 @@ public class CentroComercial implements Serializable {
         }
         return registrado;
     }
-    
+
     public boolean modificarConcurso(int codigo, Concurso concurso) {
         boolean modificado = false;
         boolean disponible = true;
@@ -346,7 +345,7 @@ public class CentroComercial implements Serializable {
         }
         return modificado;
     }
-    
+
     public boolean eliminarConcurso(int codigo) {
         boolean eliminado = false;
         for (int i = 0; i < concursos.Size(); i++) {
@@ -358,7 +357,7 @@ public class CentroComercial implements Serializable {
         }
         return eliminado;
     }
-    
+
     public Concurso buscarPorConcurso(int codigo) {
         Concurso concurso = null;
         for (int i = 0; i < concursos.Size(); i++) {
@@ -368,7 +367,7 @@ public class CentroComercial implements Serializable {
         }
         return concurso;
     }
-    
+
     public Persona buscarPorCedula(String cedula) {
         Persona persona = null;
         for (int i = 0; i < personas.Size(); i++) {
@@ -378,7 +377,30 @@ public class CentroComercial implements Serializable {
         }
         return persona;
     }
-    
+
+    public boolean validarCorreoAdmin(String correo) {
+        boolean existe = false;
+        for (int i = 0; i < locales.length; i++) {
+            for (int j = 0; j < locales[i].length; j++) {
+                if (locales[i][j].getNegocio() != null) {
+                    if (locales[i][j].getNegocio().getAdministrador().getCorreo().equals(correo)) {
+                        existe = true;
+                    }
+                    for (int k = 0; k < locales[i][j].getNegocio().getEmpleados().Size(); k++) {
+                        for (int l = 0; l < personas.Size(); l++) {
+                            if (locales[i][j].getNegocio().getAdministrador().getCorreo().equals(personas.obtenerDato(l).getCorreo())
+                                    || locales[i][j].getNegocio().getEmpleados().obtenerDato(k).getCorreo().equals(correo)) {
+                                existe = true;
+                                throw new ExcepcionCorreoDuplicado();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return existe;
+    }
+
     public boolean validarCorreo(String correo) throws ExcepcionCorreoDuplicado {
         boolean existe = false;
         for (int k = 0; k < personas.Size(); k++) {
@@ -403,7 +425,7 @@ public class CentroComercial implements Serializable {
         }
         return existe;
     }
-    
+
     public boolean anadirNegocio(AdministradorDeNegocio administradorDeNegocio, Negocio negocio, Contrato contrato, Local local) {
         boolean registro = false;
         if (local.isDisponible()) {
@@ -415,7 +437,7 @@ public class CentroComercial implements Serializable {
         }
         return registro;
     }
-    
+
     public boolean eliminarNegocio(Local local) {
         local.setNegocio(null);
         local.setDisponible(true);
@@ -447,7 +469,7 @@ public class CentroComercial implements Serializable {
             ex.printStackTrace();
         }
     }
-    
+
     public static void serializarListaLocales() {
         try {
             FileOutputStream archivo = new FileOutputStream("locales.dat");
@@ -457,7 +479,7 @@ public class CentroComercial implements Serializable {
             ex.printStackTrace();
         }
     }
-    
+
     public static void serializarListaConcursos() {
         try {
             FileOutputStream archivo = new FileOutputStream("concursos.dat");
@@ -467,7 +489,7 @@ public class CentroComercial implements Serializable {
             ex.printStackTrace();
         }
     }
-    
+
     public static void serializarHistorialConcursos() {
         try {
             FileOutputStream archivo = new FileOutputStream("historialConcursos.dat");
@@ -477,7 +499,7 @@ public class CentroComercial implements Serializable {
             ex.printStackTrace();
         }
     }
-    
+
     public static void serializarListaParqueadero() {
         try {
             FileOutputStream archivo = new FileOutputStream("parqueadero.dat");

@@ -26,4 +26,7 @@ public class ControladorVentanaContrato {
         return controlador.validarCorreo(correo);
     }
 
+    public boolean validarCorreoAdmin(String correo) {
+        return controlador.validarCorreoAdmin(correo);
+    }
 }

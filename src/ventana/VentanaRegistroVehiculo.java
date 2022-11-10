@@ -4,7 +4,7 @@
  */
 package ventana;
 
-import controlador.ControladorSignUp;
+import controlador.ControladorVentanaSignUp;
 import excepciones.ExcepcionVehiculoDuplicado;
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -18,7 +18,7 @@ import src.Vehiculo;
 public class VentanaRegistroVehiculo extends javax.swing.JFrame {
 
     VentanaParqueadero ventanaParqueadero;
-    ControladorSignUp controlador;
+    ControladorVentanaSignUp controlador;
     Vehiculo vehiculo;
 
     public VentanaRegistroVehiculo(VentanaParqueadero ventanaParqueadero, Vehiculo vehiculo) {
@@ -26,7 +26,7 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         this.ventanaParqueadero = ventanaParqueadero;
         this.vehiculo = vehiculo;
-        this.controlador = new ControladorSignUp();
+        this.controlador = new ControladorVentanaSignUp();
     }
 
     /**

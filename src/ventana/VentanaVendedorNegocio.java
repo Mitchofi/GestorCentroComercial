@@ -22,12 +22,12 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
     /**
      * Creates new form VentanaAdministrador
      */
-    private LogIn ventanaLogIn;
+    private VentanaLogIn ventanaLogIn;
     private ControladorVentanaAdministrador controlador;
     private DefaultTableModel modelo;
     private Local local;
 
-    public VentanaVendedorNegocio(LogIn logIn, Negocio negocio) {
+    public VentanaVendedorNegocio(VentanaLogIn logIn, Negocio negocio) {
         initComponents();
         setLocationRelativeTo(this);
         this.ventanaLogIn = logIn;

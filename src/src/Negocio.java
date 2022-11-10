@@ -116,17 +116,16 @@ public class Negocio implements Serializable {
         return registrado;
     }
 
-    public boolean modificarEmpleadoLocal(String cedula, Empleado empleado, Local local) {
-        Local localAux = local;
-        Persona aux = buscarPorCedulaLocal(cedula, local);
+    public boolean modificarEmpleadoNegocio(String cedula, Empleado empleado, Negocio negocio) {
+        Persona aux = buscarPorCedulaNegocio(cedula, negocio);
         Empleado empleadoAux = (Empleado) aux;
         boolean modificado = false;
         boolean disponible = true;
         if (empleadoAux != null) {
-            for (int i = 0; i < localAux.getNegocio().getEmpleados().Size(); i++) {
+            for (int i = 0; i < negocio.getEmpleados().Size(); i++) {
                 for (int j = 0; j < personas.Size(); j++) {
-                    if (localAux.getNegocio().getEmpleados().obtenerDato(i).getCorreo().equals(empleado.getCorreo())
-                            || localAux.getNegocio().getEmpleados().obtenerDato(i).getNumeroCelular().equals(empleado.getNumeroCelular())
+                    if (negocio.getEmpleados().obtenerDato(i).getCorreo().equals(empleado.getCorreo())
+                            || negocio.getEmpleados().obtenerDato(i).getNumeroCelular().equals(empleado.getNumeroCelular())
                             || personas.obtenerDato(j).getCorreo().equals(empleado.getCorreo())
                             || personas.obtenerDato(j).getNumeroCelular().equals(empleado.getNumeroCelular())) {
                         disponible = false;
@@ -149,11 +148,11 @@ public class Negocio implements Serializable {
         return modificado;
     }
 
-    public boolean eliminarEmpleadoLocal(String cedula, Local local) {
+    public boolean eliminarEmpleadoNegocio(String cedula, Negocio negocio) {
         boolean eliminado = false;
-        for (int i = 0; i < local.getNegocio().getEmpleados().Size(); i++) {
-            if (local.getNegocio().getEmpleados().obtenerDato(i).getCedula().equals(cedula)) {
-                local.getNegocio().getEmpleados().eliminarDato(i);
+        for (int i = 0; i < negocio.getEmpleados().Size(); i++) {
+            if (negocio.getEmpleados().obtenerDato(i).getCedula().equals(cedula)) {
+                negocio.getEmpleados().eliminarDato(i);
                 serializarListaLocales();
                 eliminado = true;
             }
@@ -161,11 +160,11 @@ public class Negocio implements Serializable {
         return eliminado;
     }
 
-    public Persona buscarPorCedulaLocal(String cedula, Local local) {
+    public Persona buscarPorCedulaNegocio(String cedula, Negocio negocio) {
         Persona persona = null;
-        for (int i = 0; i < local.getNegocio().getEmpleados().Size(); i++) {
-            if (local.getNegocio().getEmpleados().obtenerDato(i).getCedula().equals(cedula)) {
-                persona = local.getNegocio().getEmpleados().obtenerDato(i);
+        for (int i = 0; i < negocio.getEmpleados().Size(); i++) {
+            if (negocio.getEmpleados().obtenerDato(i).getCedula().equals(cedula)) {
+                persona = negocio.getEmpleados().obtenerDato(i);
             }
         }
         return persona;

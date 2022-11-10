@@ -5,7 +5,6 @@
 package controlador;
 
 import src.Empleado;
-import src.Local;
 import src.Negocio;
 
 /**
@@ -28,12 +27,12 @@ public class ControladorVentanaAdministradorNegocio {
         return controlador.anadirEmpleadoLocal(empleado);
     }
 
-    public boolean modificarEmpleadoLocal(String cedula, Empleado empleado, Local local) {
-        return controlador.modificarEmpleadoLocal(cedula, empleado, local);
+    public boolean modificarEmpleadoNegocio(String cedula, Empleado empleado, Negocio negocio) {
+        return controlador.modificarEmpleadoNegocio(cedula, empleado, negocio);
     }
 
-    public boolean eliminarEmpleadoLocal(String cedula, Local local) {
-        return controlador.eliminarEmpleadoLocal(cedula, local);
+    public boolean eliminarEmpleadoNegocio(String cedula, Negocio negocio) {
+        return controlador.eliminarEmpleadoNegocio(cedula, negocio);
     }
 
     public float ingresosGenerados() {
