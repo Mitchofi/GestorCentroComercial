@@ -10,7 +10,6 @@ import util.Lista;
 public class Cliente extends Persona implements Serializable {
 
     private Vehiculo Vehiculo;
-    private Lista<Articulo> compras;
     private boolean multa;
     private HistorialCompra historialCompra;
     private HistorialConcurso historialConcurso;
@@ -33,7 +32,6 @@ public class Cliente extends Persona implements Serializable {
             String numeroCelular, String correo, String contrasena, short edad) {
         super(nombre, cedula, numeroCelular, correo, contrasena, edad);
         this.Vehiculo = Vehiculo;
-        this.compras = new Lista<>();
         this.multa = false;
         this.historialCompra = new HistorialCompra();
         this.historialConcurso = new HistorialConcurso();
@@ -57,22 +55,6 @@ public class Cliente extends Persona implements Serializable {
      */
     public void setVehiculo(Vehiculo Vehiculo) {
         this.Vehiculo = Vehiculo;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Lista<Articulo> getCompras() {
-        return compras;
-    }
-
-    /**
-     *
-     * @param articulos
-     */
-    public void setCompras(Lista<Articulo> articulos) {
-        this.compras = articulos;
     }
 
     /**
@@ -186,5 +168,4 @@ public class Cliente extends Persona implements Serializable {
     public void setValorTotal(float valorTotal) {
         this.valorTotal = valorTotal;
     }
-
 }

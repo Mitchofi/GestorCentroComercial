@@ -4,9 +4,6 @@
  */
 package ventana;
 
-import java.awt.Color;
-import java.util.Date;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import src.Articulo;
 import src.CentroComercial;
@@ -18,7 +15,8 @@ import src.Cliente;
  */
 public class VentanaConcurso extends javax.swing.JFrame {
 
-    private DefaultTableModel modeloArticulosEnVenta;
+    private DefaultTableModel modeloConcursosVigentes;
+    private DefaultTableModel modeloConcursosParticipo;
     private Cliente cliente;
     private VentanaCliente ventanaCliente;
 
@@ -29,7 +27,12 @@ public class VentanaConcurso extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         this.cliente = cliente;
-        this.modeloArticulosEnVenta = new DefaultTableModel();
+        this.modeloConcursosVigentes = new DefaultTableModel();
+        this.modeloConcursosParticipo = new DefaultTableModel();
+        limpiarTablaConcursosVigentes();
+        limpiarTablaConcursosParticipo();
+        cargarConcursosVigentes();
+        cargarConcursosParticipo();
     }
 
     /**
@@ -44,14 +47,10 @@ public class VentanaConcurso extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTableArticulos = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBoxCategoria = new javax.swing.JComboBox<>();
+        jTableConcursosVigentes = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTableArticulos1 = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
-        jComboBoxCategoria1 = new javax.swing.JComboBox<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableConcursosParticipo = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabelLocales = new javax.swing.JLabel();
@@ -78,12 +77,12 @@ public class VentanaConcurso extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Concursos vigentes"));
 
-        jTableArticulos.setModel(new javax.swing.table.DefaultTableModel(
+        jTableConcursosVigentes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Articulo", "Categoria", "Valor", "Stock", "Local", "Codigo articulo"
+                "Codigo curso", "Nombre", "Premio", "Valor minimo", "Fecha de Fin", "Participantes"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -94,53 +93,32 @@ public class VentanaConcurso extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableArticulos.setToolTipText("");
-        jScrollPane2.setViewportView(jTableArticulos);
-
-        jLabel1.setText("Filtrar por categoria:");
-
-        jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Categoria", "Accesorios para Vehículos", "Agro", "Alimentos y Bebidas", "Animales y Mascotas", "Antigüedades y Colecciones", "Arte, Papelería y Mercería", "Bebés", "Belleza y Cuidado Personal", "Boletas para Espectáculos", "Cámaras y Accesorios", "Carros, Motos y Otros", "Celulares y Teléfonos", "Computación", "Consolas y Videojuegos", "Construcción", "Deportes y Fitness", "Electrodomésticos", "Electrónica, Audio y Video", "Herramientas", "Hogar y Muebles", "Industrias y Oficinas", "Inmuebles", "Instrumentos Musicales", "Juegos y Juguetes", "Libros, Revistas y Comics", "Música, Películas y Series", "Recuerdos, Piñatería y Fiestas", "Relojes y Joyas", "Ropa y Accesorios", "Salud y Equipamiento Médico", "Servicios", "Otras categorías" }));
-        jComboBoxCategoria.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBoxCategoriaItemStateChanged(evt);
-            }
-        });
+        jTableConcursosVigentes.setToolTipText("");
+        jScrollPane2.setViewportView(jTableConcursosVigentes);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(31, Short.MAX_VALUE))
+            .addComponent(jScrollPane2)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Concursos en los participo"));
 
-        jTableArticulos1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableConcursosParticipo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Articulo", "Categoria", "Valor", "Stock", "Local", "Codigo articulo"
+                "Codigo curso", "Nombre", "Premio", "Valor minimo", "Fecha de Fin", "Participantes"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -151,42 +129,28 @@ public class VentanaConcurso extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableArticulos1.setToolTipText("");
-        jScrollPane4.setViewportView(jTableArticulos1);
-
-        jLabel4.setText("Filtrar por categoria:");
-
-        jComboBoxCategoria1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Categoria", "Accesorios para Vehículos", "Agro", "Alimentos y Bebidas", "Animales y Mascotas", "Antigüedades y Colecciones", "Arte, Papelería y Mercería", "Bebés", "Belleza y Cuidado Personal", "Boletas para Espectáculos", "Cámaras y Accesorios", "Carros, Motos y Otros", "Celulares y Teléfonos", "Computación", "Consolas y Videojuegos", "Construcción", "Deportes y Fitness", "Electrodomésticos", "Electrónica, Audio y Video", "Herramientas", "Hogar y Muebles", "Industrias y Oficinas", "Inmuebles", "Instrumentos Musicales", "Juegos y Juguetes", "Libros, Revistas y Comics", "Música, Películas y Series", "Recuerdos, Piñatería y Fiestas", "Relojes y Joyas", "Ropa y Accesorios", "Salud y Equipamiento Médico", "Servicios", "Otras categorías" }));
-        jComboBoxCategoria1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBoxCategoria1ItemStateChanged(evt);
-            }
-        });
+        jTableConcursosParticipo.setToolTipText("");
+        jScrollPane3.setViewportView(jTableConcursosParticipo);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxCategoria1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
+            .addGap(0, 617, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane3)
+                    .addContainerGap()))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxCategoria1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 190, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(18, 18, 18)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(19, Short.MAX_VALUE)))
         );
 
         jPanel5.setBackground(new java.awt.Color(204, 204, 204));
@@ -300,9 +264,11 @@ public class VentanaConcurso extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9)
@@ -328,15 +294,6 @@ public class VentanaConcurso extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBoxCategoriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxCategoriaItemStateChanged
-        limpiarTabla();
-        cargar();
-    }//GEN-LAST:event_jComboBoxCategoriaItemStateChanged
-
-    private void jComboBoxCategoria1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxCategoria1ItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxCategoria1ItemStateChanged
-
     private void jLabelLocalesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelLocalesMouseClicked
         VentanaCliente ventanaCliente = new VentanaCliente(cliente);
         ventanaCliente.setVisible(true);
@@ -359,36 +316,50 @@ public class VentanaConcurso extends javax.swing.JFrame {
         ventanaLogIn.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabelRegistrar6jLabelRegistrar2MouseClicked
-    public void cargar() {
-        modeloArticulosEnVenta = (DefaultTableModel) jTableArticulos.getModel();
+    public void cargarConcursosVigentes() {
+        modeloConcursosVigentes = (DefaultTableModel) jTableConcursosVigentes.getModel();
         Object[] ob = new Object[6];
-        for (int i = 0; i < CentroComercial.locales.length; i++) {
-            for (int j = 0; j < CentroComercial.locales[i].length; j++) {
-                if (CentroComercial.locales[i][j].getNegocio() != null) {
-                    if (CentroComercial.locales[i][j].getNegocio().getArticulos() != null) {
-                        for (int k = 0; k < CentroComercial.locales[i][j].getNegocio().getArticulos().Size(); k++) {
-                            Articulo arti = (Articulo) CentroComercial.locales[i][j].getNegocio().getArticulos().obtenerDato(k);
-                            if (arti.getCantidadProducto() != 0) {
-                                if (jComboBoxCategoria.getSelectedIndex() == 0 || arti.getNombreCategoria().equals(jComboBoxCategoria.getSelectedItem())) {
-                                    ob[0] = arti.getNombreProducto();
-                                    ob[1] = arti.getNombreCategoria();
-                                    ob[2] = arti.getValorDelProducto();
-                                    ob[3] = arti.getCantidadProducto();
-                                    ob[4] = CentroComercial.locales[i][j].getNegocio().getNombre();
-                                    modeloArticulosEnVenta.addRow(ob);
-                                }
-                            }
-                        }
-                    }
-                }
+        for (int i = 0; i < CentroComercial.concursos.Size(); i++) {
+            if (CentroComercial.concursos.obtenerDato(i) != null) {
+                ob[0] = CentroComercial.concursos.obtenerDato(i).getCodigo();
+                ob[1] = CentroComercial.concursos.obtenerDato(i).getNombreConcurso();
+                ob[2] = CentroComercial.concursos.obtenerDato(i).getPremioConcurso();
+                ob[3] = CentroComercial.concursos.obtenerDato(i).getValorMinimo();
+                ob[4] = CentroComercial.concursos.obtenerDato(i).getFechaFinConcurso();
+                ob[5] = CentroComercial.concursos.obtenerDato(i).getParticipantes().Size();
+                modeloConcursosVigentes.addRow(ob);
             }
         }
-        jTableArticulos.setModel(modeloArticulosEnVenta);
+        jTableConcursosVigentes.setModel(modeloConcursosVigentes);
     }
 
-    public void limpiarTabla() {
-        for (int i = 0; i < modeloArticulosEnVenta.getRowCount(); i++) {
-            modeloArticulosEnVenta.removeRow(i);
+    public void limpiarTablaConcursosVigentes() {
+        for (int i = 0; i < modeloConcursosVigentes.getRowCount(); i++) {
+            modeloConcursosVigentes.removeRow(i);
+            i = i - 1;
+        }
+    }
+
+    public void cargarConcursosParticipo() {
+        modeloConcursosParticipo = (DefaultTableModel) jTableConcursosParticipo.getModel();
+        Object[] ob = new Object[6];
+        for (int i = 0; i < cliente.getHistorialConcurso().getConcursos().Size(); i++) {
+            if (cliente.getHistorialConcurso().getConcursos().obtenerDato(i) != null) {
+                ob[0] = cliente.getHistorialConcurso().getConcursos().obtenerDato(i).getCodigo();
+                ob[1] = cliente.getHistorialConcurso().getConcursos().obtenerDato(i).getNombreConcurso();
+                ob[2] = cliente.getHistorialConcurso().getConcursos().obtenerDato(i).getPremioConcurso();
+                ob[3] = cliente.getHistorialConcurso().getConcursos().obtenerDato(i).getValorMinimo();
+                ob[4] = cliente.getHistorialConcurso().getConcursos().obtenerDato(i).getFechaFinConcurso();
+                ob[5] = cliente.getHistorialConcurso().getConcursos().obtenerDato(i).getParticipantes().Size();
+                modeloConcursosParticipo.addRow(ob);
+            }
+        }
+        jTableConcursosParticipo.setModel(modeloConcursosParticipo);
+    }
+
+    public void limpiarTablaConcursosParticipo() {
+        for (int i = 0; i < modeloConcursosParticipo.getRowCount(); i++) {
+            modeloConcursosParticipo.removeRow(i);
             i = i - 1;
         }
     }
@@ -407,16 +378,24 @@ public class VentanaConcurso extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaConcurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaConcurso.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaConcurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaConcurso.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaConcurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaConcurso.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaConcurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaConcurso.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -435,10 +414,6 @@ public class VentanaConcurso extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBoxCategoria;
-    private javax.swing.JComboBox<String> jComboBoxCategoria1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
@@ -452,8 +427,8 @@ public class VentanaConcurso extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTableArticulos;
-    private javax.swing.JTable jTableArticulos1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTableConcursosParticipo;
+    private javax.swing.JTable jTableConcursosVigentes;
     // End of variables declaration//GEN-END:variables
 }

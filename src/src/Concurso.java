@@ -23,7 +23,7 @@ public class Concurso implements Serializable {
     public Concurso(float valorMinimo, boolean estado, String nombreConcurso,
             String premioConcurso, Date fechaIncioConcurso,
             Date fechaFinConcurso) {
-        this.codigo++;
+        this.codigo = 0;
         this.valorMinimo = valorMinimo;
         this.estado = true;
         this.nombreConcurso = nombreConcurso;

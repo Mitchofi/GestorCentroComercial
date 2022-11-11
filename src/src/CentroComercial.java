@@ -243,6 +243,33 @@ public class CentroComercial implements Serializable {
         return cliente;
     }
 
+    public Empleado buscarEmpleadoNegocio(String correo, String contrasena) {
+        Empleado empleado = null;
+        for (int j = 0; j < locales.length; j++) {
+            for (int k = 0; k < locales[j].length; k++) {
+                if (locales[j][k].getNegocio() != null) {
+                    for (int i = 0; i < locales[j][k].getNegocio().getEmpleados().Size(); i++) {
+                        if (locales[j][k].getNegocio().getEmpleados().obtenerDato(i).getCorreo().equals(correo)
+                                && locales[j][k].getNegocio().getEmpleados().obtenerDato(i).getContrasena().equals(contrasena)) {
+                            empleado = locales[j][k].getNegocio().getEmpleados().obtenerDato(i);
+                        }
+                    }
+                }
+            }
+        }
+        return empleado;
+    }
+
+    public Cliente buscarClientePorUsuario(String correo) {
+        Cliente cliente = null;
+        for (int i = 0; i < personas.Size(); i++) {
+            if (personas.obtenerDato(i) instanceof Cliente && personas.obtenerDato(i).getCorreo().equals(correo)) {
+                cliente = (Cliente) personas.obtenerDato(i);
+            }
+        }
+        return cliente;
+    }
+
     public boolean anadirEmpleadoCentroComercial(Empleado empleado) throws ExcepcionEmpleadoDuplicado {
         boolean existe = true;
         boolean registrado = false;

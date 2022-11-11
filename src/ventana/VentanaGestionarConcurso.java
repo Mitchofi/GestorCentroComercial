@@ -4,7 +4,6 @@
  */
 package ventana;
 
-import controlador.ControladorVentanaAdministrador;
 import controlador.ControladorVentanaGestionarConcurso;
 import excepciones.ExcepcionConcursoDuplicado;
 import java.awt.Color;
@@ -18,7 +17,6 @@ import javax.swing.table.DefaultTableModel;
 import src.CentroComercial;
 import src.Cliente;
 import src.Concurso;
-import src.Persona;
 
 /**
  *
@@ -39,7 +37,7 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
         this.modeloTablaHistorialConcurso = new DefaultTableModel();
         this.modeloTablaConcurso = new DefaultTableModel();
         this.controlador = new ControladorVentanaGestionarConcurso();
-        this.txtCodigoConcurso.setEnabled(false);
+        this.txtCorreoDeGanador.setEnabled(false);
         limpiarTablaConcurso();
         limpiarTablaConcursoHistorial();
         cargarTablaConcurso();
@@ -75,21 +73,11 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
         txtCodigoConcurso = new javax.swing.JTextField();
         btnRegistrarConcurso1 = new javax.swing.JButton();
         jDateChooserConcursoIni = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jDateChooserConcursoFin = new com.toedter.calendar.JDateChooser();
+        txtCorreoDeGanador = new javax.swing.JTextField();
         jPanel17 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTableConcursoHistorial = new javax.swing.JTable();
-        jPanel18 = new javax.swing.JPanel();
-        txtNombreGanadorConcurso = new javax.swing.JTextField();
-        txtCodigoGanadorConcurso = new javax.swing.JTextField();
-        txtCedulaGanadorConcurso = new javax.swing.JTextField();
-        txtNombrePremioConcurso = new javax.swing.JTextField();
-        txtNombreConcurso1 = new javax.swing.JTextField();
-        btnRegistrarGanadorDeConcurso = new javax.swing.JButton();
-        btnModificarGanadorDeConcurso = new javax.swing.JButton();
-        btnEliminarGanadorDeConcurso = new javax.swing.JButton();
-        btnRegistrarDatosGanadorDeConcurso = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabelLocales = new javax.swing.JLabel();
@@ -177,7 +165,13 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
             }
         });
 
-        checkConcurso.setLabel("¿Vigente?");
+        checkConcurso.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        checkConcurso.setLabel("¿Marcar ganador?");
+        checkConcurso.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                checkConcursoItemStateChanged(evt);
+            }
+        });
 
         txtNombreConcurso.setForeground(new java.awt.Color(153, 153, 153));
         txtNombreConcurso.setText("Nombre concurso");
@@ -210,11 +204,30 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
 
         txtCodigoConcurso.setForeground(new java.awt.Color(153, 153, 153));
         txtCodigoConcurso.setText("Codigo concurso");
+        txtCodigoConcurso.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCodigoConcursoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCodigoConcursoFocusLost(evt);
+            }
+        });
 
         btnRegistrarConcurso1.setText("Limpiar datos");
         btnRegistrarConcurso1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarConcurso1ActionPerformed(evt);
+            }
+        });
+
+        txtCorreoDeGanador.setForeground(new java.awt.Color(153, 153, 153));
+        txtCorreoDeGanador.setText("Correo de ganador");
+        txtCorreoDeGanador.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCorreoDeGanadorFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCorreoDeGanadorFocusLost(evt);
             }
         });
 
@@ -237,12 +250,9 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
                 .addComponent(btnRegistrarConcurso1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(btnEliminarConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooserConcursoIni, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooserConcursoFin, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(jDateChooserConcursoIni, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jDateChooserConcursoFin, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(txtCorreoDeGanador, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,17 +267,17 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
                 .addComponent(txtValorMinimoConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(jLabel1)
-                .addGap(10, 10, 10)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooserConcursoIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(4, 4, 4)
-                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jDateChooserConcursoIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jDateChooserConcursoFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addGap(12, 12, 12)
                 .addComponent(checkConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtCorreoDeGanador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnRegistrarConcurso)
                     .addComponent(btnModificarConcurso))
@@ -275,7 +285,7 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnRegistrarConcurso1)
                     .addComponent(btnEliminarConcurso))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         jPanel17.setBackground(new java.awt.Color(255, 255, 255));
@@ -310,137 +320,6 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
             .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
         );
 
-        jPanel18.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel18.setBorder(javax.swing.BorderFactory.createTitledBorder("Informacion del ganador"));
-
-        txtNombreGanadorConcurso.setForeground(new java.awt.Color(153, 153, 153));
-        txtNombreGanadorConcurso.setText("Nombre ganador");
-        txtNombreGanadorConcurso.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombreGanadorConcursoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNombreGanadorConcursoFocusLost(evt);
-            }
-        });
-
-        txtCodigoGanadorConcurso.setForeground(new java.awt.Color(153, 153, 153));
-        txtCodigoGanadorConcurso.setText("Codigo concurso");
-        txtCodigoGanadorConcurso.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCodigoGanadorConcursoFocusGained(evt);
-            }
-        });
-
-        txtCedulaGanadorConcurso.setForeground(new java.awt.Color(153, 153, 153));
-        txtCedulaGanadorConcurso.setText("Cedula del ganador");
-        txtCedulaGanadorConcurso.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCedulaGanadorConcursoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCedulaGanadorConcursoFocusLost(evt);
-            }
-        });
-
-        txtNombrePremioConcurso.setForeground(new java.awt.Color(153, 153, 153));
-        txtNombrePremioConcurso.setText("Premio concurso");
-        txtNombrePremioConcurso.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombrePremioConcursoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNombrePremioConcursoFocusLost(evt);
-            }
-        });
-
-        txtNombreConcurso1.setForeground(new java.awt.Color(153, 153, 153));
-        txtNombreConcurso1.setText("Usuario ganador");
-        txtNombreConcurso1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombreConcurso1FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNombreConcurso1FocusLost(evt);
-            }
-        });
-
-        btnRegistrarGanadorDeConcurso.setText("Registrar");
-        btnRegistrarGanadorDeConcurso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarGanadorDeConcursoActionPerformed(evt);
-            }
-        });
-
-        btnModificarGanadorDeConcurso.setText("Modificar");
-        btnModificarGanadorDeConcurso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarGanadorDeConcursoActionPerformed(evt);
-            }
-        });
-
-        btnEliminarGanadorDeConcurso.setText("Eliminar");
-        btnEliminarGanadorDeConcurso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarGanadorDeConcursoActionPerformed(evt);
-            }
-        });
-
-        btnRegistrarDatosGanadorDeConcurso.setText("Limpiar datos");
-        btnRegistrarDatosGanadorDeConcurso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarDatosGanadorDeConcursoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
-        jPanel18.setLayout(jPanel18Layout);
-        jPanel18Layout.setHorizontalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtNombreConcurso1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCodigoGanadorConcurso, javax.swing.GroupLayout.Alignment.LEADING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtCedulaGanadorConcurso)
-                    .addComponent(txtNombrePremioConcurso))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNombreGanadorConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnRegistrarGanadorDeConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnModificarGanadorDeConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRegistrarDatosGanadorDeConcurso)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEliminarGanadorDeConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49))
-        );
-        jPanel18Layout.setVerticalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCodigoGanadorConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombrePremioConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtNombreGanadorConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtCedulaGanadorConcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtNombreConcurso1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminarGanadorDeConcurso)
-                    .addComponent(btnRegistrarGanadorDeConcurso)
-                    .addComponent(btnModificarGanadorDeConcurso)
-                    .addComponent(btnRegistrarDatosGanadorDeConcurso))
-                .addGap(0, 0, 0))
-        );
-
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -448,7 +327,6 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -465,15 +343,13 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabelRegistrar5))
@@ -608,24 +484,27 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelRegistrar5MouseClicked
 
     private void btnRegistrarConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarConcursoActionPerformed
-        if (txtNombreConcurso.getText().equals("")
+        if (txtNombreConcurso.getText().isEmpty()
                 || txtNombreConcurso.getText().equals("Nombre concurso")
                 || txtPremioConcurso.getText().equals("Premio concurso")
-                || txtPremioConcurso.getText().equals("")
+                || txtPremioConcurso.getText().isEmpty()
                 || txtValorMinimoConcurso.getText().equals("Valor minimo para participar")
-                || txtValorMinimoConcurso.getText().equals("")
+                || txtValorMinimoConcurso.getText().isEmpty()
                 || jDateChooserConcursoFin.getDate() == null
-                || jDateChooserConcursoIni.getDate() == null) {
+                || jDateChooserConcursoIni.getDate() == null
+                || txtCodigoConcurso.getText().isEmpty() || txtCodigoConcurso.getText().equals("Codigo concurso")) {
             JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
         } else {
+            int codigo = Integer.parseInt(txtCodigoConcurso.getText());
             String nombre = txtNombreConcurso.getText();
             String premio = txtPremioConcurso.getText();
             float valorMinimo = Float.parseFloat(txtValorMinimoConcurso.getText());
             Date fechaInicio = jDateChooserConcursoIni.getDate();
             Date fechaFin = jDateChooserConcursoFin.getDate();
-            boolean check = checkConcurso.getState();
+            boolean check = true;
             Concurso concurso = new Concurso(valorMinimo, check, nombre, premio, fechaInicio, fechaFin);
             try {
+                concurso.setCodigo(codigo);
                 if (controlador.anadirConcurso(concurso)) {
                     JOptionPane.showMessageDialog(this, "Concurso llamado: " + concurso.getNombreConcurso() + " fue registrado correctamente");
                     limpiarTablaConcurso();
@@ -693,13 +572,19 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
                 || jDateChooserConcursoIni.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
         } else {
+            txtCorreoDeGanador.getText();
             String nombre = txtNombreConcurso.getText();
             String premio = txtPremioConcurso.getText();
             float valorMinimo = Float.parseFloat(txtValorMinimoConcurso.getText());
             Date fechaInicio = jDateChooserConcursoIni.getDate();
             Date fechaFin = jDateChooserConcursoFin.getDate();
-            boolean check = checkConcurso.getState();
+            boolean check = false;
             Concurso concurso = new Concurso(valorMinimo, check, nombre, premio, fechaInicio, fechaFin);
+            if (checkConcurso.getState()) {
+                String correo = txtCodigoConcurso.getText();
+                Cliente cliente = controlador.buscarClientePorUsuario(correo);
+                concurso.setGanador(cliente);
+            }
             if (controlador.modificarConcurso(concurso.getCodigo(), concurso)) {
                 JOptionPane.showMessageDialog(this, "El concurso con codigo: " + concurso.getCodigo() + " modificado correctamente.");
                 limpiarTablaConcurso();
@@ -731,90 +616,6 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
         cleanTextFieldConcurso();
     }//GEN-LAST:event_btnRegistrarConcurso1ActionPerformed
 
-    private void txtNombreGanadorConcursoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreGanadorConcursoFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreGanadorConcursoFocusGained
-
-    private void txtNombreGanadorConcursoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreGanadorConcursoFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreGanadorConcursoFocusLost
-
-    private void txtCodigoGanadorConcursoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoGanadorConcursoFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodigoGanadorConcursoFocusGained
-
-    private void txtCedulaGanadorConcursoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaGanadorConcursoFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCedulaGanadorConcursoFocusGained
-
-    private void txtCedulaGanadorConcursoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaGanadorConcursoFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCedulaGanadorConcursoFocusLost
-
-    private void txtNombrePremioConcursoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombrePremioConcursoFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombrePremioConcursoFocusGained
-
-    private void txtNombrePremioConcursoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombrePremioConcursoFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombrePremioConcursoFocusLost
-
-    private void txtNombreConcurso1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreConcurso1FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreConcurso1FocusGained
-
-    private void txtNombreConcurso1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreConcurso1FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreConcurso1FocusLost
-
-    private void btnRegistrarGanadorDeConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarGanadorDeConcursoActionPerformed
-        int codigoConcurso = Integer.parseInt(txtCodigoGanadorConcurso.getText());
-        String cedulaCliente = txtCedulaGanadorConcurso.getText();
-        if (txtCedulaGanadorConcurso.getText().equals("") || txtCedulaGanadorConcurso.getText().equals("Cedula del ganador")
-                || txtCodigoGanadorConcurso.getText().equals("") || txtCodigoGanadorConcurso.getText().equals("Codigo concurso")) {
-            JOptionPane.showMessageDialog(this, "Rellena los campos de datos");
-        } else {
-            Persona persona = controlador.buscarPorCedula(cedulaCliente);
-            Concurso concurso = controlador.buscarPorConcurso(codigoConcurso);
-            if (persona == null) {
-                JOptionPane.showMessageDialog(this, "No se encuentra ninguna "
-                        + "persona con la cedula: " + cedulaCliente + " "
-                        + "registrado en el sistema");
-            } else {
-                if (persona instanceof Cliente) {
-                    Cliente cliente = (Cliente) persona;
-                    if (concurso == null) {
-                        JOptionPane.showMessageDialog(this, "No se encuentra ningun "
-                                + "concurso con el codigo: " + codigoConcurso + " "
-                                + "registrado en el sistema");
-                    } else {
-                        concurso.setGanador(cliente);
-                        JOptionPane.showMessageDialog(this, "El cliente: " + cliente.getNombre() + " "
-                                + "es el ganador del concurso de un/una: " + concurso.getPremioConcurso());
-                        limpiarTablaConcursoHistorial();
-                        cargarTablaConcursoHistorial();
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(this, "La persona con la "
-                            + "cedula: " + cedulaCliente + " no esta registrado "
-                            + "como cliente en el sistema");
-                }
-            }
-        }
-    }//GEN-LAST:event_btnRegistrarGanadorDeConcursoActionPerformed
-
-    private void btnModificarGanadorDeConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarGanadorDeConcursoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnModificarGanadorDeConcursoActionPerformed
-
-    private void btnEliminarGanadorDeConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarGanadorDeConcursoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarGanadorDeConcursoActionPerformed
-
-    private void btnRegistrarDatosGanadorDeConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarDatosGanadorDeConcursoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRegistrarDatosGanadorDeConcursoActionPerformed
-
     private void jLabelLocalesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelLocalesMouseClicked
         VentanaAdministrador ventanaAdministrador = new VentanaAdministrador();
         ventanaAdministrador.setVisible(true);
@@ -844,6 +645,36 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
         ventanaGestionarSolicitudes.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabelSolicitudesMouseClicked
+
+    private void txtCodigoConcursoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoConcursoFocusGained
+        if (txtCodigoConcurso.getText().equals("Codigo concurso")) {
+            txtCodigoConcurso.setText("");
+            txtCodigoConcurso.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtCodigoConcursoFocusGained
+
+    private void txtCodigoConcursoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoConcursoFocusLost
+        if (txtCodigoConcurso.getText().equals("")) {
+            txtCodigoConcurso.setText("Codigo concurso");
+            txtCodigoConcurso.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtCodigoConcursoFocusLost
+
+    private void txtCorreoDeGanadorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoDeGanadorFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCorreoDeGanadorFocusGained
+
+    private void txtCorreoDeGanadorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoDeGanadorFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCorreoDeGanadorFocusLost
+
+    private void checkConcursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkConcursoItemStateChanged
+        if (checkConcurso.getState()) {
+            txtCorreoDeGanador.setEnabled(true);
+        } else {
+            txtCorreoDeGanador.setEnabled(false);
+        }
+    }//GEN-LAST:event_checkConcursoItemStateChanged
     public void cargarTablaConcurso() {
         modeloTablaConcurso = (DefaultTableModel) jTableConcurso.getModel();
         Object[] ob = new Object[7];
@@ -976,15 +807,10 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminarConcurso;
-    private javax.swing.JButton btnEliminarGanadorDeConcurso;
     private javax.swing.JButton btnModificarConcurso;
-    private javax.swing.JButton btnModificarGanadorDeConcurso;
     private javax.swing.JButton btnRegistrarConcurso;
     private javax.swing.JButton btnRegistrarConcurso1;
-    private javax.swing.JButton btnRegistrarDatosGanadorDeConcurso;
-    private javax.swing.JButton btnRegistrarGanadorDeConcurso;
     private java.awt.Checkbox checkConcurso;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooserConcursoFin;
     private com.toedter.calendar.JDateChooser jDateChooserConcursoIni;
     private javax.swing.JLabel jLabel1;
@@ -1001,20 +827,15 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTableConcurso;
     private javax.swing.JTable jTableConcursoHistorial;
-    private javax.swing.JTextField txtCedulaGanadorConcurso;
     private javax.swing.JTextField txtCodigoConcurso;
-    private javax.swing.JTextField txtCodigoGanadorConcurso;
+    private javax.swing.JTextField txtCorreoDeGanador;
     private javax.swing.JTextField txtNombreConcurso;
-    private javax.swing.JTextField txtNombreConcurso1;
-    private javax.swing.JTextField txtNombreGanadorConcurso;
-    private javax.swing.JTextField txtNombrePremioConcurso;
     private javax.swing.JTextField txtPremioConcurso;
     private javax.swing.JTextField txtValorMinimoConcurso;
     // End of variables declaration//GEN-END:variables

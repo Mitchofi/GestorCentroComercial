@@ -1,6 +1,7 @@
 package controlador;
 
 import src.CentroComercial;
+import src.Cliente;
 import src.Concurso;
 import src.Persona;
 
@@ -31,4 +32,9 @@ public class ControladorVentanaGestionarConcurso {
     public Persona buscarPorCedula(String cedula) {
         return controlador.buscarPorCedula(cedula);
     }
+
+    public Cliente buscarClientePorUsuario(String correo) {
+        return controlador.buscarClientePorUsuario(correo);
+    }
+
 }

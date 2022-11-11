@@ -4,10 +4,7 @@
  */
 package controlador;
 
-import excepciones.ExcepcionClienteDuplicado;
 import src.CentroComercial;
-import src.Cliente;
-import src.Concurso;
 import src.Local;
 import src.Persona;
 
@@ -30,7 +27,7 @@ public class ControladorVentanaAdministrador {
     public boolean validarCorreo(String correo) {
         return controlador.validarCorreo(correo);
     }
-    
+
     public Persona buscarPorCedula(String cedula) {
         return controlador.buscarPorCedula(cedula);
     }

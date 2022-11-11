@@ -1,25 +1,32 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package src;
 
 import java.io.Serializable;
 import java.util.Date;
-import util.Lista;
 
-class Venta implements Serializable {
+/**
+ *
+ * @author usuario
+ */
+public class Venta implements Serializable {
 
     private float valorTotal;
     private Cliente cliente;
-    private Negocio negocio;
     private Empleado empleado;
     private Date fechaVenta;
-    private Lista<Articulo> articulos;
+    private Articulo articulos;
+    private int Cantidad;
 
-    public Venta(float valorTotal, Cliente cliente, Negocio negocio, Empleado empleado, Date fechaVenta, Lista<Articulo> articulos) {
-        this.valorTotal = valorTotal;
+    public Venta(Cliente cliente, Date fechaVenta, Articulo articulo, int cantidad) {
+        this.valorTotal = 0;
         this.cliente = cliente;
-        this.negocio = negocio;
-        this.empleado = empleado;
+        this.empleado = null;
         this.fechaVenta = fechaVenta;
-        this.articulos = new Lista<>();
+        this.articulos = articulo;
+        this.Cantidad = cantidad;
     }
 
     public float getValorTotal() {
@@ -38,14 +45,6 @@ class Venta implements Serializable {
         this.cliente = cliente;
     }
 
-    public Negocio getNegocio() {
-        return negocio;
-    }
-
-    public void setNegocio(Negocio negocio) {
-        this.negocio = negocio;
-    }
-
     public Empleado getEmpleado() {
         return empleado;
     }
@@ -62,12 +61,20 @@ class Venta implements Serializable {
         this.fechaVenta = fechaVenta;
     }
 
-    public Lista<Articulo> getArticulos() {
+    public Articulo getArticulos() {
         return articulos;
     }
 
-    public void setArticulos(Lista<Articulo> articulos) {
+    public void setArticulos(Articulo articulos) {
         this.articulos = articulos;
+    }
+
+    public int getCantidad() {
+        return Cantidad;
+    }
+
+    public void setCantidad(int Cantidad) {
+        this.Cantidad = Cantidad;
     }
 
 }

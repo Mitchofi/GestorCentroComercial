@@ -4,13 +4,19 @@
  */
 package ventana;
 
-import controlador.ControladorVentanaAdministrador;
+import controlador.ControladorVentanaCliente;
 import java.awt.Color;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import src.Articulo;
 import src.CentroComercial;
 import src.Cliente;
+import src.Negocio;
 
 /**
  *
@@ -21,19 +27,32 @@ public class VentanaCliente extends javax.swing.JFrame {
     /**
      * Creates new form VentanaAdministrador
      */
-    private ControladorVentanaAdministrador controlador;
+    private ControladorVentanaCliente controlador;
     private DefaultTableModel modeloArticulosEnVenta;
+    private String codigo;
+    private int cantidad;
     private Cliente cliente;
+    private Negocio negocio;
+    private float valorDescuento;
 
     public VentanaCliente(Cliente cliente) {
         initComponents();
         setLocationRelativeTo(this);
         this.cliente = cliente;
-        this.controlador = new ControladorVentanaAdministrador();
-        modeloArticulosEnVenta = new DefaultTableModel();
-        jLabel6.setText(cliente.getNombre());
+        this.controlador = new ControladorVentanaCliente();
+        this.txtValor.setEnabled(false);
+        this.modeloArticulosEnVenta = new DefaultTableModel();
+        this.jLabel6.setText(cliente.getNombre());
+        this.cantidad = 0;
+        this.codigo = txtCodigoArticulo.getText();
+        this.negocio = null;
+        this.valorDescuento = 0;
+        this.txtCodigoArticulo.setEnabled(false);
+        this.jDateChooserFechaRecogida.setEnabled(false);
+        this.btnSeparado.setEnabled(false);
         limpiarTabla();
         cargar();
+        mouseTablArticulos();
     }
 
     /**
@@ -56,24 +75,25 @@ public class VentanaCliente extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
-        jButton = new javax.swing.JButton();
+        btnComprar = new javax.swing.JButton();
         txtCantidad = new javax.swing.JTextField();
-        txtCategoria = new javax.swing.JTextField();
         txtValor = new javax.swing.JTextField();
         txtArticulo = new javax.swing.JTextField();
         jScrollPane9 = new javax.swing.JScrollPane();
         jTextDescripcion = new javax.swing.JTextArea();
-        txtLocal = new javax.swing.JTextField();
         txtCodigoArticulo = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jLabelRegistrar6 = new javax.swing.JLabel();
+        btnSeparado = new javax.swing.JButton();
+        checkSeparado = new java.awt.Checkbox();
+        jDateChooserFechaRecogida = new com.toedter.calendar.JDateChooser();
+        jLabel3 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTableArticulos = new javax.swing.JTable();
         jComboBoxCategoria = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabelRegistrar6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administrador");
@@ -173,15 +193,15 @@ public class VentanaCliente extends javax.swing.JFrame {
         jPanel14.setBackground(new java.awt.Color(255, 255, 255));
         jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.MatteBorder(null), "Comprar Articulo"));
 
-        jButton.setText("Comprar");
-        jButton.addActionListener(new java.awt.event.ActionListener() {
+        btnComprar.setText("Comprar");
+        btnComprar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnComprar2ActionPerformed(evt);
             }
         });
 
         txtCantidad.setForeground(new java.awt.Color(153, 153, 153));
-        txtCantidad.setText("Cantidad");
+        txtCantidad.setText("Cantidad a comprar");
         txtCantidad.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtCantidadFocusGained(evt);
@@ -191,19 +211,8 @@ public class VentanaCliente extends javax.swing.JFrame {
             }
         });
 
-        txtCategoria.setForeground(new java.awt.Color(153, 153, 153));
-        txtCategoria.setText("Categoria");
-        txtCategoria.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCategoriaFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCategoriaFocusLost(evt);
-            }
-        });
-
         txtValor.setForeground(new java.awt.Color(153, 153, 153));
-        txtValor.setText("Valor");
+        txtValor.setText("Valor a pagar");
         txtValor.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtValorFocusGained(evt);
@@ -232,17 +241,6 @@ public class VentanaCliente extends javax.swing.JFrame {
         jTextDescripcion.setText("Descripcion");
         jScrollPane9.setViewportView(jTextDescripcion);
 
-        txtLocal.setForeground(new java.awt.Color(153, 153, 153));
-        txtLocal.setText("Local");
-        txtLocal.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtLocalFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtLocalFocusLost(evt);
-            }
-        });
-
         txtCodigoArticulo.setForeground(new java.awt.Color(153, 153, 153));
         txtCodigoArticulo.setText("Codigo articulo");
         txtCodigoArticulo.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -256,58 +254,72 @@ public class VentanaCliente extends javax.swing.JFrame {
             }
         });
 
+        btnSeparado.setText("Realizar separado");
+        btnSeparado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeparadoActionPerformed(evt);
+            }
+        });
+
+        checkSeparado.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        checkSeparado.setLabel("¿Desea realizar separado?");
+        checkSeparado.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                checkSeparadoItemStateChanged(evt);
+            }
+        });
+
+        jLabel3.setText("Fecha de recogida:");
+
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addGap(34, 34, 34)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSeparado, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel14Layout.createSequentialGroup()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtCantidad)
-                    .addComponent(txtCategoria, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtValor)
                     .addComponent(txtArticulo)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(txtLocal)
                     .addComponent(txtCodigoArticulo, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                    .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(jButton, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(checkSeparado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jDateChooserFechaRecogida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(txtCodigoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(txtArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkSeparado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jDateChooserFechaRecogida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnComprar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSeparado)
+                .addContainerGap())
         );
-
-        jLabel9.setText("¿Deseas salir de la cuenta?");
-
-        jLabelRegistrar6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabelRegistrar6.setForeground(new java.awt.Color(51, 153, 255));
-        jLabelRegistrar6.setText("Salir");
-        jLabelRegistrar6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelRegistrar6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelRegistrar2MouseClicked(evt);
-            }
-        });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel10.setText("Comprar:");
@@ -320,11 +332,11 @@ public class VentanaCliente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Articulo", "Categoria", "Valor", "Stock", "Codigo articulo", "Local"
+                "Codigo articulo", "Articulo", "Categoria", "Stock", "Negocio", "Valor", "Con descuento"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -340,6 +352,7 @@ public class VentanaCliente extends javax.swing.JFrame {
             jTableArticulos.getColumnModel().getColumn(3).setResizable(false);
             jTableArticulos.getColumnModel().getColumn(4).setResizable(false);
             jTableArticulos.getColumnModel().getColumn(5).setResizable(false);
+            jTableArticulos.getColumnModel().getColumn(6).setResizable(false);
         }
 
         jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Categoria", "Accesorios para Vehículos", "Agro", "Alimentos y Bebidas", "Animales y Mascotas", "Antigüedades y Colecciones", "Arte, Papelería y Mercería", "Bebés", "Belleza y Cuidado Personal", "Boletas para Espectáculos", "Cámaras y Accesorios", "Carros, Motos y Otros", "Celulares y Teléfonos", "Computación", "Consolas y Videojuegos", "Construcción", "Deportes y Fitness", "Electrodomésticos", "Electrónica, Audio y Video", "Herramientas", "Hogar y Muebles", "Industrias y Oficinas", "Inmuebles", "Instrumentos Musicales", "Juegos y Juguetes", "Libros, Revistas y Comics", "Música, Películas y Series", "Recuerdos, Piñatería y Fiestas", "Relojes y Joyas", "Ropa y Accesorios", "Salud y Equipamiento Médico", "Servicios", "Otras categorías" }));
@@ -355,12 +368,13 @@ public class VentanaCliente extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(2, 2, 2)
-                .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -368,68 +382,62 @@ public class VentanaCliente extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
-        );
+        jLabel9.setText("¿Deseas salir de la cuenta?");
+
+        jLabelRegistrar6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabelRegistrar6.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelRegistrar6.setText("Salir");
+        jLabelRegistrar6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelRegistrar6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelRegistrar2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(10, 10, 10)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(640, 640, 640)
-                        .addComponent(jLabel9)
-                        .addGap(8, 8, 8)
-                        .addComponent(jLabelRegistrar6)))
-                .addGap(24, 24, 24))
+                        .addComponent(jLabel10)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelRegistrar6)
+                .addGap(19, 19, 19))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel10)
+                .addGap(37, 37, 37)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel10)
-                        .addGap(32, 32, 32)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(136, 136, 136))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabelRegistrar6)))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelRegistrar6)
+                    .addComponent(jLabel9))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
-        jPanel3.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 440));
+        jPanel3.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 540));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -444,24 +452,23 @@ public class VentanaCliente extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -485,26 +492,18 @@ public class VentanaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxCategoriaItemStateChanged
 
     private void txtArticulo1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtArticulo1MouseClicked
-        // TODO add your handling code here:
+        if (txtCodigoArticulo.getText().equals("Codigo articulo")) {
+            txtCodigoArticulo.setText("");
+            txtCodigoArticulo.setForeground(Color.black);
+        }
     }//GEN-LAST:event_txtArticulo1MouseClicked
 
     private void txtArticulo1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtArticulo1FocusLost
-        // TODO add your handling code here:
+        if (txtCodigoArticulo.getText().equals("")) {
+            txtCodigoArticulo.setText("Codigo articulo");
+            txtCodigoArticulo.setForeground(Color.gray);
+        }
     }//GEN-LAST:event_txtArticulo1FocusLost
-
-    private void txtLocalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtLocalFocusLost
-        if (txtLocal.getText().equals("")) {
-            txtLocal.setText("Local");
-            txtLocal.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtLocalFocusLost
-
-    private void txtLocalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtLocalFocusGained
-        if (txtLocal.getText().equals("Local")) {
-            txtLocal.setText("");
-            txtLocal.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtLocalFocusGained
 
     private void txtArticuloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtArticuloMouseClicked
         if (txtArticulo.getText().equals("Articulo")) {
@@ -522,67 +521,64 @@ public class VentanaCliente extends javax.swing.JFrame {
 
     private void txtValorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusLost
         if (txtValor.getText().equals("")) {
-            txtValor.setText("Valor");
+            txtValor.setText("Valor a pagar");
             txtValor.setForeground(Color.gray);
 
         }
     }//GEN-LAST:event_txtValorFocusLost
 
     private void txtValorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusGained
-        if (txtValor.getText().equals("Valor")) {
+        if (txtValor.getText().equals("Valor a pagar")) {
             txtValor.setText("");
             txtValor.setForeground(Color.black);
         }
     }//GEN-LAST:event_txtValorFocusGained
 
-    private void txtCategoriaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCategoriaFocusLost
-        if (txtCategoria.getText().equals("")) {
-            txtCategoria.setText("Categoria");
-            txtCategoria.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtCategoriaFocusLost
-
-    private void txtCategoriaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCategoriaFocusGained
-        if (txtCategoria.getText().equals("Categoria")) {
-            txtCategoria.setText("");
-            txtCategoria.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtCategoriaFocusGained
-
     private void txtCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadFocusLost
         if (txtCantidad.getText().equals("")) {
-            txtCantidad.setText("Cantidad");
+            txtCantidad.setText("Cantidad a comprar");
             txtCantidad.setForeground(Color.gray);
+        }
+        if (validarNumeros(txtCantidad.getText())) {
+            Articulo arti = controlador.buscarArticulo(codigo);
+            txtValor.setText(String.valueOf(negocio.valorTotal(codigo, Integer.parseInt(txtCantidad.getText()))));
         }
     }//GEN-LAST:event_txtCantidadFocusLost
 
     private void txtCantidadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadFocusGained
-        if (txtCantidad.getText().equals("Cantidad")) {
+        if (txtCantidad.getText().equals("Cantidad a comprar")) {
             txtCantidad.setText("");
             txtCantidad.setForeground(Color.black);
         }
     }//GEN-LAST:event_txtCantidadFocusGained
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (txtArticulo.getText().equals("") || txtArticulo.getText().equals("Articulo")
-                || txtValor.getText().equals("") || txtValor.getText().equals("Valor")
-                || txtCantidad.getText().equals("") || txtCantidad.getText().equals("Cantidad")
-                || txtCategoria.equals("") || txtCategoria.getText().equals("Categoria")
-                || txtLocal.equals("") || txtLocal.getText().equals("Local")) {
-            JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
+    private void btnComprar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprar2ActionPerformed
+        if (txtCodigoArticulo.getText().equals("") || txtCodigoArticulo.getText().equals("Codigo articulo")
+                || txtArticulo.getText().equals("") || txtArticulo.getText().equals("Articulo")
+                || txtValor.getText().equals("") || txtValor.getText().equals("Valor a pagar")
+                || txtCantidad.getText().equals("") || txtCantidad.getText().equals("Cantidad a comprar")) {
+            JOptionPane.showMessageDialog(this, "Por favor selecciona de la tabla el articulo que deseas comprar");
         } else {
-            String nombreArticulo = txtArticulo.getText();
-            String categoriaCompra = txtCategoria.getText();
-            String local = txtLocal.getText();
-            String descripcion = "";
-            if (!jTextDescripcion.getText().equals("Descripcion articulo")) {
-                descripcion = jTextDescripcion.getText();
+            for (int i = 0; i < CentroComercial.locales.length; i++) {
+                for (int j = 0; j < CentroComercial.locales[i].length; j++) {
+                    if (CentroComercial.locales[i][j].getNegocio() != null) {
+                        if (CentroComercial.locales[i][j].getNegocio().getNombre().equals(negocio.getNombre())) {
+                            codigo = txtCodigoArticulo.getText();
+                            cantidad = Integer.parseInt(txtCantidad.getText());
+                            if (negocio.realizarCompra(codigo, null, cantidad, cliente)) {
+                                JOptionPane.showMessageDialog(this, "El articulo fue comprado correctamente");
+                                cleanTextField();
+                                limpiarTabla();
+                                cargar();
+                            } else {
+                                JOptionPane.showMessageDialog(this, "El articulo no pudo ser comprado, verifica que pudo haber fallado :(");
+                            }
+                        }
+                    }
+                }
             }
-            float valor = Float.parseFloat(txtValor.getText());
-            int cantidad = Integer.parseInt(txtCantidad.getText());
-            cleanTextField();
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnComprar2ActionPerformed
 
     private void jLabelRegistrar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar2MouseClicked
         VentanaLogIn ventanaLogIn = new VentanaLogIn();
@@ -596,6 +592,50 @@ public class VentanaCliente extends javax.swing.JFrame {
         ventanaConcurso.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabelVentasMouseClicked
+
+    private void btnSeparadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeparadoActionPerformed
+        if (txtCodigoArticulo.getText().equals("") || txtCodigoArticulo.getText().equals("Codigo articulo")
+                || txtArticulo.getText().equals("") || txtArticulo.getText().equals("Articulo")
+                || txtValor.getText().equals("") || txtValor.getText().equals("Valor a pagar")
+                || txtCantidad.getText().equals("") || txtCantidad.getText().equals("Cantidad a comprar")
+                || jDateChooserFechaRecogida.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Por favor selecciona de la tabla el articulo que deseas separar y rellena el campo de fecha");
+        } else {
+            for (int i = 0; i < CentroComercial.locales.length; i++) {
+                for (int j = 0; j < CentroComercial.locales[i].length; j++) {
+                    if (CentroComercial.locales[i][j].getNegocio() != null) {
+                        if (CentroComercial.locales[i][j].getNegocio().getNombre().equals(negocio.getNombre())) {
+                            codigo = txtCodigoArticulo.getText();
+                            cantidad = Integer.parseInt(txtCantidad.getText());
+                            Date date = jDateChooserFechaRecogida.getDate();
+                            if (negocio.realizarSeparado(codigo, cantidad, null, negocio, cliente, date)) {
+                                JOptionPane.showMessageDialog(this, "El articulo fue separado correctamente");
+                                cleanTextField();
+                                limpiarTabla();
+                                cargar();
+                            } else {
+                                JOptionPane.showMessageDialog(this, "El articulo no pudo ser separado, verifica que pudo haber fallado :(");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_btnSeparadoActionPerformed
+
+    private void checkSeparadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkSeparadoItemStateChanged
+        if (checkSeparado.getState()) {
+            btnComprar.setEnabled(false);
+            btnSeparado.setEnabled(true);
+            jDateChooserFechaRecogida.setEnabled(true);
+        } else {
+            btnComprar.setEnabled(true);
+            btnSeparado.setEnabled(false);
+            jDateChooserFechaRecogida.setDate(null);
+            jDateChooserFechaRecogida.setEnabled(false);
+
+        }
+    }//GEN-LAST:event_checkSeparadoItemStateChanged
 
     public void llenarArticulos() {
         for (int i = 0; i < CentroComercial.locales.length; i++) {
@@ -619,21 +659,26 @@ public class VentanaCliente extends javax.swing.JFrame {
 
     public void cargar() {
         modeloArticulosEnVenta = (DefaultTableModel) jTableArticulos.getModel();
-        Object[] ob = new Object[6];
+        Object[] ob = new Object[7];
         for (int i = 0; i < CentroComercial.locales.length; i++) {
             for (int j = 0; j < CentroComercial.locales[i].length; j++) {
                 if (CentroComercial.locales[i][j].getNegocio() != null) {
                     if (CentroComercial.locales[i][j].getNegocio().getArticulos() != null) {
                         for (int k = 0; k < CentroComercial.locales[i][j].getNegocio().getArticulos().Size(); k++) {
                             Articulo arti = (Articulo) CentroComercial.locales[i][j].getNegocio().getArticulos().obtenerDato(k);
-                            if (arti.getCantidadProducto() != 0) {
+                            if (arti.getCantidadProducto() > 0) {
                                 if (jComboBoxCategoria.getSelectedIndex() == 0 || arti.getNombreCategoria().equals(jComboBoxCategoria.getSelectedItem())) {
-                                    ob[0] = arti.getNombreProducto();
-                                    ob[1] = arti.getNombreCategoria();
-                                    ob[2] = arti.getValorDelProducto();
+                                    ob[0] = arti.getCodigo();
+                                    ob[1] = arti.getNombreProducto();
+                                    ob[2] = arti.getNombreCategoria();
                                     ob[3] = arti.getCantidadProducto();
-                                    ob[4] = arti.getCodigo();
-                                    ob[5] = CentroComercial.locales[i][j].getNegocio().getNombre();
+                                    ob[4] = CentroComercial.locales[i][j].getNegocio().getNombre();
+                                    ob[5] = arti.getValorDelProducto();
+                                    if (arti.getPorcentajeDescuento() > 0) {
+                                        ob[6] = arti.calcularDescuento();
+                                    } else {
+                                        ob[6] = "No hay";
+                                    }
                                     modeloArticulosEnVenta.addRow(ob);
                                 }
                             }
@@ -655,16 +700,55 @@ public class VentanaCliente extends javax.swing.JFrame {
     public void cleanTextField() {
         txtArticulo.setText("Articulo");
         txtArticulo.setForeground(Color.gray);
-        txtCategoria.setText("Categoria");
-        txtCategoria.setForeground(Color.gray);
         txtValor.setText("Valor");
         txtValor.setForeground(Color.gray);
-        txtLocal.setText("Local");
-        txtLocal.setForeground(Color.gray);
         jTextDescripcion.setText("Descripcion");
         jTextDescripcion.setForeground(Color.gray);
         txtCantidad.setText("Cantidad");
         txtCantidad.setForeground(Color.gray);
+        checkSeparado.setState(false);
+        if (checkSeparado.getState()) {
+            btnComprar.setEnabled(false);
+            btnSeparado.setEnabled(true);
+            jDateChooserFechaRecogida.setEnabled(true);
+        } else {
+            btnComprar.setEnabled(true);
+            btnSeparado.setEnabled(false);
+            jDateChooserFechaRecogida.setDate(null);
+            jDateChooserFechaRecogida.setEnabled(false);
+        }
+    }
+
+    public void mouseTablArticulos() {
+        jTableArticulos.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent Mouse_evt) {
+                JTable table = (JTable) Mouse_evt.getSource();
+                Point point = Mouse_evt.getPoint();
+                int row = table.rowAtPoint(point);
+                if (Mouse_evt.getClickCount() == 1) {
+                    txtCodigoArticulo.setText(jTableArticulos.getValueAt(jTableArticulos.getSelectedRow(), 0).toString());
+                    txtCodigoArticulo.setForeground(Color.black);
+                    txtArticulo.setText(jTableArticulos.getValueAt(jTableArticulos.getSelectedRow(), 1).toString());
+                    txtArticulo.setForeground(Color.black);
+                    codigo = txtCodigoArticulo.getText();
+                    for (int i = 0; i < CentroComercial.locales.length; i++) {
+                        for (int j = 0; j < CentroComercial.locales[i].length; j++) {
+                            if (CentroComercial.locales[i][j].getNegocio() != null) {
+                                if (CentroComercial.locales[i][j].getNegocio().getNombre().equals(jTableArticulos.getValueAt(jTableArticulos.getSelectedRow(), 4).toString())) {
+                                    negocio = CentroComercial.locales[i][j].getNegocio();
+                                    jTextDescripcion.setText(negocio.buscarArticulo(codigo).getDecripcionProducto());
+                                    jTextDescripcion.setForeground(Color.black);
+                                }
+                            }
+                        }
+                    }
+                    if (!jTableArticulos.getValueAt(jTableArticulos.getSelectedRow(), 4).toString().equals("No hay")) {
+                        valorDescuento = Float.parseFloat(jTableArticulos.getValueAt(jTableArticulos.getSelectedRow(), 6).toString());
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -700,11 +784,15 @@ public class VentanaCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton;
+    private javax.swing.JButton btnComprar;
+    private javax.swing.JButton btnSeparado;
+    private java.awt.Checkbox checkSeparado;
     private javax.swing.JComboBox<String> jComboBoxCategoria;
+    private com.toedter.calendar.JDateChooser jDateChooserFechaRecogida;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelClientes;
@@ -717,7 +805,6 @@ public class VentanaCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
@@ -725,9 +812,7 @@ public class VentanaCliente extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextDescripcion;
     private javax.swing.JTextField txtArticulo;
     private javax.swing.JTextField txtCantidad;
-    private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtCodigoArticulo;
-    private javax.swing.JTextField txtLocal;
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }

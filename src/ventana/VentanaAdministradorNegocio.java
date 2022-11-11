@@ -13,6 +13,7 @@ import src.CentroComercial;
 import src.Empleado;
 import src.Negocio;
 import src.Vehiculo;
+import static ventana.VentanaContrato.validarLetras;
 
 /**
  *
@@ -686,9 +687,14 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreFocusGained
 
     private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
-        if (txtNombre.getText().equals("")) {
+        if (txtNombre.getText().isEmpty()) {
             txtNombre.setText("Nombre completo");
             txtNombre.setForeground(Color.gray);
+        }
+        if (!validarLetras(txtNombre.getText()) && !txtNombre.getText().equals("Nombre completo")) {
+            txtNombre.setBackground(Color.red);
+        } else {
+            txtNombre.setBackground(Color.white);
         }
     }//GEN-LAST:event_txtNombreFocusLost
 

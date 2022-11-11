@@ -2,6 +2,7 @@ package controlador;
 
 import src.CentroComercial;
 import src.Cliente;
+import src.Empleado;
 import src.Local;
 import src.Negocio;
 
@@ -24,8 +25,12 @@ public class ControladorVentanaLogIn {
     public Negocio returnNegocioEmpleado(String correo, String contrasena) {
         return controlador.returnNegocioEmpleado(correo, contrasena);
     }
-        public Cliente buscarCliente(String correo, String contrasena) {
-            return controlador.buscarCliente(correo, contrasena);
-        }
- 
+
+    public Cliente buscarCliente(String correo, String contrasena) {
+        return controlador.buscarCliente(correo, contrasena);
+    }
+
+    public Empleado buscarEmpleadoNegocio(String correo, String contrasena) {
+        return controlador.buscarEmpleadoNegocio(correo, contrasena);
+    }
 }

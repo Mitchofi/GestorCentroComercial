@@ -24,6 +24,7 @@ public class VentanaHistorialCompra extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         this.modeloHistorialDeCompras = new DefaultTableModel();
+        this.jLabel6.setText(cliente.getNombre());
         this.cliente = cliente;
         limpiarTabla();
         cargar();
@@ -257,12 +258,12 @@ public class VentanaHistorialCompra extends javax.swing.JFrame {
     public void cargar() {
         modeloHistorialDeCompras = (DefaultTableModel) jTableHistorialArticulos.getModel();
         Object[] ob = new Object[4];
-        for (int i = 0; i < cliente.getCompras().Size(); i++) {
-            if (cliente.getCompras().Size() != 0) {
-                ob[0] = cliente.getCompras().obtenerDato(i).getNombreProducto();
-                ob[1] = cliente.getCompras().obtenerDato(i).getNombreCategoria();
-                ob[2] = cliente.getCompras().obtenerDato(i).getValorDelProducto();
-                ob[3] = cliente.getCompras().obtenerDato(i).getCantidadProducto();
+        for (int i = 0; i < cliente.getHistorialCompra().getArticulos().Size(); i++) {
+            if (cliente.getHistorialCompra().getArticulos().Size() != 0) {
+                ob[0] = cliente.getHistorialCompra().getArticulos().obtenerDato(i).getNombreProducto();
+                ob[1] = cliente.getHistorialCompra().getArticulos().obtenerDato(i).getNombreCategoria();
+                ob[2] = cliente.getHistorialCompra().getArticulos().obtenerDato(i).getValorDelProducto();
+                ob[3] = cliente.getHistorialCompra().getArticulos().obtenerDato(i).getCantidadProducto();
                 modeloHistorialDeCompras.addRow(ob);
             }
             jTableHistorialArticulos.setModel(modeloHistorialDeCompras);

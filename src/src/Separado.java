@@ -2,7 +2,6 @@ package src;
 
 import java.io.Serializable;
 import java.util.Date;
-import util.Lista;
 
 /**
  *
@@ -10,28 +9,20 @@ import util.Lista;
  */
 public class Separado implements Serializable {
 
-    private Lista<Articulo> produtosSeparados;
+    private Articulo produtosSeparado;
     private Cliente cliente;
-    private Negocio negocio;
     private Date fechaInicio;
     private Date fechaDeRecogida;
+    private Negocio negocio;
     private float valorTotal;
 
-    public Separado(Lista<Articulo> produtosSeparados, Cliente cliente, Negocio negocio, Date fechaInicio, Date fechaDeRecogida, float valorTotal) {
-        this.produtosSeparados = new Lista<>();
+    public Separado(Articulo produtosSeparado, Cliente cliente, Negocio negocio, Date fechaInicio, Date fechaDeRecogida) {
+        this.produtosSeparado = produtosSeparado;
         this.cliente = cliente;
-        this.negocio = negocio;
         this.fechaInicio = fechaInicio;
+        this.negocio = negocio;
         this.fechaDeRecogida = fechaDeRecogida;
-        this.valorTotal = valorTotal;
-    }
-
-    public Lista<Articulo> getProdutosSeparados() {
-        return produtosSeparados;
-    }
-
-    public void setProdutosSeparados(Lista<Articulo> produtosSeparados) {
-        this.produtosSeparados = produtosSeparados;
+        this.valorTotal = 0;
     }
 
     public Cliente getCliente() {
@@ -40,14 +31,6 @@ public class Separado implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    }
-
-    public Negocio getNegocio() {
-        return negocio;
-    }
-
-    public void setNegocio(Negocio negocio) {
-        this.negocio = negocio;
     }
 
     public Date getFechaInicio() {
@@ -72,6 +55,22 @@ public class Separado implements Serializable {
 
     public void setValorTotal(float valorTotal) {
         this.valorTotal = valorTotal;
+    }
+
+    public Articulo getProdutosSeparado() {
+        return produtosSeparado;
+    }
+
+    public void setProdutosSeparado(Articulo produtosSeparado) {
+        this.produtosSeparado = produtosSeparado;
+    }
+
+    public Negocio getNegocio() {
+        return negocio;
+    }
+
+    public void setNegocio(Negocio negocio) {
+        this.negocio = negocio;
     }
 
 }

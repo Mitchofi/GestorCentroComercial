@@ -5,6 +5,8 @@
 package ventana;
 
 import controlador.ControladorVentanaVentas;
+import javax.swing.table.DefaultTableModel;
+import src.Articulo;
 import src.Negocio;
 
 /**
@@ -15,6 +17,7 @@ public class VentanaVentas extends javax.swing.JFrame {
 
     private Negocio negocio;
     private ControladorVentanaVentas controlador;
+    private DefaultTableModel modelo;
 
     /**
      * Creates new form VentanaVentas
@@ -23,8 +26,11 @@ public class VentanaVentas extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         this.negocio = negocio;
+        this.modelo = new DefaultTableModel();
         this.controlador = new ControladorVentanaVentas();
         ingresos();
+        limpiarTabla();
+        cargar();
     }
 
     /**
@@ -163,11 +169,11 @@ public class VentanaVentas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Cliente", "articulo comprado", "valor de compra"
+                "Cliente", "Fecha venta", "articulo comprado", "valor de compra", "Cantidad"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -175,6 +181,13 @@ public class VentanaVentas extends javax.swing.JFrame {
             }
         });
         jScrollPane3.setViewportView(jTableVentas);
+        if (jTableVentas.getColumnModel().getColumnCount() > 0) {
+            jTableVentas.getColumnModel().getColumn(0).setResizable(false);
+            jTableVentas.getColumnModel().getColumn(1).setResizable(false);
+            jTableVentas.getColumnModel().getColumn(2).setResizable(false);
+            jTableVentas.getColumnModel().getColumn(3).setResizable(false);
+            jTableVentas.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("INGRESOS GENERADOS:");
@@ -270,7 +283,29 @@ public class VentanaVentas extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabelSolicitudesMouseClicked
     public void ingresos() {
-        jLabel4.setText(String.valueOf(controlador.ingresosGenerados()));
+        jLabel4.setText(String.valueOf(negocio.ingresosGenerados()));
+    }
+
+    public void cargar() {
+        modelo = (DefaultTableModel) jTableVentas.getModel();
+        Object[] ob = new Object[5];
+        for (int i = 0; i < negocio.getVentas().Size(); i++) {
+            ob[0] = negocio.getVentas().obtenerDato(i).getCliente().getCorreo();
+            ob[1] = negocio.getVentas().obtenerDato(i).getFechaVenta();
+            ob[2] = negocio.getVentas().obtenerDato(i).getArticulos().getNombreProducto();
+            ob[3] = negocio.getVentas().obtenerDato(i).getValorTotal();
+            ob[4] = negocio.getVentas().obtenerDato(i).getCantidad();
+            modelo.addRow(ob);
+
+        }
+        jTableVentas.setModel(modelo);
+    }
+
+    public void limpiarTabla() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i = i - 1;
+        }
     }
 
     /**

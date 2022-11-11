@@ -13,10 +13,10 @@ public class Articulo implements Serializable {
     private String decripcionProducto;
     private String nombreCategoria;
     private float valorDelProducto;
-    private int porcentajeDescuento;
+    private float porcentajeDescuento;
     private int cantidadProducto;
 
-    public Articulo(String codigo, String nombreProducto, String decripcionProducto, String nombreCategoria, float valorDelProducto, int porcentajeDescuento, int cantidadProducto) {
+    public Articulo(String codigo, String nombreProducto, String decripcionProducto, String nombreCategoria, float valorDelProducto, float porcentajeDescuento, int cantidadProducto) {
         this.codigo = codigo;
         this.nombreProducto = nombreProducto;
         this.decripcionProducto = decripcionProducto;
@@ -66,11 +66,11 @@ public class Articulo implements Serializable {
         this.valorDelProducto = valorDelProducto;
     }
 
-    public int getPorcentajeDescuento() {
+    public float getPorcentajeDescuento() {
         return porcentajeDescuento;
     }
 
-    public void setPorcentajeDescuento(int porcentajeDescuento) {
+    public void setPorcentajeDescuento(float porcentajeDescuento) {
         this.porcentajeDescuento = porcentajeDescuento;
     }
 
@@ -80,5 +80,14 @@ public class Articulo implements Serializable {
 
     public void setCantidadProducto(int cantidadProducto) {
         this.cantidadProducto = cantidadProducto;
+    }
+
+    public float calcularDescuento() {
+        float porcentajeAux = porcentajeDescuento;
+        porcentajeAux = porcentajeDescuento / 100;
+        float valorAPagar = valorDelProducto * porcentajeAux;
+        valorAPagar = valorDelProducto - valorAPagar;
+        return valorAPagar;
+
     }
 }

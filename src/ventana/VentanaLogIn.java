@@ -5,6 +5,7 @@ import excepciones.ExcepcionNoSeEncuentraElUsuario;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import src.Cliente;
+import src.Empleado;
 import src.Negocio;
 
 /**
@@ -229,12 +230,13 @@ public class VentanaLogIn extends javax.swing.JFrame {
                 this.dispose();
             } else if (tipo == 4) {
                 Negocio negocio = controlador.returnNegocioEmpleado(correo, contrasena);
-                VentanaEncargadoInventario ventanaEncargadoInventario = new VentanaEncargadoInventario(this, negocio);
+                VentanaEncargadoInventario ventanaEncargadoInventario = new VentanaEncargadoInventario(negocio);
                 ventanaEncargadoInventario.setVisible(true);
                 this.dispose();
             } else if (tipo == 5) {
                 Negocio negocio = controlador.returnNegocioEmpleado(correo, contrasena);
-                VentanaVendedorNegocio ventanaVendedorNegocio = new VentanaVendedorNegocio(this, negocio);
+                Empleado empleado = controlador.buscarEmpleadoNegocio(correo, contrasena);
+                VentanaVendedorNegocio ventanaVendedorNegocio = new VentanaVendedorNegocio(negocio, empleado);
                 ventanaVendedorNegocio.setVisible(true);
                 this.dispose();
             } else if (tipo == 6) {

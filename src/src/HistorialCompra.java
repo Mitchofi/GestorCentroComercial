@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package src;
 
 import java.io.Serializable;
@@ -5,9 +9,9 @@ import util.Lista;
 
 /**
  *
- * @author Acer
+ * @author usuario
  */
-public class HistorialCompra implements Serializable{
+public class HistorialCompra implements Serializable {
 
     private Lista<Articulo> articulos;
     private float valorTotal;
@@ -21,44 +25,25 @@ public class HistorialCompra implements Serializable{
         calcularValorTotal();
     }
 
-    /**
-     *
-     * @return
-     */
-    public Lista getArticulos() {
-        return articulos;
-    }
-
-    /**
-     *
-     * @param articulos
-     */
-    public void setArticulos(Lista articulos) {
-        this.articulos = articulos;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public float getValorTotal() {
-        return valorTotal;
-    }
-
-    /**
-     *
-     * @param valorTotal
-     */
-    public void setValorTotal(float valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
-    /**
-     *
-     */
     public void calcularValorTotal() {
         for (int i = 0; i < articulos.Size(); i++) {
             valorTotal += articulos.obtenerDato(i).getValorDelProducto();
         }
+    }
+
+    public Lista<Articulo> getArticulos() {
+        return articulos;
+    }
+
+    public void setArticulos(Lista<Articulo> articulos) {
+        this.articulos = articulos;
+    }
+
+    public float getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(float valorTotal) {
+        this.valorTotal = valorTotal;
     }
 }

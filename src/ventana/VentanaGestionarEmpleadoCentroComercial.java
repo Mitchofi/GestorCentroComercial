@@ -4,7 +4,6 @@
  */
 package ventana;
 
-import controlador.ControladorVentanaGestionarCliente;
 import controlador.ControladorVentanaGestionarEmpleadoCentroComercial;
 import excepciones.ExcepcionEmpleadoDuplicado;
 import java.awt.Color;
