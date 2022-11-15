@@ -306,7 +306,7 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 447, 153));
 
         jLabel4.setText("¿Deseas salir de la cuenta?");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 630, -1, -1));
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 510, -1, -1));
 
         jLabelRegistrar2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabelRegistrar2.setForeground(new java.awt.Color(51, 153, 255));
@@ -317,7 +317,7 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
                 jLabelRegistrar2MouseClicked(evt);
             }
         });
-        jPanel3.add(jLabelRegistrar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 630, -1, -1));
+        jPanel3.add(jLabelRegistrar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 510, -1, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -331,7 +331,7 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -540,18 +540,6 @@ public class VentanaEncargadoInventario extends javax.swing.JFrame {
             txtCodigoArticulo.setForeground(Color.black);
         }
     }//GEN-LAST:event_txtCodigoArticuloMouseClicked
-
-    public void llenarArticulos() {
-        for (int i = 0; i < CentroComercial.locales.length; i++) {
-            for (int j = 0; j < CentroComercial.locales[i].length; j++) {
-                if (CentroComercial.locales[i][j].getNegocio() != null) {
-                    if (CentroComercial.locales[i][j].getNegocio().getArticulos() != null) {
-
-                    }
-                }
-            }
-        }
-    }
 
     public static boolean validarNumeros(String datos) {
         return datos.matches("[0-9-.]*");

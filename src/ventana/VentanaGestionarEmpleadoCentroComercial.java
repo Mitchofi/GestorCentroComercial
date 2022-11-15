@@ -6,6 +6,7 @@ package ventana;
 
 import controlador.ControladorVentanaGestionarEmpleadoCentroComercial;
 import excepciones.ExcepcionEmpleadoDuplicado;
+import excepciones.ExcepcionNoSeEncuentraDocumento;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -16,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import src.CentroComercial;
 import src.Empleado;
 import src.Vehiculo;
+import static ventana.VentanaGestionarCliente.validarLetras;
 
 /**
  *
@@ -191,11 +193,13 @@ public class VentanaGestionarEmpleadoCentroComercial extends javax.swing.JFrame 
         txtNombreEmpleado.setForeground(new java.awt.Color(153, 153, 153));
         txtNombreEmpleado.setText("Nombre completo");
         txtNombreEmpleado.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombreEmpleadoFocusGained(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtNombreEmpleadoFocusLost(evt);
+            }
+        });
+        txtNombreEmpleado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtNombreEmpleadoMouseClicked(evt);
             }
         });
 
@@ -293,6 +297,13 @@ public class VentanaGestionarEmpleadoCentroComercial extends javax.swing.JFrame 
             }
         });
         jScrollPane2.setViewportView(jTableEmpleados);
+        if (jTableEmpleados.getColumnModel().getColumnCount() > 0) {
+            jTableEmpleados.getColumnModel().getColumn(0).setResizable(false);
+            jTableEmpleados.getColumnModel().getColumn(1).setResizable(false);
+            jTableEmpleados.getColumnModel().getColumn(2).setResizable(false);
+            jTableEmpleados.getColumnModel().getColumn(3).setResizable(false);
+            jTableEmpleados.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -305,7 +316,7 @@ public class VentanaGestionarEmpleadoCentroComercial extends javax.swing.JFrame 
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -315,9 +326,9 @@ public class VentanaGestionarEmpleadoCentroComercial extends javax.swing.JFrame 
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 5, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
@@ -329,9 +340,11 @@ public class VentanaGestionarEmpleadoCentroComercial extends javax.swing.JFrame 
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -356,7 +369,7 @@ public class VentanaGestionarEmpleadoCentroComercial extends javax.swing.JFrame 
         });
 
         jLabelEmpleados.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabelEmpleados.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelEmpleados.setForeground(new java.awt.Color(255, 255, 255));
         jLabelEmpleados.setText("Empleados");
         jLabelEmpleados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -626,17 +639,15 @@ public class VentanaGestionarEmpleadoCentroComercial extends javax.swing.JFrame 
         }
     }//GEN-LAST:event_txtTipoDeVehiculoEmpleadoFocusLost
 
-    private void txtNombreEmpleadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreEmpleadoFocusGained
-        if (txtNombreEmpleado.getText().equals("Nombre completo")) {
-            txtNombreEmpleado.setText("");
-            txtNombreEmpleado.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtNombreEmpleadoFocusGained
-
     private void txtNombreEmpleadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreEmpleadoFocusLost
         if (txtNombreEmpleado.getText().equals("")) {
             txtNombreEmpleado.setText("Nombre completo");
             txtNombreEmpleado.setForeground(Color.gray);
+        }
+        if (!validarLetras(txtNombreEmpleado.getText()) && !txtNombreEmpleado.getText().equals("Nombre completo")) {
+            txtNombreEmpleado.setBackground(Color.red);
+        } else {
+            txtNombreEmpleado.setBackground(Color.white);
         }
     }//GEN-LAST:event_txtNombreEmpleadoFocusLost
 
@@ -660,13 +671,17 @@ public class VentanaGestionarEmpleadoCentroComercial extends javax.swing.JFrame 
             String contrasena = String.valueOf(txtContrasenaEmpleado.getPassword());
             Vehiculo vehiculo = vehiculo();
             Empleado empleado = new Empleado(vehiculo, rol, nombre, cedula, telefono, correo, contrasena, edad);
-            if (controlador.modificarEmpleadoCentroComercial(cedula, empleado)) {
-                JOptionPane.showMessageDialog(this, "El empleado con cedula: " + cedula + " modificado correctamente");
-                limpiarTablaEmpleados();
-                cargarTablaEmpleados();
-                cleanTextFieldEmpleado();
-            } else {
-                JOptionPane.showMessageDialog(this, "El empleado con cedula: " + cedula + " no fue modificado debido a que hay un usuario con esos datos");
+            try {
+                if (controlador.modificarEmpleadoCentroComercial(cedula, empleado)) {
+                    JOptionPane.showMessageDialog(this, "El empleado con cedula: " + cedula + " modificado correctamente");
+                    limpiarTablaEmpleados();
+                    cargarTablaEmpleados();
+                    cleanTextFieldEmpleado();
+                } else {
+                    JOptionPane.showMessageDialog(this, "El empleado con cedula: " + cedula + " no fue modificado debido a que hay un usuario con esos datos");
+                }
+            } catch (ExcepcionNoSeEncuentraDocumento ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
             }
         }
     }//GEN-LAST:event_btnModificarEmpleadoActionPerformed
@@ -716,6 +731,13 @@ public class VentanaGestionarEmpleadoCentroComercial extends javax.swing.JFrame 
         ventanaGestionarSolicitudes.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabelSolicitudesMouseClicked
+
+    private void txtNombreEmpleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNombreEmpleadoMouseClicked
+        if (txtNombreEmpleado.getText().equals("Nombre completo")) {
+            txtNombreEmpleado.setText("");
+            txtNombreEmpleado.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtNombreEmpleadoMouseClicked
     public void cargarTablaEmpleados() {
         if (CentroComercial.personas.Size() != 0) {
             modeloTablaEmpleado = (DefaultTableModel) jTableEmpleados.getModel();

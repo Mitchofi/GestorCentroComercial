@@ -13,7 +13,7 @@ public class ControladorVentanaGestionarEmpleadoCentroComercial {
 
     }
 
-    public boolean validarCorreo(String correo) {
+    public int validarCorreo(String correo) {
         return controlador.validarCorreo(correo);
     }
 

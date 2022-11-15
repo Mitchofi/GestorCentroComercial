@@ -6,6 +6,8 @@ package controlador;
 
 import src.CentroComercial;
 import src.Parqueadero;
+import src.Vehiculo;
+import util.Queve;
 
 /**
  *
@@ -13,18 +15,28 @@ import src.Parqueadero;
  */
 public class ControladorVentanaParqueadero {
 
-    CentroComercial controlador;
+    CentroComercial controladorAux;
 
     public ControladorVentanaParqueadero() {
-        this.controlador = new CentroComercial();
+        this.controladorAux = new CentroComercial();
     }
 
     public Parqueadero returnParqueadero() {
-        return controlador.returnParqueadero();
+        return controladorAux.returnParqueadero();
     }
 
-    public boolean validarCorreo(String correo) {
+    /*public int validarCorreo(String correo) {
         return controlador.validarCorreo(correo);
+    }*/
+    public Vehiculo buscarVehiculo(String tipo, String placa) {
+        return controladorAux.returnParqueadero().buscarVehiculo(tipo, placa);
     }
 
+    public boolean anadirVehiculoACola(String tipo, String placa) {
+        return controladorAux.returnParqueadero().anadirVehiculoACola(tipo, placa);
+    }
+
+    public Queve<Vehiculo> returnCola() {
+        return controladorAux.returnParqueadero().returnCola();
+    }
 }

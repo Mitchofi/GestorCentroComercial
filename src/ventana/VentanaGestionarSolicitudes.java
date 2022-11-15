@@ -98,7 +98,7 @@ public class VentanaGestionarSolicitudes extends javax.swing.JFrame {
         });
 
         jLabelSolicitudes.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabelSolicitudes.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelSolicitudes.setForeground(new java.awt.Color(255, 255, 255));
         jLabelSolicitudes.setText("Solicitudes");
         jLabelSolicitudes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 

@@ -6,7 +6,6 @@ package ventana;
 
 import controlador.ControladorVentanaVentas;
 import javax.swing.table.DefaultTableModel;
-import src.Articulo;
 import src.Negocio;
 
 /**
@@ -87,7 +86,7 @@ public class VentanaVentas extends javax.swing.JFrame {
         });
 
         jLabelConcursos.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabelConcursos.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelConcursos.setForeground(new java.awt.Color(255, 255, 255));
         jLabelConcursos.setText("Ventas");
         jLabelConcursos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -149,7 +148,7 @@ public class VentanaVentas extends javax.swing.JFrame {
                 .addComponent(jLabelVentas)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelSolicitudes)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jLabel6.setText("¿Deseas salir de la cuenta?");
@@ -245,10 +244,10 @@ public class VentanaVentas extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -268,6 +267,9 @@ public class VentanaVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelClientesMouseClicked
 
     private void jLabelVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelVentasMouseClicked
+        VentanaConcursoAdminNegocio ventanaConcursoAdminNegocio = new VentanaConcursoAdminNegocio(negocio);
+        ventanaConcursoAdminNegocio.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jLabelVentasMouseClicked
 
     private void jLabelRegistrar4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar4MouseClicked

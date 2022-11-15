@@ -7,6 +7,7 @@ package ventana;
 import controlador.ControladorVentanaVendedorNegocio;
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
@@ -18,6 +19,7 @@ import src.CentroComercial;
 import src.Cliente;
 import src.Empleado;
 import src.Negocio;
+import static ventana.VentanaCliente.validarNumeros;
 
 /**
  *
@@ -35,17 +37,17 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
     private Negocio negocio;
     private float valorDescuento;
     private Empleado empleado;
-
+    
     public VentanaVendedorNegocio(Negocio negocio, Empleado empleado) {
         initComponents();
         setLocationRelativeTo(this);
-        this.controlador = new ControladorVentanaVendedorNegocio();
+        this.controlador = new ControladorVentanaVendedorNegocio(negocio);
         this.empleado = empleado;
         this.txtValor.setEnabled(false);
         this.modeloArticulosEnVenta = new DefaultTableModel();
         this.cantidad = 0;
         this.codigo = txtCodigoArticulo.getText();
-        this.negocio = null;
+        this.negocio = negocio;
         this.valorDescuento = 0;
         this.txtCodigoArticulo.setEnabled(false);
         this.jDateChooserFechaRecogida.setEnabled(false);
@@ -148,6 +150,11 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
                 txtCantidadFocusLost(evt);
             }
         });
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyPressed(evt);
+            }
+        });
 
         txtValor.setForeground(new java.awt.Color(153, 153, 153));
         txtValor.setText("Valor a pagar");
@@ -237,8 +244,7 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
                             .addGroup(jPanel14Layout.createSequentialGroup()
                                 .addGap(13, 13, 13)
                                 .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(txtCorreoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(txtCantidad)
@@ -360,22 +366,23 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+            .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(732, 732, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(732, 732, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(19, 19, 19))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelRegistrar6)
+                        .addComponent(jLabelRegistrar6)))
                 .addGap(19, 19, 19))
         );
         jPanel10Layout.setVerticalGroup(
@@ -464,7 +471,6 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
         if (txtValor.getText().equals("")) {
             txtValor.setText("Valor a pagar");
             txtValor.setForeground(Color.gray);
-
         }
     }//GEN-LAST:event_txtValorFocusLost
 
@@ -509,7 +515,7 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
                             codigo = txtCodigoArticulo.getText();
                             cantidad = Integer.parseInt(txtCantidad.getText());
                             Cliente cliente = controlador.buscarClientePorUsuario(correo);
-                            if (negocio.realizarCompra(codigo, empleado, cantidad, cliente)) {
+                            if (controlador.realizarCompra(codigo, empleado, cantidad, cliente)) {
                                 JOptionPane.showMessageDialog(this, "El articulo fue comprado correctamente");
                                 cleanTextField();
                                 limpiarTabla();
@@ -532,12 +538,12 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelRegistrar2MouseClicked
 
     private void btnSeparadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeparadoActionPerformed
-        if (txtCodigoArticulo.getText().equals("") || txtCodigoArticulo.getText().equals("Codigo articulo")
+        if (txtCorreoCliente.getText().isEmpty() || txtCorreoCliente.getText().equals("Correo de cliente") || txtCodigoArticulo.getText().equals("") || txtCodigoArticulo.getText().equals("Codigo articulo")
                 || txtArticulo.getText().equals("") || txtArticulo.getText().equals("Articulo")
                 || txtValor.getText().equals("") || txtValor.getText().equals("Valor a pagar")
                 || txtCantidad.getText().equals("") || txtCantidad.getText().equals("Cantidad a comprar")
                 || jDateChooserFechaRecogida.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Por favor selecciona de la tabla el articulo que deseas separar y rellena el campo de fecha");
+            JOptionPane.showMessageDialog(this, "Por favor selecciona de la tabla el articulo que deseas separar y rellena los campos");
         } else {
             for (int i = 0; i < CentroComercial.locales.length; i++) {
                 for (int j = 0; j < CentroComercial.locales[i].length; j++) {
@@ -548,7 +554,7 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
                             cantidad = Integer.parseInt(txtCantidad.getText());
                             Date date = jDateChooserFechaRecogida.getDate();
                             Cliente cliente = controlador.buscarClientePorUsuario(correo);
-                            if (negocio.realizarSeparado(codigo, cantidad, empleado, negocio, cliente, date)) {
+                            if (controlador.realizarSeparado(codigo, cantidad, empleado, negocio, cliente, date)) {
                                 JOptionPane.showMessageDialog(this, "El articulo fue separado correctamente");
                                 cleanTextField();
                                 limpiarTabla();
@@ -573,12 +579,15 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
             btnSeparado.setEnabled(false);
             jDateChooserFechaRecogida.setDate(null);
             jDateChooserFechaRecogida.setEnabled(false);
-
+            
         }
     }//GEN-LAST:event_checkSeparadoItemStateChanged
 
     private void txtCorreoClientetxtArticulo1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoClientetxtArticulo1FocusLost
-        // TODO add your handling code here:
+        if (txtCorreoCliente.getText().equals("")) {
+            txtCorreoCliente.setText("Correo de cliente");
+            txtCorreoCliente.setForeground(Color.gray);
+        }
     }//GEN-LAST:event_txtCorreoClientetxtArticulo1FocusLost
 
     private void txtCorreoClientetxtArticulo1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCorreoClientetxtArticulo1MouseClicked
@@ -602,26 +611,25 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtCorreoClienteFocusGained
 
-    public void llenarArticulos() {
-        for (int i = 0; i < CentroComercial.locales.length; i++) {
-            for (int j = 0; j < CentroComercial.locales[i].length; j++) {
-                if (CentroComercial.locales[i][j].getNegocio() != null) {
-                    if (CentroComercial.locales[i][j].getNegocio().getArticulos() != null) {
-
-                    }
-                }
+    private void txtCantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (validarNumeros(txtCantidad.getText()) && !txtCantidad.getText().isEmpty()) {
+                Articulo arti = controlador.buscarArticulo(codigo);
+                txtValor.setText(String.valueOf(negocio.valorTotal(codigo, Integer.parseInt(txtCantidad.getText()))));
+            } else {
+                txtCantidad.setText("0");
             }
         }
-    }
-
+    }//GEN-LAST:event_txtCantidadKeyPressed
+    
     public static boolean validarNumeros(String datos) {
         return datos.matches("[0-9]*");
     }
-
+    
     public static boolean validarLetras(String datos) {
         return datos.matches("[a-zA-Z]*");
     }
-
+    
     public void cargar() {
         modeloArticulosEnVenta = (DefaultTableModel) jTableArticulos.getModel();
         Object[] ob = new Object[7];
@@ -654,22 +662,24 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
         }
         jTableArticulos.setModel(modeloArticulosEnVenta);
     }
-
+    
     public void limpiarTabla() {
         for (int i = 0; i < modeloArticulosEnVenta.getRowCount(); i++) {
             modeloArticulosEnVenta.removeRow(i);
             i = i - 1;
         }
     }
-
+    
     public void cleanTextField() {
+        txtCorreoCliente.setText("Correo de cliente");
+        txtCorreoCliente.setForeground(Color.gray);
         txtArticulo.setText("Articulo");
         txtArticulo.setForeground(Color.gray);
-        txtValor.setText("Valor");
+        txtValor.setText("Valor a pagar");
         txtValor.setForeground(Color.gray);
         jTextDescripcion.setText("Descripcion");
         jTextDescripcion.setForeground(Color.gray);
-        txtCantidad.setText("Cantidad");
+        txtCantidad.setText("Cantidad a comprar");
         txtCantidad.setForeground(Color.gray);
         checkSeparado.setState(false);
         if (checkSeparado.getState()) {
@@ -683,7 +693,7 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
             jDateChooserFechaRecogida.setEnabled(false);
         }
     }
-
+    
     public void mouseTablArticulos() {
         jTableArticulos.addMouseListener(new MouseAdapter() {
             @Override
@@ -697,17 +707,8 @@ public class VentanaVendedorNegocio extends javax.swing.JFrame {
                     txtArticulo.setText(jTableArticulos.getValueAt(jTableArticulos.getSelectedRow(), 1).toString());
                     txtArticulo.setForeground(Color.black);
                     codigo = txtCodigoArticulo.getText();
-                    for (int i = 0; i < CentroComercial.locales.length; i++) {
-                        for (int j = 0; j < CentroComercial.locales[i].length; j++) {
-                            if (CentroComercial.locales[i][j].getNegocio() != null) {
-                                if (CentroComercial.locales[i][j].getNegocio().getNombre().equals(jTableArticulos.getValueAt(jTableArticulos.getSelectedRow(), 4).toString())) {
-                                    negocio = CentroComercial.locales[i][j].getNegocio();
-                                    jTextDescripcion.setText(negocio.buscarArticulo(codigo).getDecripcionProducto());
-                                    jTextDescripcion.setForeground(Color.black);
-                                }
-                            }
-                        }
-                    }
+                    jTextDescripcion.setText(negocio.buscarArticulo(codigo).getDecripcionProducto());
+                    jTextDescripcion.setForeground(Color.black);
                     if (!jTableArticulos.getValueAt(jTableArticulos.getSelectedRow(), 4).toString().equals("No hay")) {
                         valorDescuento = Float.parseFloat(jTableArticulos.getValueAt(jTableArticulos.getSelectedRow(), 6).toString());
                     }

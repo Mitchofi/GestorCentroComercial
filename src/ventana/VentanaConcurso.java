@@ -95,6 +95,14 @@ public class VentanaConcurso extends javax.swing.JFrame {
         });
         jTableConcursosVigentes.setToolTipText("");
         jScrollPane2.setViewportView(jTableConcursosVigentes);
+        if (jTableConcursosVigentes.getColumnModel().getColumnCount() > 0) {
+            jTableConcursosVigentes.getColumnModel().getColumn(0).setResizable(false);
+            jTableConcursosVigentes.getColumnModel().getColumn(1).setResizable(false);
+            jTableConcursosVigentes.getColumnModel().getColumn(2).setResizable(false);
+            jTableConcursosVigentes.getColumnModel().getColumn(3).setResizable(false);
+            jTableConcursosVigentes.getColumnModel().getColumn(4).setResizable(false);
+            jTableConcursosVigentes.getColumnModel().getColumn(5).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -131,6 +139,14 @@ public class VentanaConcurso extends javax.swing.JFrame {
         });
         jTableConcursosParticipo.setToolTipText("");
         jScrollPane3.setViewportView(jTableConcursosParticipo);
+        if (jTableConcursosParticipo.getColumnModel().getColumnCount() > 0) {
+            jTableConcursosParticipo.getColumnModel().getColumn(0).setResizable(false);
+            jTableConcursosParticipo.getColumnModel().getColumn(1).setResizable(false);
+            jTableConcursosParticipo.getColumnModel().getColumn(2).setResizable(false);
+            jTableConcursosParticipo.getColumnModel().getColumn(3).setResizable(false);
+            jTableConcursosParticipo.getColumnModel().getColumn(4).setResizable(false);
+            jTableConcursosParticipo.getColumnModel().getColumn(5).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -190,7 +206,7 @@ public class VentanaConcurso extends javax.swing.JFrame {
         });
 
         jLabelVentas.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabelVentas.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelVentas.setForeground(new java.awt.Color(255, 255, 255));
         jLabelVentas.setText("Concursos");
         jLabelVentas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -209,19 +225,19 @@ public class VentanaConcurso extends javax.swing.JFrame {
                                 .addGap(14, 14, 14)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabelEmpleados)
-                                    .addComponent(jLabelLocales)
-                                    .addComponent(jLabelVentas)))
+                                    .addComponent(jLabelLocales)))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel6)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 79, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addContainerGap()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                                .addGap(0, 8, Short.MAX_VALUE)
-                                .addComponent(jLabelClientes))
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabelVentas)
+                            .addComponent(jLabelClientes))))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(

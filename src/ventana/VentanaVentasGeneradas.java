@@ -91,7 +91,7 @@ public class VentanaVentasGeneradas extends javax.swing.JFrame {
         });
 
         jLabelConcursos.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabelConcursos.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelConcursos.setForeground(new java.awt.Color(255, 255, 255));
         jLabelConcursos.setText("Ventas");
         jLabelConcursos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -183,6 +183,12 @@ public class VentanaVentasGeneradas extends javax.swing.JFrame {
             }
         });
         jScrollPane3.setViewportView(jTableVentas);
+        if (jTableVentas.getColumnModel().getColumnCount() > 0) {
+            jTableVentas.getColumnModel().getColumn(0).setResizable(false);
+            jTableVentas.getColumnModel().getColumn(1).setResizable(false);
+            jTableVentas.getColumnModel().getColumn(2).setResizable(false);
+            jTableVentas.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);

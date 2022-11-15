@@ -15,8 +15,8 @@ public class ControladorVentanaAdministradorNegocio {
 
     Negocio controlador;
 
-    public ControladorVentanaAdministradorNegocio() {
-        this.controlador = new Negocio();
+    public ControladorVentanaAdministradorNegocio(Negocio negocio) {
+        this.controlador = negocio;
     }
 
     public boolean validarCorreo(String correo) {

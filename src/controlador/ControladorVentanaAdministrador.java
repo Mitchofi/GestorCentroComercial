@@ -24,7 +24,7 @@ public class ControladorVentanaAdministrador {
         return controlador.obtenerLocal(fila, columna);
     }
 
-    public boolean validarCorreo(String correo) {
+    public int validarCorreo(String correo) {
         return controlador.validarCorreo(correo);
     }
 

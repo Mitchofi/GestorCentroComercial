@@ -67,7 +67,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jLabel2.setText("ADMINISTRADOR");
 
         jLabelLocales.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabelLocales.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelLocales.setForeground(new java.awt.Color(255, 255, 255));
         jLabelLocales.setText("Locales");
         jLabelLocales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 

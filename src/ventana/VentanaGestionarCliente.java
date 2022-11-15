@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import src.CentroComercial;
 import src.Cliente;
 import src.Vehiculo;
+import static ventana.VentanaSignUp.validarLetras;
 
 /**
  *
@@ -109,7 +110,7 @@ public class VentanaGestionarCliente extends javax.swing.JFrame {
         });
 
         jLabelClientes.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabelClientes.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelClientes.setForeground(new java.awt.Color(255, 255, 255));
         jLabelClientes.setText("Clientes");
         jLabelClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -288,11 +289,13 @@ public class VentanaGestionarCliente extends javax.swing.JFrame {
         txtNombreCliente.setForeground(new java.awt.Color(153, 153, 153));
         txtNombreCliente.setText("Nombre completo");
         txtNombreCliente.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombreClienteFocusGained(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtNombreClienteFocusLost(evt);
+            }
+        });
+        txtNombreCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtNombreClienteMouseClicked(evt);
             }
         });
 
@@ -376,11 +379,11 @@ public class VentanaGestionarCliente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Correo", "Cedula", "Edad", "Multa"
+                "Nombre", "Correo", "Cedula", "Edad", "Multa", "Tiene vehiculo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -388,6 +391,14 @@ public class VentanaGestionarCliente extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTableClientes);
+        if (jTableClientes.getColumnModel().getColumnCount() > 0) {
+            jTableClientes.getColumnModel().getColumn(0).setResizable(false);
+            jTableClientes.getColumnModel().getColumn(1).setResizable(false);
+            jTableClientes.getColumnModel().getColumn(2).setResizable(false);
+            jTableClientes.getColumnModel().getColumn(3).setResizable(false);
+            jTableClientes.getColumnModel().getColumn(4).setResizable(false);
+            jTableClientes.getColumnModel().getColumn(5).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -395,15 +406,15 @@ public class VentanaGestionarCliente extends javax.swing.JFrame {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -411,9 +422,9 @@ public class VentanaGestionarCliente extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
@@ -427,9 +438,11 @@ public class VentanaGestionarCliente extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -445,7 +458,7 @@ public class VentanaGestionarCliente extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -655,17 +668,15 @@ public class VentanaGestionarCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtTipoDeVehiculoClienteFocusLost
 
-    private void txtNombreClienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreClienteFocusGained
-        if (txtNombreCliente.getText().equals("Nombre completo")) {
-            txtNombreCliente.setText("");
-            txtNombreCliente.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtNombreClienteFocusGained
-
     private void txtNombreClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreClienteFocusLost
         if (txtNombreCliente.getText().equals("")) {
             txtNombreCliente.setText("Nombre completo");
             txtNombreCliente.setForeground(Color.gray);
+        }
+        if (!validarLetras(txtNombreCliente.getText()) && !txtNombreCliente.getText().equals("Nombre completo")) {
+            txtNombreCliente.setBackground(Color.red);
+        } else {
+            txtNombreCliente.setBackground(Color.white);
         }
     }//GEN-LAST:event_txtNombreClienteFocusLost
 
@@ -714,6 +725,13 @@ public class VentanaGestionarCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarClienteActionPerformed
 
+    private void txtNombreClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNombreClienteMouseClicked
+        if (txtNombreCliente.getText().equals("Nombre completo")) {
+            txtNombreCliente.setText("");
+            txtNombreCliente.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtNombreClienteMouseClicked
+
     public static boolean validarNumeros(String datos) {
         return datos.matches("[0-9]*");
     }
@@ -725,16 +743,21 @@ public class VentanaGestionarCliente extends javax.swing.JFrame {
     public void cargarCliente() {
         if (CentroComercial.personas.Size() != 0) {
             modeloTablaCliente = (DefaultTableModel) jTableClientes.getModel();
-            Object[] ob = new Object[5];
+            Object[] ob = new Object[6];
             for (int i = 0; i < CentroComercial.personas.Size(); i++) {
                 if (!(CentroComercial.personas.obtenerDato(i) instanceof Cliente)) {
                 } else {
+                    String vehiculo = "Si";
                     Cliente aux = (Cliente) CentroComercial.personas.obtenerDato(i);
                     ob[0] = aux.getNombre();
                     ob[1] = aux.getCorreo();
                     ob[2] = aux.getCedula();
                     ob[3] = aux.getEdad();
                     ob[4] = aux.isMulta();
+                    if (aux.getVehiculo() == null) {
+                        vehiculo = "No";
+                    }
+                    ob[5] = vehiculo;
                     modeloTablaCliente.addRow(ob);
                 }
             }
@@ -783,6 +806,12 @@ public class VentanaGestionarCliente extends javax.swing.JFrame {
         txtContrasenaCliente.setText("******");
         txtContrasenaCliente.setForeground(Color.gray);
         checkVehiculoCliente.setState(false);
+        txtTipoDeVehiculoCliente.setEnabled(false);
+        txtPlacaVehiculoCliente.setEnabled(false);
+        txtTipoDeVehiculoCliente.setText("Tipo de vehiculo");
+        txtTipoDeVehiculoCliente.setForeground(Color.gray);
+        txtPlacaVehiculoCliente.setText("Placa del vehiculo");
+        txtPlacaVehiculoCliente.setForeground(Color.gray);
     }
 
     public void mouseTableCliente() {

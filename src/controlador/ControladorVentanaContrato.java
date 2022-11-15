@@ -22,7 +22,7 @@ public class ControladorVentanaContrato {
         return controlador.anadirNegocio(administradorDeNegocio, negocio, contrato, local);
     }
 
-    public boolean validarCorreo(String correo) {
+    public int validarCorreo(String correo) {
         return controlador.validarCorreo(correo);
     }
 

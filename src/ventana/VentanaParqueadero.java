@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import src.CentroComercial;
 import src.Vehiculo;
 
 /**
@@ -25,6 +24,7 @@ public class VentanaParqueadero extends javax.swing.JFrame implements ActionList
     private VentanaLogIn ventanaLogIn;
     private ControladorVentanaParqueadero controlador;
     private JButton[][] botones;
+    private int contadorEspaciosOcupados;
 
     public VentanaParqueadero(VentanaLogIn logIn) {
         initComponents();
@@ -32,8 +32,14 @@ public class VentanaParqueadero extends javax.swing.JFrame implements ActionList
         this.botones = new JButton[5][10];
         this.ventanaLogIn = logIn;
         this.controlador = new ControladorVentanaParqueadero();
+        this.contadorEspaciosOcupados = 0;
+        this.btnAnadirCola.setEnabled(true);
         initBotones();
+        if (!controlador.returnParqueadero().getColaEsperaVehiculos().isEmpty()) {
+            vehiculoCola();
+        }
         validarPosiciones();
+        botonAnadir();
     }
 
     /**
@@ -48,34 +54,148 @@ public class VentanaParqueadero extends javax.swing.JFrame implements ActionList
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        btnAnadirCola = new javax.swing.JButton();
+        txtPlaca = new javax.swing.JTextField();
+        txtTipoVehiculo = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabelRegistrar1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Administrador");
+        setTitle("Encargado de parqueadero");
+        setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setForeground(new java.awt.Color(153, 153, 153));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel2.setText("BIENVENIDO");
+        jLabel2.setText("ENCARGADO DE");
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel4.setText("BIENVENIDO");
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel5.setText("PARQUEADERO");
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel6.setText("Carro en cola:");
+
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel7.setText("No hay");
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Añadir a cola"));
+
+        btnAnadirCola.setText("Añadir carro");
+        btnAnadirCola.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnadirColaActionPerformed(evt);
+            }
+        });
+
+        txtPlaca.setForeground(new java.awt.Color(153, 153, 153));
+        txtPlaca.setText("Placa");
+        txtPlaca.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPlacaFocusLost(evt);
+            }
+        });
+        txtPlaca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtPlacaMouseClicked(evt);
+            }
+        });
+
+        txtTipoVehiculo.setForeground(new java.awt.Color(153, 153, 153));
+        txtTipoVehiculo.setText("Tipo de vehiculo");
+        txtTipoVehiculo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtTipoVehiculoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTipoVehiculoFocusLost(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(btnAnadirCola)
+                .addContainerGap(54, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtTipoVehiculo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                        .addComponent(txtPlaca))
+                    .addContainerGap()))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(85, Short.MAX_VALUE)
+                .addComponent(btnAnadirCola)
+                .addGap(23, 23, 23))
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(23, 23, 23)
+                    .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(txtTipoVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(58, Short.MAX_VALUE)))
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel2)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel5))
+                            .addComponent(jLabel2)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(34, 34, 34)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addContainerGap(577, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addGap(57, 57, 57)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addGap(51, 51, 51)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         jLabelRegistrar1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -95,7 +215,7 @@ public class VentanaParqueadero extends javax.swing.JFrame implements ActionList
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(534, Short.MAX_VALUE)
+                .addContainerGap(535, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelRegistrar1)
@@ -149,6 +269,58 @@ public class VentanaParqueadero extends javax.swing.JFrame implements ActionList
         this.dispose();
     }//GEN-LAST:event_jLabelRegistrar1MouseClicked
 
+    private void txtPlacaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaFocusLost
+        if (txtPlaca.getText().equals("")) {
+            txtPlaca.setText("Placa");
+            txtPlaca.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtPlacaFocusLost
+
+    private void txtPlacaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPlacaMouseClicked
+        if (txtPlaca.getText().equals("Placa")) {
+            txtPlaca.setText("");
+            txtPlaca.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtPlacaMouseClicked
+
+    private void txtTipoVehiculoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoVehiculoFocusGained
+        if (txtTipoVehiculo.getText().equals("Tipo de vehiculo")) {
+            txtTipoVehiculo.setText("");
+            txtTipoVehiculo.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtTipoVehiculoFocusGained
+
+    private void txtTipoVehiculoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoVehiculoFocusLost
+        if (txtTipoVehiculo.getText().equals("")) {
+            txtTipoVehiculo.setText("Tipo de vehiculo");
+            txtTipoVehiculo.setForeground(Color.gray);
+        }
+        if (!validarLetras(txtTipoVehiculo.getText()) && !txtTipoVehiculo.getText().equals("Tipo de vehiculo")) {
+            txtTipoVehiculo.setBackground(Color.red);
+        } else {
+            txtTipoVehiculo.setBackground(Color.white);
+        }
+    }//GEN-LAST:event_txtTipoVehiculoFocusLost
+
+    private void btnAnadirColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirColaActionPerformed
+        if (txtTipoVehiculo.getText().equals("") || txtTipoVehiculo.getText().equals("Tipo de vehiculo")
+                || txtPlaca.getText().equals("") || txtPlaca.getText().equals("Placa")
+                || txtTipoVehiculo.getBackground().equals(Color.red)) {
+            JOptionPane.showMessageDialog(this, "Algo salio mal, por favor verifica los datos ingresados :(");
+        } else {
+            String placa = txtPlaca.getText();
+            String tipoDeVehiculo = txtTipoVehiculo.getText();
+            if (controlador.anadirVehiculoACola(tipoDeVehiculo, placa)) {
+                JOptionPane.showMessageDialog(this, "vehiculo con placa: " + placa + " guardado al listado");
+                validarPosiciones();
+                cleanTextField();
+                vehiculoCola();
+            } else {
+                JOptionPane.showMessageDialog(this, "El vehiculo con placa: " + placa + " no pudo ser registrado");
+            }
+        }
+    }//GEN-LAST:event_btnAnadirColaActionPerformed
+
     private void initBotones() {
         int ancho = 70;
         int alto = 70;
@@ -158,7 +330,7 @@ public class VentanaParqueadero extends javax.swing.JFrame implements ActionList
         for (int i = 0; i < botones.length; i++) {
             for (int j = 0; j < botones[i].length; j++) {
                 botones[i][j] = new JButton();
-                botones[i][j].setBounds(j * ancho + separado1, (separado1 * 6) + i * alto + separado1, ancho, alto);
+                botones[i][j].setBounds(j * ancho + separado1, (separado1 * 3) + i * alto + separado1, ancho, alto);
                 botones[i][j].setText(Integer.toString(texto));
                 botones[i][j].addActionListener(this);
                 jPanel4.add(botones[i][j]);
@@ -168,15 +340,49 @@ public class VentanaParqueadero extends javax.swing.JFrame implements ActionList
     }
 
     public void validarPosiciones() {
+        contadorEspaciosOcupados = 0;
         for (int i = 0; i < botones.length; i++) {
             for (int j = 0; j < botones[i].length; j++) {
                 if (controlador.returnParqueadero().espacio(i, j).getPlaca() == null) {
                     botones[i][j].setBackground(Color.white);
                 } else {
                     botones[i][j].setBackground(Color.yellow);
+                    contadorEspaciosOcupados++;
                 }
             }
         }
+    }
+
+    public void botonAnadir() {
+        if (contadorEspaciosOcupados == 2) {
+            btnAnadirCola.setEnabled(true);
+        } else {
+            btnAnadirCola.setEnabled(false);
+        }
+    }
+
+    public static boolean validarNumeros(String datos) {
+        return datos.matches("[0-9]*");
+    }
+
+    public static boolean validarLetras(String datos) {
+        return datos.matches("[a-zA-Z]*");
+    }
+
+    public void vehiculoCola() {
+        if (! controlador.returnParqueadero().getColaEsperaVehiculos().isEmpty()) {
+            jLabel7.setText(controlador.returnCola().peek().getPlaca());
+        }
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public void cleanTextField() {
+        txtPlaca.setText("Placa");
+        txtPlaca.setForeground(Color.gray);
+        txtTipoVehiculo.setText("Tipo de placa");
+        txtTipoVehiculo.setForeground(Color.gray);
     }
 
     /**
@@ -222,12 +428,20 @@ public class VentanaParqueadero extends javax.swing.JFrame implements ActionList
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnadirCola;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelRegistrar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JTextField txtPlaca;
+    private javax.swing.JTextField txtTipoVehiculo;
     // End of variables declaration//GEN-END:variables
 
     @Override

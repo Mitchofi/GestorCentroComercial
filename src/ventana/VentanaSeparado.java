@@ -4,11 +4,11 @@
  */
 package ventana;
 
+import controlador.ControladorVentanaSeparado;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -25,23 +25,22 @@ import static ventana.VentanaCliente.validarNumeros;
 public class VentanaSeparado extends javax.swing.JFrame {
 
     private DefaultTableModel modeloArticulosSeparados;
-    private DefaultTableModel modeloHistorialSeparados;
     private Cliente cliente;
     private String codigo;
-    private VentanaCliente ventanaCliente;
     private Negocio negocio;
+    private ControladorVentanaSeparado controlador;
 
     /**
      * Creates new form VentanaSeparados
      */
-    public VentanaSeparado(Cliente cliente) {
+    public VentanaSeparado(Cliente cliente, Negocio negocio) {
         initComponents();
         setLocationRelativeTo(this);
         this.cliente = cliente;
         this.jLabel6.setText(cliente.getNombre());
         this.modeloArticulosSeparados = new DefaultTableModel();
-        this.modeloHistorialSeparados = new DefaultTableModel();
         this.codigo = txtCodigoArticulo.getText();
+        this.controlador = new ControladorVentanaSeparado(negocio);
         this.negocio = null;
         this.txtValor.setEnabled(false);
         limpiarTabla();
@@ -142,6 +141,14 @@ public class VentanaSeparado extends javax.swing.JFrame {
         });
         jTableArticulosSeparados.setToolTipText("");
         jScrollPane2.setViewportView(jTableArticulosSeparados);
+        if (jTableArticulosSeparados.getColumnModel().getColumnCount() > 0) {
+            jTableArticulosSeparados.getColumnModel().getColumn(0).setResizable(false);
+            jTableArticulosSeparados.getColumnModel().getColumn(1).setResizable(false);
+            jTableArticulosSeparados.getColumnModel().getColumn(2).setResizable(false);
+            jTableArticulosSeparados.getColumnModel().getColumn(3).setResizable(false);
+            jTableArticulosSeparados.getColumnModel().getColumn(4).setResizable(false);
+            jTableArticulosSeparados.getColumnModel().getColumn(5).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -261,9 +268,8 @@ public class VentanaSeparado extends javax.swing.JFrame {
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtCodigoArticulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                        .addComponent(txtArticulo, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(txtCodigoArticulo, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                    .addComponent(txtArticulo)
                     .addComponent(jDateChooserFechaDeInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                     .addComponent(txtValor)
@@ -315,7 +321,7 @@ public class VentanaSeparado extends javax.swing.JFrame {
         });
 
         jLabelEmpleados.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabelEmpleados.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelEmpleados.setForeground(new java.awt.Color(255, 255, 255));
         jLabelEmpleados.setText("Separados");
         jLabelEmpleados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -450,7 +456,7 @@ public class VentanaSeparado extends javax.swing.JFrame {
             txtCantidad.setForeground(Color.gray);
         }
         if (validarNumeros(txtCantidad.getText())) {
-            Articulo arti = negocio.buscarArticulo(codigo);
+            Articulo arti = controlador.buscarArticulo(codigo);
             txtValor.setText(String.valueOf(negocio.valorTotal(codigo, Integer.parseInt(txtCantidad.getText()))));
         }
     }//GEN-LAST:event_txtCantidadFocusLost
@@ -528,7 +534,7 @@ public class VentanaSeparado extends javax.swing.JFrame {
         } else {
             String codigo = txtCodigoArticulo.getText();
             int cantidad = Integer.parseInt(txtCantidad.getText());
-            negocio.eliminarSeparado(codigo, cantidad, null, cliente);
+            controlador.eliminarSeparado(codigo, cantidad, null, cliente);
             JOptionPane.showMessageDialog(this, "El articulo separado fue eliminado");
             cleanTextField();
             limpiarTabla();
@@ -544,7 +550,7 @@ public class VentanaSeparado extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Por favor selecciona de la tabla el articulo que deseas comprar");
         } else {
             int cantiddad = Integer.parseInt(txtCantidad.getText());
-            negocio.pagarSeparado(codigo, cantiddad, null, cliente);
+            controlador.pagarSeparado(codigo, cantiddad, null, cliente);
             JOptionPane.showMessageDialog(this, "El articulo fue comprado correctamente");
             cleanTextField();
             limpiarTabla();
@@ -579,13 +585,15 @@ public class VentanaSeparado extends javax.swing.JFrame {
     }
 
     public void cleanTextField() {
+        txtCodigoArticulo.setText("Codigo articulo");
+        txtCodigoArticulo.setForeground(Color.gray);
         txtArticulo.setText("Articulo");
         txtArticulo.setForeground(Color.gray);
         txtValor.setText("Valor");
         txtValor.setForeground(Color.gray);
         jTextDescripcion.setText("Descripcion");
         jTextDescripcion.setForeground(Color.gray);
-        txtCantidad.setText("Cantidad");
+        txtCantidad.setText("Cantidad a comprar");
         txtCantidad.setForeground(Color.gray);
     }
 
@@ -614,6 +622,7 @@ public class VentanaSeparado extends javax.swing.JFrame {
                             if (CentroComercial.locales[i][j].getNegocio() != null) {
                                 if (CentroComercial.locales[i][j].getNegocio().getNombre().equals(jTableArticulosSeparados.getValueAt(jTableArticulosSeparados.getSelectedRow(), 5).toString())) {
                                     negocio = CentroComercial.locales[i][j].getNegocio();
+                                    controlador = new ControladorVentanaSeparado(negocio);
                                     jTextDescripcion.setText(negocio.buscarArticulo(codigo).getDecripcionProducto());
                                     jTextDescripcion.setForeground(Color.black);
                                 }

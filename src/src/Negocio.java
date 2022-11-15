@@ -3,8 +3,6 @@ package src;
 import excepciones.ExcepcionCorreoDuplicado;
 import excepciones.ExcepcionEmpleadoDuplicado;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import static src.CentroComercial.locales;
 import static src.CentroComercial.personas;
@@ -319,6 +317,7 @@ public class Negocio implements Serializable {
     }
 
     public void anadirAListaSeparados(String codigo, int cantidad, Empleado empleado, Negocio negocio, Cliente cliente, Date fechaRecogida) {
+        
         Articulo articuloVendido = null;
         articuloVendido = buscarArticulo(codigo);
         Date fechaIni = new Date();

@@ -101,7 +101,7 @@ public class VentanaSolicitud extends javax.swing.JFrame {
         });
 
         jLabelSolicitudes.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabelSolicitudes.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelSolicitudes.setForeground(new java.awt.Color(255, 255, 255));
         jLabelSolicitudes.setText("Solicitudes");
         jLabelSolicitudes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -187,6 +187,7 @@ public class VentanaSolicitud extends javax.swing.JFrame {
         });
 
         jTextArea1.setColumns(20);
+        jTextArea1.setForeground(new java.awt.Color(153, 153, 153));
         jTextArea1.setRows(5);
         jTextArea1.setText("Motivo solicitud");
         jScrollPane2.setViewportView(jTextArea1);
@@ -231,8 +232,22 @@ public class VentanaSolicitud extends javax.swing.JFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -303,6 +318,9 @@ public class VentanaSolicitud extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelConcursosMouseClicked
 
     private void jLabelVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelVentasMouseClicked
+        VentanaConcursoAdminNegocio ventanaConcursoAdminNegocio = new VentanaConcursoAdminNegocio(negocio);
+        ventanaConcursoAdminNegocio.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jLabelVentasMouseClicked
 
     private void jLabelSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSalirMouseClicked

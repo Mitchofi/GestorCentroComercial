@@ -13,7 +13,6 @@ import src.CentroComercial;
 import src.Empleado;
 import src.Negocio;
 import src.Vehiculo;
-import static ventana.VentanaContrato.validarLetras;
 
 /**
  *
@@ -31,7 +30,7 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
     public VentanaAdministradorNegocio(Negocio negocio) {
         initComponents();
         setLocationRelativeTo(this);
-        this.controlador = new ControladorVentanaAdministradorNegocio();
+        this.controlador = new ControladorVentanaAdministradorNegocio(negocio);
         this.negocio = negocio;
         this.modelo = new DefaultTableModel();
         this.txtTipoDeVehiculo.setEnabled(false);
@@ -79,7 +78,6 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTextField2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administrador");
@@ -91,7 +89,7 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
         jLabel2.setText("ADMINISTRADOR");
 
         jLabelEmpleados.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabelEmpleados.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelEmpleados.setForeground(new java.awt.Color(255, 255, 255));
         jLabelEmpleados.setText("Empleados");
         jLabelEmpleados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -154,7 +152,7 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(jLabel10)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -389,20 +387,21 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
             }
         });
         jScrollPane3.setViewportView(jTable1);
-
-        jTextField2.setText("Buscar por cedula");
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+            jTable1.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -410,8 +409,6 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -420,14 +417,15 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelSalir)
@@ -437,9 +435,11 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -464,7 +464,7 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
@@ -501,7 +501,9 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelClientesMouseClicked
 
     private void jLabelVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelVentasMouseClicked
-
+        VentanaConcursoAdminNegocio ventanaConcursoAdminNegocio = new VentanaConcursoAdminNegocio(negocio);
+        ventanaConcursoAdminNegocio.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jLabelVentasMouseClicked
 
     private void jLabelSolicitudesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSolicitudesMouseClicked
@@ -538,7 +540,7 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
             String rol = String.valueOf(jComboBox.getSelectedItem());
             Empleado empleado = new Empleado(vehiculo, rol, nombre, cedula, telefono, correo, contrasena, edad);
             try {
-                if (negocio.anadirEmpleadoLocal(empleado)) {
+                if (controlador.anadirEmpleadoLocal(empleado)) {
                     JOptionPane.showMessageDialog(this, "Registrado correctamente");
                     limpiarTabla();
                     cargar();
@@ -746,6 +748,7 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
     private void jLabelConcursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelConcursosMouseClicked
         VentanaVentas ventanaVentas = new VentanaVentas(negocio);
         ventanaVentas.setVisible(true);
+        jLabelConcursos.setForeground(Color.gray);
         this.dispose();
     }//GEN-LAST:event_jLabelConcursosMouseClicked
 
@@ -873,7 +876,6 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JPasswordField txtContrasena;
     private javax.swing.JTextField txtCorreo;

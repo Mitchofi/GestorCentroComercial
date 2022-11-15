@@ -5,7 +5,6 @@
 package ventana;
 
 import controlador.ControladorVentanaSignUp;
-import excepciones.ExcepcionVehiculoDuplicado;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import src.CentroComercial;
@@ -19,13 +18,13 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
 
     VentanaParqueadero ventanaParqueadero;
     ControladorVentanaSignUp controlador;
-    Vehiculo vehiculo;
+    Vehiculo espacioParqueadero;
 
-    public VentanaRegistroVehiculo(VentanaParqueadero ventanaParqueadero, Vehiculo vehiculo) {
+    public VentanaRegistroVehiculo(VentanaParqueadero ventanaParqueadero, Vehiculo espacioParqueadero) {
         initComponents();
         setLocationRelativeTo(this);
         this.ventanaParqueadero = ventanaParqueadero;
-        this.vehiculo = vehiculo;
+        this.espacioParqueadero = espacioParqueadero;
         this.controlador = new ControladorVentanaSignUp();
     }
 
@@ -48,12 +47,13 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
         txtPlaca = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Sign Up");
+        setTitle("Registrar carro");
+        setResizable(false);
 
         jPanel1.setName("dd"); // NOI18N
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.MatteBorder(null), "Iniciar sesion"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.MatteBorder(null), "Volver"));
 
         jLabel1.setText("¿Deseas volver al parqueadero?");
 
@@ -88,7 +88,7 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.MatteBorder(null), "Registro"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.MatteBorder(null), "Registrar vehiculo"));
 
         jButton1.setText("Registrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -111,11 +111,13 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
         txtPlaca.setForeground(new java.awt.Color(153, 153, 153));
         txtPlaca.setText("Placa");
         txtPlaca.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtPlacaFocusGained(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtPlacaFocusLost(evt);
+            }
+        });
+        txtPlaca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtPlacaMouseClicked(evt);
             }
         });
 
@@ -204,18 +206,22 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (txtTipoVehiculo.getText().equals("") || txtTipoVehiculo.getText().equals("Tipo de vehiculo")
-                || txtPlaca.getText().equals("") || txtPlaca.getText().equals("Placa")) {
-            JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
+                || txtPlaca.getText().equals("") || txtPlaca.getText().equals("Placa")
+                || txtTipoVehiculo.getBackground().equals(Color.red)) {
+            JOptionPane.showMessageDialog(this, "Algo salio mal, por favor verifica los datos ingresados :(");
         } else {
             String placa = txtPlaca.getText();
             String tipoDeVehiculo = txtTipoVehiculo.getText();
-            if (vehiculo.getPlaca() == null) {
-                vehiculo.setPlaca(placa);
-                vehiculo.setTipo(tipoDeVehiculo);
-                JOptionPane.showMessageDialog(this, "parqueadero asignado correctamente al vehiculo con placa: " + placa);
+            if (espacioParqueadero.getPlaca() == null) {
+                espacioParqueadero.setPlaca(placa);
+                espacioParqueadero.setTipo(tipoDeVehiculo);
+                JOptionPane.showMessageDialog(this, "parqueadero asignado correctamente al espacio parqueadero con placa: " + placa);
                 ventanaParqueadero.validarPosiciones();
+                ventanaParqueadero.botonAnadir();
                 CentroComercial.serializarListaParqueadero();
                 cleanTextField();
+                ventanaParqueadero.setVisible(true);
+                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "No pudiste ser registrado"
                         + " debido a que hay un auto registrado con algunos de los datos que escribistes ");
@@ -223,18 +229,18 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void txtPlacaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaFocusGained
+    private void txtPlacaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaFocusLost
+        if (txtPlaca.getText().equals("")) {
+            txtPlaca.setText("Placa");
+            txtPlaca.setForeground(Color.gray);
+        }    }//GEN-LAST:event_txtPlacaFocusLost
+
+    private void txtPlacaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPlacaMouseClicked
         if (txtPlaca.getText().equals("Placa")) {
             txtPlaca.setText("");
             txtPlaca.setForeground(Color.black);
         }
-    }//GEN-LAST:event_txtPlacaFocusGained
-
-    private void txtPlacaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPlacaFocusLost
-        if (txtPlaca.getText().equals("")) {
-            txtPlaca.setText("Nombre completo");
-            txtPlaca.setForeground(Color.gray);
-        }    }//GEN-LAST:event_txtPlacaFocusLost
+    }//GEN-LAST:event_txtPlacaMouseClicked
 
     public static boolean validarNumeros(String datos) {
         return datos.matches("[0-9]*");

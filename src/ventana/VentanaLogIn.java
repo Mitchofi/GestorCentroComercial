@@ -17,7 +17,7 @@ public class VentanaLogIn extends javax.swing.JFrame {
     /**
      * Creates new form LogInt
      */
-    ControladorVentanaLogIn controlador;
+    ControladorVentanaLogIn controlador;    
 
     public VentanaLogIn() {
         initComponents();

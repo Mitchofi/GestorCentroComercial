@@ -4,6 +4,7 @@
  */
 package controlador;
 
+import java.util.Date;
 import src.Articulo;
 import src.Cliente;
 import src.Empleado;
@@ -17,13 +18,17 @@ public class ControladorVentanaCliente {
 
     private Negocio controlador;
 
-    public ControladorVentanaCliente() {
-        this.controlador = new Negocio();
+    public ControladorVentanaCliente(Negocio negocio) {
+        this.controlador = negocio;
 
     }
 
     public boolean realizarCompra(String codigo, Empleado empleado, int cantidad, Cliente cliente) {
         return controlador.realizarCompra(codigo, empleado, cantidad, cliente);
+    }
+
+    public boolean realizarSeparado(String codigo, int cantidad, Empleado empleado, Negocio negocio, Cliente cliente, Date fechaRecogida) {
+        return controlador.realizarSeparado(codigo, cantidad, empleado, negocio, cliente, fechaRecogida);
     }
 
     public Articulo buscarArticulo(String codigo) {

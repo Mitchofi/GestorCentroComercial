@@ -5,6 +5,7 @@ import excepciones.ExcepcionClienteDuplicado;
 import excepciones.ExcepcionConcursoDuplicado;
 import excepciones.ExcepcionCorreoDuplicado;
 import excepciones.ExcepcionEmpleadoDuplicado;
+import excepciones.ExcepcionNoSeEncuentraDocumento;
 import excepciones.ExcepcionNoSeEncuentraElUsuario;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -116,6 +117,10 @@ public class CentroComercial implements Serializable {
         return resultado;
     }
 
+    public Vehiculo buscarVehiculo(String tipo, String placa) {
+        return parqueadero.buscarVehiculo(tipo, placa);
+    }
+
     public Negocio returnNegocio(String correo, String contrasena) {
         Negocio negocio = null;
         for (int i = 0; i < locales.length; i++) {
@@ -179,7 +184,7 @@ public class CentroComercial implements Serializable {
                 }
             }
         }
-        if (validarCorreo(cliente.getCorreo())) {
+        if (validarCorreo(cliente.getCorreo()) > 2) {
             existe = false;
         }
         if (existe) {
@@ -195,16 +200,11 @@ public class CentroComercial implements Serializable {
         boolean disponible = true;
         Cliente clienteAux = null;
         for (int i = 0; i < personas.Size(); i++) {
-            if (personas.obtenerDato(i).getCedula().equals(cedula)) {
+            if (personas.obtenerDato(i).getCorreo().equals(cliente.getCorreo())) {
                 clienteAux = (Cliente) personas.obtenerDato(i);
             }
         }
-        for (int i = 0; i < personas.Size(); i++) {
-            if (personas.obtenerDato(i).getCorreo().equals(cliente.getCorreo())) {
-                disponible = false;
-            }
-        }
-        if (validarCorreo(cliente.getCorreo())) {
+        if (validarCorreo(cliente.getCorreo()) > 2) {
             disponible = false;
         }
         if (disponible) {
@@ -289,7 +289,7 @@ public class CentroComercial implements Serializable {
         return registrado;
     }
 
-    public boolean modificarEmpleadoCentroComercial(String cedula, Empleado empleado) {
+    public boolean modificarEmpleadoCentroComercial(String cedula, Empleado empleado) throws ExcepcionNoSeEncuentraDocumento {
         boolean modificado = false;
         boolean disponible = true;
         Empleado empleadoAux = null;
@@ -298,6 +298,9 @@ public class CentroComercial implements Serializable {
             if (personas.obtenerDato(i).getCedula().equals(cedula)) {
                 empleadoAux = (Empleado) personas.obtenerDato(i);
             }
+        }
+        if (empleadoAux == null) {
+            throw new ExcepcionNoSeEncuentraDocumento();
         }
         for (int i = 0; i < personas.Size(); i++) {
             if (personas.obtenerDato(i).getCorreo().equals(empleado.getCorreo())) {
@@ -428,11 +431,11 @@ public class CentroComercial implements Serializable {
         return existe;
     }
 
-    public boolean validarCorreo(String correo) throws ExcepcionCorreoDuplicado {
-        boolean existe = false;
+    public int validarCorreo(String correo) throws ExcepcionCorreoDuplicado {
+        int existe = 0;
         for (int k = 0; k < personas.Size(); k++) {
             if (personas.obtenerDato(k).getCorreo().equals(correo)) {
-                existe = true;
+                existe++;
             }
         }
         for (int i = 0; i < locales.length; i++) {
@@ -442,7 +445,7 @@ public class CentroComercial implements Serializable {
                         for (int l = 0; l < personas.Size(); l++) {
                             if (locales[i][j].getNegocio().getAdministrador().getCorreo().equals(personas.obtenerDato(l).getCorreo())
                                     || locales[i][j].getNegocio().getEmpleados().obtenerDato(k).getCorreo().equals(correo)) {
-                                existe = true;
+                                existe++;
                                 throw new ExcepcionCorreoDuplicado();
                             }
                         }

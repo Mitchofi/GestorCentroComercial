@@ -74,6 +74,12 @@ public class VentanaHistorialCompra extends javax.swing.JFrame {
         });
         jTableHistorialArticulos.setToolTipText("");
         jScrollPane6.setViewportView(jTableHistorialArticulos);
+        if (jTableHistorialArticulos.getColumnModel().getColumnCount() > 0) {
+            jTableHistorialArticulos.getColumnModel().getColumn(0).setResizable(false);
+            jTableHistorialArticulos.getColumnModel().getColumn(1).setResizable(false);
+            jTableHistorialArticulos.getColumnModel().getColumn(2).setResizable(false);
+            jTableHistorialArticulos.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Historial de compras:");
@@ -105,7 +111,7 @@ public class VentanaHistorialCompra extends javax.swing.JFrame {
         });
 
         jLabelClientes.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabelClientes.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelClientes.setForeground(new java.awt.Color(255, 255, 255));
         jLabelClientes.setText("Historial compras");
         jLabelClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -237,7 +243,7 @@ public class VentanaHistorialCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelLocalesMouseClicked
 
     private void jLabelEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEmpleadosMouseClicked
-        VentanaSeparado ventanaSeparado = new VentanaSeparado(cliente);
+        VentanaSeparado ventanaSeparado = new VentanaSeparado(cliente, null);
         ventanaSeparado.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabelEmpleadosMouseClicked

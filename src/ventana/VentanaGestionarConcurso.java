@@ -121,6 +121,15 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
             }
         });
         jScrollPane4.setViewportView(jTableConcurso);
+        if (jTableConcurso.getColumnModel().getColumnCount() > 0) {
+            jTableConcurso.getColumnModel().getColumn(0).setResizable(false);
+            jTableConcurso.getColumnModel().getColumn(1).setResizable(false);
+            jTableConcurso.getColumnModel().getColumn(2).setResizable(false);
+            jTableConcurso.getColumnModel().getColumn(3).setResizable(false);
+            jTableConcurso.getColumnModel().getColumn(4).setResizable(false);
+            jTableConcurso.getColumnModel().getColumn(5).setResizable(false);
+            jTableConcurso.getColumnModel().getColumn(6).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -296,11 +305,11 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Nombre", "Premio", "valor minimo", "Fecha inicio", "Fecha fin", "Participantes", "Ganador"
+                "Codigo", "Nombre", "Premio", "valor minimo", "Fecha inicio", "Fecha fin", "Ganador"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -308,6 +317,15 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
             }
         });
         jScrollPane5.setViewportView(jTableConcursoHistorial);
+        if (jTableConcursoHistorial.getColumnModel().getColumnCount() > 0) {
+            jTableConcursoHistorial.getColumnModel().getColumn(0).setResizable(false);
+            jTableConcursoHistorial.getColumnModel().getColumn(1).setResizable(false);
+            jTableConcursoHistorial.getColumnModel().getColumn(2).setResizable(false);
+            jTableConcursoHistorial.getColumnModel().getColumn(3).setResizable(false);
+            jTableConcursoHistorial.getColumnModel().getColumn(4).setResizable(false);
+            jTableConcursoHistorial.getColumnModel().getColumn(5).setResizable(false);
+            jTableConcursoHistorial.getColumnModel().getColumn(6).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
@@ -344,11 +362,12 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
                         .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(40, 40, 40)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -403,7 +422,7 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
         });
 
         jLabelVentas.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabelVentas.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelVentas.setForeground(new java.awt.Color(255, 255, 255));
         jLabelVentas.setText("Concursos");
         jLabelVentas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -702,7 +721,7 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
 
     public void cargarTablaConcursoHistorial() {
         modeloTablaHistorialConcurso = (DefaultTableModel) jTableConcursoHistorial.getModel();
-        Object[] ob = new Object[8];
+        Object[] ob = new Object[7];
         for (int i = 0; i < CentroComercial.historialConcursos.getConcursos().Size(); i++) {
             if (CentroComercial.historialConcursos.getConcursos().obtenerDato(i).isEstado()) {
                 ob[0] = CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getCodigo();
@@ -711,11 +730,10 @@ public class VentanaGestionarConcurso extends javax.swing.JFrame {
                 ob[3] = CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getValorMinimo();
                 ob[4] = CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getFechaIncioConcurso();
                 ob[5] = CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getFechaFinConcurso();
-                ob[6] = CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getParticipantes().Size();
                 if (CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getGanador() == null) {
-                    ob[7] = "";
+                    ob[6] = "";
                 } else {
-                    ob[7] = CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getGanador().getNombre();
+                    ob[6] = CentroComercial.historialConcursos.getConcursos().obtenerDato(i).getGanador().getNombre();
                 }
                 modeloTablaHistorialConcurso.addRow(ob);
             }

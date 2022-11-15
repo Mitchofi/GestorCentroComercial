@@ -7,6 +7,7 @@ package ventana;
 import controlador.ControladorVentanaCliente;
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
@@ -39,7 +40,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         this.cliente = cliente;
-        this.controlador = new ControladorVentanaCliente();
+        this.controlador = new ControladorVentanaCliente(negocio);
         this.txtValor.setEnabled(false);
         this.modeloArticulosEnVenta = new DefaultTableModel();
         this.jLabel6.setText(cliente.getNombre());
@@ -106,7 +107,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         jLabel2.setText("CLIENTE:");
 
         jLabelLocales.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabelLocales.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelLocales.setForeground(new java.awt.Color(255, 255, 255));
         jLabelLocales.setText("Comprar");
         jLabelLocales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -208,6 +209,11 @@ public class VentanaCliente extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCantidadFocusLost(evt);
+            }
+        });
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyPressed(evt);
             }
         });
 
@@ -475,7 +481,7 @@ public class VentanaCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabelEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEmpleadosMouseClicked
-        VentanaSeparado ventanaSeparado = new VentanaSeparado(cliente);
+        VentanaSeparado ventanaSeparado = new VentanaSeparado(cliente, null);
         ventanaSeparado.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabelEmpleadosMouseClicked
@@ -565,7 +571,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                         if (CentroComercial.locales[i][j].getNegocio().getNombre().equals(negocio.getNombre())) {
                             codigo = txtCodigoArticulo.getText();
                             cantidad = Integer.parseInt(txtCantidad.getText());
-                            if (negocio.realizarCompra(codigo, null, cantidad, cliente)) {
+                            if (controlador.realizarCompra(codigo, null, cantidad, cliente)) {
                                 JOptionPane.showMessageDialog(this, "El articulo fue comprado correctamente");
                                 cleanTextField();
                                 limpiarTabla();
@@ -608,7 +614,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                             codigo = txtCodigoArticulo.getText();
                             cantidad = Integer.parseInt(txtCantidad.getText());
                             Date date = jDateChooserFechaRecogida.getDate();
-                            if (negocio.realizarSeparado(codigo, cantidad, null, negocio, cliente, date)) {
+                            if (controlador.realizarSeparado(codigo, cantidad, null, negocio, cliente, date)) {
                                 JOptionPane.showMessageDialog(this, "El articulo fue separado correctamente");
                                 cleanTextField();
                                 limpiarTabla();
@@ -637,17 +643,16 @@ public class VentanaCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_checkSeparadoItemStateChanged
 
-    public void llenarArticulos() {
-        for (int i = 0; i < CentroComercial.locales.length; i++) {
-            for (int j = 0; j < CentroComercial.locales[i].length; j++) {
-                if (CentroComercial.locales[i][j].getNegocio() != null) {
-                    if (CentroComercial.locales[i][j].getNegocio().getArticulos() != null) {
-
-                    }
-                }
+    private void txtCantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (validarNumeros(txtCantidad.getText()) && !txtCantidad.getText().isEmpty()) {
+                Articulo arti = controlador.buscarArticulo(codigo);
+                txtValor.setText(String.valueOf(negocio.valorTotal(codigo, Integer.parseInt(txtCantidad.getText()))));
+            } else {
+                txtCantidad.setText("0");
             }
         }
-    }
+    }//GEN-LAST:event_txtCantidadKeyPressed
 
     public static boolean validarNumeros(String datos) {
         return datos.matches("[0-9]*");
@@ -704,7 +709,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         txtValor.setForeground(Color.gray);
         jTextDescripcion.setText("Descripcion");
         jTextDescripcion.setForeground(Color.gray);
-        txtCantidad.setText("Cantidad");
+        txtCantidad.setText("Cantidad a comprar");
         txtCantidad.setForeground(Color.gray);
         checkSeparado.setState(false);
         if (checkSeparado.getState()) {
@@ -737,6 +742,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                             if (CentroComercial.locales[i][j].getNegocio() != null) {
                                 if (CentroComercial.locales[i][j].getNegocio().getNombre().equals(jTableArticulos.getValueAt(jTableArticulos.getSelectedRow(), 4).toString())) {
                                     negocio = CentroComercial.locales[i][j].getNegocio();
+                                    controlador = new ControladorVentanaCliente(negocio);
                                     jTextDescripcion.setText(negocio.buscarArticulo(codigo).getDecripcionProducto());
                                     jTextDescripcion.setForeground(Color.black);
                                 }
