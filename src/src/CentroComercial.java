@@ -136,6 +136,22 @@ public class CentroComercial implements Serializable {
         return negocio;
     }
 
+    public Local returnLocal(Negocio negocio) {
+        Local local = null;
+        for (int i = 0; i < locales.length; i++) {
+            for (int j = 0; j < locales[i].length; j++) {
+                if (locales[i][j] != null && locales[i][j].getNegocio() != null) {
+                    if (locales[i][j].getNegocio().getNombre().equals(negocio.getNombre())
+                            && locales[i][j].getNegocio().getAdministrador().getCorreo().equals(negocio.getAdministrador().getCorreo())
+                            && locales[i][j].getNegocio().getAdministrador().getContrasena().equals(negocio.getAdministrador().getContrasena())) {
+                        local = locales[i][j];
+                    }
+                }
+            }
+        }
+        return local;
+    }
+
     public Negocio returnNegocioEmpleado(String correo, String contrasena) {
         Negocio negocio = null;
         for (int i = 0; i < locales.length; i++) {
@@ -462,6 +478,7 @@ public class CentroComercial implements Serializable {
             negocio.setContrato(contrato);
             local.setNegocio(negocio);
             local.setDisponible(false);
+            local.setDesocupado(false);
             registro = true;
             serializarListaLocales();
         }

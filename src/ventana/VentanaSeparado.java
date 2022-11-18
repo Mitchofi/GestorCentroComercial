@@ -46,6 +46,7 @@ public class VentanaSeparado extends javax.swing.JFrame {
         limpiarTabla();
         cargarTablaSeparados();
         mouseTablArticulos();
+        CuentaConMulta();
     }
 
     /**
@@ -76,7 +77,6 @@ public class VentanaSeparado extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jDateChooserFechaDeInicio = new com.toedter.calendar.JDateChooser();
         btnEliminarSerparado = new javax.swing.JButton();
-        btnCompra = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabelLocales = new javax.swing.JLabel();
@@ -84,6 +84,9 @@ public class VentanaSeparado extends javax.swing.JFrame {
         jLabelClientes = new javax.swing.JLabel();
         jLabelVentas = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabelRegistrar6 = new javax.swing.JLabel();
 
@@ -245,35 +248,27 @@ public class VentanaSeparado extends javax.swing.JFrame {
             }
         });
 
-        btnCompra.setText("Realizar Compra");
-        btnCompra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCompraActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addContainerGap(38, Short.MAX_VALUE)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnCompra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEliminarSerparado, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
-                .addGap(32, 32, 32))
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(txtCodigoArticulo, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                    .addComponent(txtArticulo)
-                    .addComponent(jDateChooserFechaDeInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                    .addComponent(txtValor)
-                    .addComponent(jDateChooserFechaRecogida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(txtCodigoArticulo, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                            .addComponent(txtArticulo)
+                            .addComponent(jDateChooserFechaDeInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                            .addComponent(txtValor)
+                            .addComponent(jDateChooserFechaRecogida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(btnEliminarSerparado, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
@@ -297,11 +292,9 @@ public class VentanaSeparado extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jDateChooserFechaRecogida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCompra)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEliminarSerparado)
-                .addGap(35, 35, 35))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(204, 204, 204));
@@ -348,6 +341,16 @@ public class VentanaSeparado extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel7.setText("CLIENTE:");
 
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel8.setText("OJO:");
+
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel10.setText("Tu cuenta esta");
+
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel11.setText("LIMITADA");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -355,23 +358,30 @@ public class VentanaSeparado extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(0, 8, Short.MAX_VALUE)
+                                .addComponent(jLabelClientes))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelEmpleados)
                             .addComponent(jLabelLocales)
                             .addComponent(jLabelVentas))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addContainerGap(14, Short.MAX_VALUE)
-                        .addComponent(jLabelClientes))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,7 +398,13 @@ public class VentanaSeparado extends javax.swing.JFrame {
                 .addComponent(jLabelClientes)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelVentas)
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel11)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         jLabel9.setText("¿Deseas salir de la cuenta?");
@@ -542,22 +558,6 @@ public class VentanaSeparado extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarSerparadoActionPerformed
 
-    private void btnCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompraActionPerformed
-        if (txtCodigoArticulo.getText().equals("") || txtCodigoArticulo.getText().equals("Codigo articulo")
-                || txtArticulo.getText().equals("") || txtArticulo.getText().equals("Articulo")
-                || txtValor.getText().equals("") || txtValor.getText().equals("Valor a pagar")
-                || txtCantidad.getText().equals("") || txtCantidad.getText().equals("Cantidad a comprar")) {
-            JOptionPane.showMessageDialog(this, "Por favor selecciona de la tabla el articulo que deseas comprar");
-        } else {
-            int cantiddad = Integer.parseInt(txtCantidad.getText());
-            controlador.pagarSeparado(codigo, cantiddad, null, cliente);
-            JOptionPane.showMessageDialog(this, "El articulo fue comprado correctamente");
-            cleanTextField();
-            limpiarTabla();
-            cargarTablaSeparados();
-        }
-    }//GEN-LAST:event_btnCompraActionPerformed
-
     public void cargarTablaSeparados() {
         modeloArticulosSeparados = (DefaultTableModel) jTableArticulosSeparados.getModel();
         Object[] ob = new Object[6];
@@ -637,6 +637,35 @@ public class VentanaSeparado extends javax.swing.JFrame {
         });
     }
 
+    public void CuentaConMulta() {
+        if (cliente.isMulta()) {
+            jLabel8.setVisible(true);
+            jLabel10.setVisible(true);
+            jLabel11.setVisible(true);
+            txtCodigoArticulo.setEnabled(false);
+            txtArticulo.setEnabled(false);
+            jTextDescripcion.setEnabled(false);
+            txtCantidad.setEnabled(false);
+            txtValor.setEnabled(false);
+            jDateChooserFechaDeInicio.setEnabled(false);
+            jDateChooserFechaRecogida.setEnabled(false);
+            btnEliminarSerparado.setEnabled(false);
+        } else {
+            jLabel8.setVisible(false);
+            jLabel10.setVisible(false);
+            jLabel11.setVisible(false);
+            txtCodigoArticulo.setEnabled(true);
+            txtArticulo.setEnabled(true);
+            jTextDescripcion.setEnabled(true);
+            txtCantidad.setEnabled(true);
+            txtValor.setEnabled(true);
+            jDateChooserFechaDeInicio.setEnabled(true);
+            jDateChooserFechaRecogida.setEnabled(true);
+            btnEliminarSerparado.setEnabled(true);
+
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -673,16 +702,18 @@ public class VentanaSeparado extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCompra;
     private javax.swing.JButton btnEliminarSerparado;
     private javax.swing.JComboBox<String> jComboBoxCategoria;
     private com.toedter.calendar.JDateChooser jDateChooserFechaDeInicio;
     private com.toedter.calendar.JDateChooser jDateChooserFechaRecogida;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelClientes;
     private javax.swing.JLabel jLabelEmpleados;

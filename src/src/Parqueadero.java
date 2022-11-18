@@ -5,6 +5,9 @@ import util.Queve;
 
 public class Parqueadero implements Serializable {
 
+    public static final double VALORMOTO = 1000;
+    public static final double VALORCARRO = 2000;
+
     private Vehiculo vehiculos[][];
     private Queve<Vehiculo> ColaEsperaVehiculos;
 
@@ -73,5 +76,13 @@ public class Parqueadero implements Serializable {
 
     public Queve<Vehiculo> returnCola() {
         return ColaEsperaVehiculos;
+    }
+
+    public double ValorAPagarMoto(int horas) {
+        return VALORMOTO * horas;
+    }
+
+    public double ValorAPagarCarro(int horas) {
+        return VALORCARRO * horas;
     }
 }

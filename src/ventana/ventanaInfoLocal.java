@@ -5,9 +5,11 @@
 package ventana;
 
 import controlador.ControladorInfoLocal;
-import controlador.ControladorVentanaContrato;
 import java.awt.Color;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import src.AdministradorDeNegocio;
+import src.CentroComercial;
 import src.Local;
 
 /**
@@ -22,14 +24,16 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
     private VentanaAdministrador ventanaAdministrador;
     private ControladorInfoLocal controlador;
     private Local local;
-
+    
     public ventanaInfoLocal(VentanaAdministrador ventanaAdministrador, Local local) {
         initComponents();
         setLocationRelativeTo(this);
         this.ventanaAdministrador = ventanaAdministrador;
-        this.controlador = new ControladorInfoLocal();
+        this.controlador = new ControladorInfoLocal(local.getNegocio());
         this.local = local;
         infoLocal();
+        cargarInfoAdmin();
+        cargarInfoNegocio();
     }
 
     /**
@@ -44,9 +48,6 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabelRegistrar2 = new javax.swing.JLabel();
@@ -69,6 +70,7 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
         txtCorreo = new javax.swing.JTextField();
         txtCedula = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
+        btnModificarAdminNegocio = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         txtNombreNegocio = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -77,8 +79,11 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jDateFinal = new com.toedter.calendar.JDateChooser();
-        btnEliminar = new javax.swing.JButton();
-        btnEliminar1 = new javax.swing.JButton();
+        btnEliminarNegocio = new javax.swing.JButton();
+        btnModificarNegocio = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -88,37 +93,10 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
         setTitle("Administrador");
         setResizable(false);
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel2.setForeground(new java.awt.Color(153, 153, 153));
-
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel2.setText("INFORMACION LOCAL");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel2)
-                .addContainerGap(29, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Registrar negocio"));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setText("¿Desea regresar al inicio?");
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, -1, -1));
 
         jLabelRegistrar2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabelRegistrar2.setForeground(new java.awt.Color(51, 153, 255));
@@ -129,7 +107,6 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
                 jLabelRegistrar2MouseClicked(evt);
             }
         });
-        jPanel4.add(jLabelRegistrar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 450, -1, -1));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Informacion del negocio"));
@@ -156,14 +133,6 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
         txtInfoContrato.setForeground(new java.awt.Color(153, 153, 153));
         txtInfoContrato.setRows(5);
         txtInfoContrato.setText("Condiciones de contrato");
-        txtInfoContrato.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtInfoContratoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtInfoContratoFocusLost(evt);
-            }
-        });
         jScrollPane3.setViewportView(txtInfoContrato);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -218,8 +187,6 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(27, Short.MAX_VALUE))
         );
-
-        jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Administrador del negocio"));
@@ -292,19 +259,31 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
             }
         });
 
+        btnModificarAdminNegocio.setText("Modificar");
+        btnModificarAdminNegocio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarAdminNegocioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                            .addComponent(txtCedula)
+                            .addComponent(txtCorreo)
+                            .addComponent(txtTelefono)
+                            .addComponent(txtEdad)
+                            .addComponent(txtContrasena)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(btnModificarAdminNegocio)))
                 .addGap(30, 30, 30))
         );
         jPanel6Layout.setVerticalGroup(
@@ -322,10 +301,10 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
                 .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(btnModificarAdminNegocio)
+                .addContainerGap())
         );
-
-        jPanel4.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 260, -1));
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Negocio y contrato"));
@@ -359,17 +338,17 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
 
         jLabel14.setText("Fecha Final:");
 
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarNegocio.setText("Eliminar");
+        btnEliminarNegocio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
+                btnEliminarNegocioActionPerformed(evt);
             }
         });
 
-        btnEliminar1.setText("Modificar");
-        btnEliminar1.addActionListener(new java.awt.event.ActionListener() {
+        btnModificarNegocio.setText("Modificar");
+        btnModificarNegocio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminar1ActionPerformed(evt);
+                btnModificarNegocioActionPerformed(evt);
             }
         });
 
@@ -381,65 +360,126 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(btnEliminarNegocio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnModificarNegocio)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombreNegocio, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(txtNombreNegocio, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3))
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jDateFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jDateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(btnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar1)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(33, 33, 33))))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(txtNombreNegocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3))
-                    .addComponent(jDateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14)
-                    .addComponent(jDateFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jDateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14)
+                            .addComponent(jDateFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnEliminar1))
+                    .addComponent(btnEliminarNegocio)
+                    .addComponent(btnModificarNegocio))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        jPanel4.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 440, -1));
-
-        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 688, 490));
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(475, 475, 475)
+                        .addComponent(jLabel4)
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabelRegistrar2))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(8, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabelRegistrar2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setForeground(new java.awt.Color(153, 153, 153));
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel2.setText("INFORMACION");
+
+        jLabel15.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel15.setText("LOCAL");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel15)))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel15)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -447,117 +487,85 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if (controlador.eliminarNegocio(local)) {
-            JOptionPane.showMessageDialog(this, "Negocio eliminado correctamente");
-            ventanaAdministrador.validarPosiciones();
+    private void btnModificarNegocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarNegocioActionPerformed
+        if (txtNombreNegocio.getText().isEmpty() || txtNombreNegocio.getText().equals("Nombre negocio")
+                || txtContrato.getText().isEmpty() || txtContrato.getText().equals("Condiciones de contrato")
+                || jDateInicio.getDate() == null || jDateFinal.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "para modificar el negocio debes rellenar todos los datos");
+        }
+        String nombre = txtNombreNegocio.getText();
+        String contrato = txtContrato.getText();
+        Date fechaInicio = jDateInicio.getDate();
+        Date fechaFin = jDateFinal.getDate();
+        controlador.modificarNegocio(nombre, fechaFin, fechaInicio, contrato);
+        JOptionPane.showMessageDialog(this, "El negocio fue modificado correctamente");
+        cargarInfoNegocio();
+        CentroComercial.serializarListaLocales();
+    }//GEN-LAST:event_btnModificarNegocioActionPerformed
+
+    private void btnEliminarNegocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarNegocioActionPerformed
+        if (local.isDesocupado()) {
+            if (controlador.eliminarNegocio(local)) {
+                JOptionPane.showMessageDialog(this, "Negocio eliminado correctamente");
+                VentanaAdministrador ventanaAdministrador = new VentanaAdministrador();
+                ventanaAdministrador.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "El negocio no fue eliminado correctamente");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "El negocio no fue eliminado correctamente");
+            JOptionPane.showMessageDialog(this, "El negocio no puede ser eliminado debido a que el negocio no ha desocupado");
         }
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    }//GEN-LAST:event_btnEliminarNegocioActionPerformed
 
-    private void jLabelRegistrar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar2MouseClicked
-        ventanaAdministrador.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabelRegistrar2MouseClicked
+    private void txtContratoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContratoFocusLost
+        if (txtContrato.getText().isEmpty()) {
+            txtContrato.setText("Condiciones de contrato");
+            txtContrato.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtContratoFocusLost
 
-    private void txtTelefonoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusGained
-        if (txtTelefono.getText().equals("Numero movil")) {
-            txtTelefono.setText("");
-            txtTelefono.setForeground(Color.black);
+    private void txtContratoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContratoFocusGained
+        if (txtContrato.getText().equals("Condiciones de contrato")) {
+            txtContrato.setText("");
+            txtContrato.setForeground(Color.black);
         }
-    }//GEN-LAST:event_txtTelefonoFocusGained
+    }//GEN-LAST:event_txtContratoFocusGained
 
-    private void txtTelefonoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusLost
-        if (txtTelefono.getText().isEmpty()) {
-            txtTelefono.setText("Numero movil");
-            txtTelefono.setForeground(Color.gray);
+    private void txtNombreNegocioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreNegocioFocusLost
+        if (txtNombreNegocio.getText().isEmpty()) {
+            txtNombreNegocio.setText("Nombre negocio");
+            txtNombreNegocio.setForeground(Color.gray);
         }
-        if (!validarNumeros(txtTelefono.getText()) && !txtTelefono.getText().equals("Numero movil")) {
-            txtTelefono.setBackground(Color.red);
-        } else {
-            txtTelefono.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtTelefonoFocusLost
+    }//GEN-LAST:event_txtNombreNegocioFocusLost
 
-    private void txtEdadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdadFocusGained
-        if (txtEdad.getText().equals("Edad")) {
-            txtEdad.setText("");
-            txtEdad.setForeground(Color.black);
+    private void txtNombreNegocioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreNegocioFocusGained
+        if (txtNombreNegocio.getText().equals("Nombre negocio")) {
+            txtNombreNegocio.setText("");
+            txtNombreNegocio.setForeground(Color.black);
         }
-    }//GEN-LAST:event_txtEdadFocusGained
+    }//GEN-LAST:event_txtNombreNegocioFocusGained
 
-    private void txtEdadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdadFocusLost
-        if (txtEdad.getText().isEmpty()) {
-            txtEdad.setText("Edad");
-            txtEdad.setForeground(Color.gray);
+    private void txtNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNombreMouseClicked
+        if (txtNombre.getText().equals("Nombre completo")) {
+            txtNombre.setText("");
+            txtNombre.setForeground(Color.black);
         }
-        if (!validarNumeros(txtEdad.getText()) && !txtEdad.getText().equals("Edad")) {
-            txtEdad.setBackground(Color.red);
-        } else {
-            txtEdad.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtEdadFocusLost
-
-    private void txtContrasenaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaFocusGained
-        if (String.valueOf(txtContrasena.getPassword()).equals("******")) {
-            txtContrasena.setText("");
-            txtContrasena.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtContrasenaFocusGained
-
-    private void txtContrasenaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaFocusLost
-        if (String.valueOf(txtContrasena.getPassword()).isEmpty()) {
-            txtContrasena.setText("******");
-            txtContrasena.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtContrasenaFocusLost
-
-    private void txtCorreoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusGained
-        if (txtCorreo.getText().equals("Correo")) {
-            txtCorreo.setText("");
-            txtCorreo.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtCorreoFocusGained
-
-    private void txtCorreoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusLost
-        if (txtCorreo.getText().isEmpty()) {
-            txtCorreo.setText("Correo");
-            txtCorreo.setForeground(Color.gray);
-
-        }
-    }//GEN-LAST:event_txtCorreoFocusLost
-
-    private void txtCedulaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaFocusGained
-        if (txtCedula.getText().equals("Cedula")) {
-            txtCedula.setText("");
-            txtCedula.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtCedulaFocusGained
-
-    private void txtCedulaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaFocusLost
-        if (txtCedula.getText().isEmpty()) {
-            txtCedula.setText("Cedula");
-            txtCedula.setForeground(Color.gray);
-        }
-        if (!validarNumeros(txtCedula.getText()) && !txtCedula.getText().equals("Cedula")) {
-            txtCedula.setBackground(Color.red);
-        } else {
-            txtCedula.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtCedulaFocusLost
+    }//GEN-LAST:event_txtNombreMouseClicked
 
     private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
         if (txtNombre.getText().isEmpty()) {
@@ -571,61 +579,134 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtNombreFocusLost
 
-    private void txtNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNombreMouseClicked
-        if (txtNombre.getText().equals("Nombre completo")) {
-            txtNombre.setText("");
-            txtNombre.setForeground(Color.black);
+    private void txtCedulaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaFocusLost
+        if (txtCedula.getText().isEmpty()) {
+            txtCedula.setText("Cedula");
+            txtCedula.setForeground(Color.gray);
         }
-    }//GEN-LAST:event_txtNombreMouseClicked
-
-    private void txtNombreNegocioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreNegocioFocusGained
-        if (txtNombreNegocio.getText().equals("Nombre negocio")) {
-            txtNombreNegocio.setText("");
-            txtNombreNegocio.setForeground(Color.black);
+        if (!validarNumeros(txtCedula.getText()) && !txtCedula.getText().equals("Cedula")) {
+            txtCedula.setBackground(Color.red);
+        } else {
+            txtCedula.setBackground(Color.white);
         }
-    }//GEN-LAST:event_txtNombreNegocioFocusGained
+    }//GEN-LAST:event_txtCedulaFocusLost
 
-    private void txtNombreNegocioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreNegocioFocusLost
-        if (txtNombreNegocio.getText().isEmpty()) {
-            txtNombreNegocio.setText("Nombre negocio");
-            txtNombreNegocio.setForeground(Color.gray);
+    private void txtCedulaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaFocusGained
+        if (txtCedula.getText().equals("Cedula")) {
+            txtCedula.setText("");
+            txtCedula.setForeground(Color.black);
         }
-    }//GEN-LAST:event_txtNombreNegocioFocusLost
+    }//GEN-LAST:event_txtCedulaFocusGained
 
-    private void txtContratoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContratoFocusGained
-        if (txtContrato.getText().equals("Condiciones de contrato")) {
-            txtContrato.setText("");
-            txtContrato.setForeground(Color.black);
+    private void txtCorreoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusLost
+        if (txtCorreo.getText().isEmpty()) {
+            txtCorreo.setText("Correo");
+            txtCorreo.setForeground(Color.gray);
+            
         }
-    }//GEN-LAST:event_txtContratoFocusGained
+    }//GEN-LAST:event_txtCorreoFocusLost
 
-    private void txtContratoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContratoFocusLost
-        if (txtContrato.getText().isEmpty()) {
-            txtContrato.setText("Condiciones de contrato");
-            txtContrato.setForeground(Color.gray);
+    private void txtCorreoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusGained
+        if (txtCorreo.getText().equals("Correo")) {
+            txtCorreo.setText("");
+            txtCorreo.setForeground(Color.black);
         }
-    }//GEN-LAST:event_txtContratoFocusLost
+    }//GEN-LAST:event_txtCorreoFocusGained
 
-    private void btnEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminar1ActionPerformed
+    private void txtContrasenaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaFocusLost
+        if (String.valueOf(txtContrasena.getPassword()).isEmpty()) {
+            txtContrasena.setText("******");
+            txtContrasena.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtContrasenaFocusLost
 
-    private void txtInfoContratoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtInfoContratoFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtInfoContratoFocusGained
+    private void txtContrasenaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaFocusGained
+        if (String.valueOf(txtContrasena.getPassword()).equals("******")) {
+            txtContrasena.setText("");
+            txtContrasena.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtContrasenaFocusGained
 
-    private void txtInfoContratoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtInfoContratoFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtInfoContratoFocusLost
+    private void txtEdadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdadFocusLost
+        if (txtEdad.getText().isEmpty()) {
+            txtEdad.setText("Edad");
+            txtEdad.setForeground(Color.gray);
+        }
+        if (!validarNumeros(txtEdad.getText()) && !txtEdad.getText().equals("Edad")) {
+            txtEdad.setBackground(Color.red);
+        } else {
+            txtEdad.setBackground(Color.white);
+        }
+    }//GEN-LAST:event_txtEdadFocusLost
 
+    private void txtEdadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdadFocusGained
+        if (txtEdad.getText().equals("Edad")) {
+            txtEdad.setText("");
+            txtEdad.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtEdadFocusGained
+
+    private void txtTelefonoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusLost
+        if (txtTelefono.getText().isEmpty()) {
+            txtTelefono.setText("Numero movil");
+            txtTelefono.setForeground(Color.gray);
+        }
+        if (!validarNumeros(txtTelefono.getText()) && !txtTelefono.getText().equals("Numero movil")) {
+            txtTelefono.setBackground(Color.red);
+        } else {
+            txtTelefono.setBackground(Color.white);
+        }
+    }//GEN-LAST:event_txtTelefonoFocusLost
+
+    private void txtTelefonoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusGained
+        if (txtTelefono.getText().equals("Numero movil")) {
+            txtTelefono.setText("");
+            txtTelefono.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtTelefonoFocusGained
+
+    private void jLabelRegistrar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar2MouseClicked
+        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador();
+        ventanaAdministrador.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabelRegistrar2MouseClicked
+
+    private void btnModificarAdminNegocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarAdminNegocioActionPerformed
+        if (txtCorreo.getText().equals("") || txtCorreo.getText().equals("Correo")
+                || String.valueOf(txtContrasena.getPassword()).equals("")
+                || String.valueOf(txtContrasena.getPassword()).equals("******")
+                || txtCedula.getText().equals("") || txtCedula.getText().equals("Cedula")
+                || txtEdad.getText().equals("") || txtEdad.getText().equals("Edad")
+                || txtNombre.getText().equals("") || txtNombre.getText().equals("Nombre completo")
+                || txtTelefono.getText().equals("") || txtTelefono.getText().equals("Numero movil")) {
+            JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
+        } else {
+            String telefono = txtTelefono.getText();
+            String nombre = txtNombre.getText();
+            short edad = Short.parseShort(txtEdad.getText());
+            String cedula = txtCedula.getText();
+            String correo = txtCorreo.getText();
+            String contrasena = String.valueOf(txtContrasena.getPassword());
+            if (controlador.validarCorreo(correo) > 2 || controlador.validarCorreoAdmin(correo)) {
+                JOptionPane.showMessageDialog(this, "Ya hay un usuario registrado con ese correo");
+            } else {
+                AdministradorDeNegocio administradorNegocio = new AdministradorDeNegocio(nombre, cedula, telefono, correo, contrasena, edad);
+                controlador.modificarAdmin(administradorNegocio);
+                JOptionPane.showMessageDialog(this, "Administrador de negocio modificado correctamente");
+                cargarInfoAdmin();
+                CentroComercial.serializarListaLocales();
+            }
+        }
+    }//GEN-LAST:event_btnModificarAdminNegocioActionPerformed
+    
     public static boolean validarNumeros(String datos) {
         return datos.matches("[0-9]*");
     }
-
+    
     public static boolean validarLetras(String datos) {
         return datos.matches("[a-zA-Z]*");
     }
-
+    
     public void cleanTextField() {
         /*
         txtTelefono.setText("Numero movil");
@@ -641,7 +722,7 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
         txtContrasena.setText("******");
         txtContrasena.setForeground(Color.gray);*/
     }
-
+    
     private void infoLocal() {
         jLabel10.setText(local.getNegocio().getNombre());
         jLabel7.setText(local.getNegocio().getAdministrador().getNombre());
@@ -649,6 +730,30 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
         jLabel12.setText(String.valueOf(local.getNegocio().getEmpleados().Size()));
         txtInfoContrato.setText(local.getNegocio().getContrato().getDescripcion());
         txtInfoContrato.setEnabled(false);
+    }
+    
+    public void cargarInfoNegocio() {
+        txtNombreNegocio.setText(local.getNegocio().getNombre());
+        txtNombreNegocio.setForeground(Color.black);
+        txtContrato.setText(local.getNegocio().getContrato().getDescripcion());
+        txtContrato.setForeground(Color.black);
+        jDateInicio.setDate(local.getNegocio().getContrato().getFechaInicio());
+        jDateFinal.setDate(local.getNegocio().getContrato().getFechaFin());
+    }
+    
+    public void cargarInfoAdmin() {
+        txtNombre.setText(local.getNegocio().getAdministrador().getNombre());
+        txtNombre.setForeground(Color.black);
+        txtCedula.setText(local.getNegocio().getAdministrador().getCedula());
+        txtCedula.setForeground(Color.black);
+        txtCorreo.setText(local.getNegocio().getAdministrador().getCorreo());
+        txtCorreo.setForeground(Color.black);
+        txtContrasena.setText(local.getNegocio().getAdministrador().getContrasena());
+        txtContrasena.setForeground(Color.black);
+        txtTelefono.setText(local.getNegocio().getAdministrador().getNumeroCelular());
+        txtTelefono.setForeground(Color.black);
+        txtEdad.setText(String.valueOf(local.getNegocio().getAdministrador().getEdad()));
+        txtEdad.setForeground(Color.black);
     }
 
     /**
@@ -702,8 +807,9 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnEliminar1;
+    private javax.swing.JButton btnEliminarNegocio;
+    private javax.swing.JButton btnModificarAdminNegocio;
+    private javax.swing.JButton btnModificarNegocio;
     private com.toedter.calendar.JDateChooser jDateFinal;
     private com.toedter.calendar.JDateChooser jDateInicio;
     private javax.swing.JLabel jLabel10;
@@ -711,6 +817,7 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -722,7 +829,6 @@ public class ventanaInfoLocal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelRegistrar2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;

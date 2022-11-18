@@ -6,6 +6,7 @@ package ventana;
 
 import controlador.ControladorVentanaSignUp;
 import java.awt.Color;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import src.CentroComercial;
 import src.Vehiculo;
@@ -43,8 +44,8 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
         jLabelRegistrar = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        txtTipoVehiculo = new javax.swing.JTextField();
         txtPlaca = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Registrar carro");
@@ -97,17 +98,6 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
             }
         });
 
-        txtTipoVehiculo.setForeground(new java.awt.Color(153, 153, 153));
-        txtTipoVehiculo.setText("Tipo de vehiculo");
-        txtTipoVehiculo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtTipoVehiculoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTipoVehiculoFocusLost(evt);
-            }
-        });
-
         txtPlaca.setForeground(new java.awt.Color(153, 153, 153));
         txtPlaca.setText("Placa");
         txtPlaca.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -121,6 +111,8 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de vehiculo", "moto", "carro" }));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -128,9 +120,9 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtTipoVehiculo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                    .addComponent(txtPlaca))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                    .addComponent(txtPlaca)
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -139,8 +131,8 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTipoVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addComponent(jButton1)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
@@ -185,36 +177,19 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabelRegistrarMouseClicked
 
-    private void txtTipoVehiculoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoVehiculoFocusGained
-        if (txtTipoVehiculo.getText().equals("Tipo de vehiculo")) {
-            txtTipoVehiculo.setText("");
-            txtTipoVehiculo.setForeground(Color.black);
-        }
-    }//GEN-LAST:event_txtTipoVehiculoFocusGained
-
-    private void txtTipoVehiculoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoVehiculoFocusLost
-        if (txtTipoVehiculo.getText().equals("")) {
-            txtTipoVehiculo.setText("Tipo de vehiculo");
-            txtTipoVehiculo.setForeground(Color.gray);
-        }
-        if (!validarLetras(txtTipoVehiculo.getText()) && !txtTipoVehiculo.getText().equals("Placa")) {
-            txtTipoVehiculo.setBackground(Color.red);
-        } else {
-            txtTipoVehiculo.setBackground(Color.white);
-        }
-    }//GEN-LAST:event_txtTipoVehiculoFocusLost
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (txtTipoVehiculo.getText().equals("") || txtTipoVehiculo.getText().equals("Tipo de vehiculo")
-                || txtPlaca.getText().equals("") || txtPlaca.getText().equals("Placa")
-                || txtTipoVehiculo.getBackground().equals(Color.red)) {
+        if (jComboBox1.getSelectedItem().equals("Tipo de vehiculo")
+                || txtPlaca.getText().equals("") || txtPlaca.getText().equals("Placa")) {
             JOptionPane.showMessageDialog(this, "Algo salio mal, por favor verifica los datos ingresados :(");
         } else {
             String placa = txtPlaca.getText();
-            String tipoDeVehiculo = txtTipoVehiculo.getText();
+            String tipoDeVehiculo = String.valueOf(jComboBox1.getSelectedItem());
             if (espacioParqueadero.getPlaca() == null) {
-                espacioParqueadero.setPlaca(placa);
-                espacioParqueadero.setTipo(tipoDeVehiculo);
+                Date date = new Date();
+                Vehiculo vehi = new Vehiculo(tipoDeVehiculo, placa);
+                espacioParqueadero.setPlaca(vehi.getPlaca());
+                espacioParqueadero.setTipo(vehi.getTipo());
+                espacioParqueadero.setFechaEntrada(date);
                 JOptionPane.showMessageDialog(this, "parqueadero asignado correctamente al espacio parqueadero con placa: " + placa);
                 ventanaParqueadero.validarPosiciones();
                 ventanaParqueadero.botonAnadir();
@@ -256,8 +231,7 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
     public void cleanTextField() {
         txtPlaca.setText("Placa");
         txtPlaca.setForeground(Color.gray);
-        txtTipoVehiculo.setText("Tipo de placa");
-        txtTipoVehiculo.setForeground(Color.gray);
+        jComboBox1.setSelectedIndex(0);
     }
 
     public static void main(String args[]) {
@@ -297,12 +271,12 @@ public class VentanaRegistroVehiculo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelRegistrar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField txtPlaca;
-    private javax.swing.JTextField txtTipoVehiculo;
     // End of variables declaration//GEN-END:variables
 }

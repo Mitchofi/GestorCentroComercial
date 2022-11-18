@@ -23,7 +23,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
      */
     private JButton[][] botones;
     private ControladorVentanaAdministrador controlador;
-
+    
     public VentanaAdministrador() {
         initComponents();
         setLocationRelativeTo(this);
@@ -50,7 +50,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         jLabelClientes = new javax.swing.JLabel();
         jLabelConcursos = new javax.swing.JLabel();
         jLabelVentas = new javax.swing.JLabel();
-        jLabelSolicitudes = new javax.swing.JLabel();
+        jLabelSolicitudes1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -111,13 +111,13 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             }
         });
 
-        jLabelSolicitudes.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabelSolicitudes.setForeground(new java.awt.Color(51, 153, 255));
-        jLabelSolicitudes.setText("Solicitudes");
-        jLabelSolicitudes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelSolicitudes.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabelSolicitudes1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabelSolicitudes1.setForeground(new java.awt.Color(51, 153, 255));
+        jLabelSolicitudes1.setText("Solicitudes");
+        jLabelSolicitudes1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelSolicitudes1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelSolicitudesMouseClicked(evt);
+                jLabelSolicitudes1MouseClicked(evt);
             }
         });
 
@@ -132,9 +132,9 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                     .addComponent(jLabelEmpleados)
                     .addComponent(jLabelLocales)
                     .addComponent(jLabelClientes)
-                    .addComponent(jLabelVentas)
                     .addComponent(jLabelConcursos)
-                    .addComponent(jLabelSolicitudes))
+                    .addComponent(jLabelVentas)
+                    .addComponent(jLabelSolicitudes1))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -153,7 +153,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                 .addGap(18, 18, 18)
                 .addComponent(jLabelVentas)
                 .addGap(18, 18, 18)
-                .addComponent(jLabelSolicitudes)
+                .addComponent(jLabelSolicitudes1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -249,12 +249,6 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         this.dispose();
     }//GEN-LAST:event_jLabelVentasMouseClicked
 
-    private void jLabelSolicitudesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSolicitudesMouseClicked
-        VentanaGestionarSolicitudes ventanaGestionarSolicitudes = new VentanaGestionarSolicitudes();
-        ventanaGestionarSolicitudes.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabelSolicitudesMouseClicked
-
     private void jLabelRegistrar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegistrar2MouseClicked
         VentanaLogIn ventanaLogIn = new VentanaLogIn();
         ventanaLogIn.reinciarLogIn();
@@ -262,12 +256,16 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
         this.dispose();
     }//GEN-LAST:event_jLabelRegistrar2MouseClicked
 
+    private void jLabelSolicitudes1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSolicitudes1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabelSolicitudes1MouseClicked
+    
     private void initBotones() {
         int ancho = 90;
         int alto = 90;
         int separado1 = 20;
         int texto = 1;
-
+        
         for (int i = 0; i < botones.length; i++) {
             for (int j = 0; j < botones[i].length; j++) {
                 botones[i][j] = new JButton();
@@ -279,7 +277,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             }
         }
     }
-
+    
     public void validarPosiciones() {
         for (int i = 0; i < botones.length; i++) {
             for (int j = 0; j < botones[i].length; j++) {
@@ -288,11 +286,12 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
                     botones[i][j].setBackground(Color.white);
                 } else {
                     botones[i][j].setBackground(Color.yellow);
+                    botones[i][j].setText(local.getNegocio().getNombre());
                 }
             }
         }
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         for (int i = 0; i < botones.length; i++) {
@@ -312,11 +311,11 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
             }
         }
     }
-
+    
     public static boolean validarNumeros(String datos) {
         return datos.matches("[0-9]*");
     }
-
+    
     public static boolean validarLetras(String datos) {
         return datos.matches("[a-zA-Z]*");
     }
@@ -363,7 +362,7 @@ public class VentanaAdministrador extends javax.swing.JFrame implements ActionLi
     private javax.swing.JLabel jLabelEmpleados;
     private javax.swing.JLabel jLabelLocales;
     private javax.swing.JLabel jLabelRegistrar2;
-    private javax.swing.JLabel jLabelSolicitudes;
+    private javax.swing.JLabel jLabelSolicitudes1;
     private javax.swing.JLabel jLabelVentas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

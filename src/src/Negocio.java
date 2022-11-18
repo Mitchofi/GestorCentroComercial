@@ -317,7 +317,7 @@ public class Negocio implements Serializable {
     }
 
     public void anadirAListaSeparados(String codigo, int cantidad, Empleado empleado, Negocio negocio, Cliente cliente, Date fechaRecogida) {
-        
+
         Articulo articuloVendido = null;
         articuloVendido = buscarArticulo(codigo);
         Date fechaIni = new Date();
@@ -389,5 +389,22 @@ public class Negocio implements Serializable {
             valor = articulo.getValorDelProducto() * cantidad;
         }
         return valor;
+    }
+
+    public void modificarAdmin(AdministradorDeNegocio administradorDeNegocio) {
+        administrador.setNombre(administradorDeNegocio.getNombre());
+        administrador.setCedula(administradorDeNegocio.getCedula());
+        administrador.setContrasena(administradorDeNegocio.getContrasena());
+        administrador.setCorreo(administradorDeNegocio.getCorreo());
+        administrador.setEdad(administradorDeNegocio.getEdad());
+        administrador.setNumeroCelular(administradorDeNegocio.getNumeroCelular());
+
+    }
+
+    public void modificarNegocio(String nombre, Date fechaFin, Date fechaInicio, String descripcion) {
+        this.nombre = nombre;
+        contrato.setFechaFin(fechaFin);
+        contrato.setFechaInicio(fechaInicio);
+        contrato.setDescripcion(descripcion);
     }
 }

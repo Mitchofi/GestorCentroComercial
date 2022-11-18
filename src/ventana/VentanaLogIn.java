@@ -14,10 +14,10 @@ import src.Negocio;
  */
 public class VentanaLogIn extends javax.swing.JFrame {
 
-    /**
+    /**          
      * Creates new form LogInt
      */
-    ControladorVentanaLogIn controlador;    
+    ControladorVentanaLogIn controlador;
 
     public VentanaLogIn() {
         initComponents();
@@ -240,7 +240,7 @@ public class VentanaLogIn extends javax.swing.JFrame {
                 ventanaVendedorNegocio.setVisible(true);
                 this.dispose();
             } else if (tipo == 6) {
-                VentanaParqueadero ventanaParqueadero = new VentanaParqueadero(this);
+                VentanaParqueadero ventanaParqueadero = new VentanaParqueadero();
                 ventanaParqueadero.setVisible(true);
                 this.dispose();
             }

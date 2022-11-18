@@ -753,7 +753,11 @@ public class VentanaGestionarCliente extends javax.swing.JFrame {
                     ob[1] = aux.getCorreo();
                     ob[2] = aux.getCedula();
                     ob[3] = aux.getEdad();
-                    ob[4] = aux.isMulta();
+                    if (aux.isMulta()) {
+                        ob[4] = "Si";
+                    } else {
+                        ob[4] = "No";
+                    }
                     if (aux.getVehiculo() == null) {
                         vehiculo = "No";
                     }

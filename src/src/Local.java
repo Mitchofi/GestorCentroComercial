@@ -6,12 +6,14 @@ public class Local implements Serializable {
 
     private Negocio negocio;
     private boolean disponible;
+    private boolean desocupado;
     private float valorArriendo;
 
     public Local() {
         this.negocio = null;
         this.valorArriendo = 0;
         this.disponible = true;
+        this.desocupado = true;
     }
 
     public Negocio getNegocio() {
@@ -37,4 +39,13 @@ public class Local implements Serializable {
     public void setValorArriendo(float valorArriendo) {
         this.valorArriendo = valorArriendo;
     }
+
+    public boolean isDesocupado() {
+        return desocupado;
+    }
+
+    public void setDesocupado(boolean desocupado) {
+        this.desocupado = desocupado;
+    }
+
 }

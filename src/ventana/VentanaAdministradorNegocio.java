@@ -57,6 +57,7 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
         jLabelVentas = new javax.swing.JLabel();
         jLabelSolicitudes = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jLabelSolicitudes1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -136,6 +137,16 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel10.setText("NEGOCIO");
 
+        jLabelSolicitudes1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabelSolicitudes1.setForeground(new java.awt.Color(255, 51, 51));
+        jLabelSolicitudes1.setText("Desocupar");
+        jLabelSolicitudes1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelSolicitudes1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelSolicitudes1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -143,6 +154,7 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelSolicitudes1)
                     .addComponent(jLabelEmpleados)
                     .addComponent(jLabelClientes)
                     .addComponent(jLabelVentas)
@@ -171,7 +183,9 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
                 .addComponent(jLabelVentas)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelSolicitudes)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelSolicitudes1)
+                .addGap(15, 15, 15))
         );
 
         jLabel4.setText("¿Deseas salir de la cuenta?");
@@ -752,6 +766,12 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabelConcursosMouseClicked
 
+    private void jLabelSolicitudes1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSolicitudes1MouseClicked
+        VentanaDesocuparNegocio ventanaDesocuparNegocio = new VentanaDesocuparNegocio(negocio);
+        ventanaDesocuparNegocio.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabelSolicitudes1MouseClicked
+
     public static boolean validarNumeros(String datos) {
         return datos.matches("[0-9]*");
     }
@@ -867,6 +887,7 @@ public class VentanaAdministradorNegocio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelEmpleados;
     private javax.swing.JLabel jLabelSalir;
     private javax.swing.JLabel jLabelSolicitudes;
+    private javax.swing.JLabel jLabelSolicitudes1;
     private javax.swing.JLabel jLabelVentas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel12;

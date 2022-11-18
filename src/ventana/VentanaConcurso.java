@@ -5,7 +5,6 @@
 package ventana;
 
 import javax.swing.table.DefaultTableModel;
-import src.Articulo;
 import src.CentroComercial;
 import src.Cliente;
 
@@ -14,7 +13,7 @@ import src.Cliente;
  * @author usuario
  */
 public class VentanaConcurso extends javax.swing.JFrame {
-
+    
     private DefaultTableModel modeloConcursosVigentes;
     private DefaultTableModel modeloConcursosParticipo;
     private Cliente cliente;
@@ -29,10 +28,12 @@ public class VentanaConcurso extends javax.swing.JFrame {
         this.cliente = cliente;
         this.modeloConcursosVigentes = new DefaultTableModel();
         this.modeloConcursosParticipo = new DefaultTableModel();
+        this.jLabel7.setText(cliente.getNombre());
         limpiarTablaConcursosVigentes();
         limpiarTablaConcursosParticipo();
         cargarConcursosVigentes();
         cargarConcursosParticipo();
+        CuentaConMulta();
     }
 
     /**
@@ -58,6 +59,9 @@ public class VentanaConcurso extends javax.swing.JFrame {
         jLabelClientes = new javax.swing.JLabel();
         jLabelVentas = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabelRegistrar6 = new javax.swing.JLabel();
 
@@ -213,6 +217,16 @@ public class VentanaConcurso extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel7.setText("Nombre cliente:");
 
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel8.setText("OJO:");
+
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel10.setText("Tu cuenta esta");
+
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel11.setText("LIMITADA");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -239,6 +253,13 @@ public class VentanaConcurso extends javax.swing.JFrame {
                             .addComponent(jLabelVentas)
                             .addComponent(jLabelClientes))))
                 .addContainerGap())
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,6 +276,12 @@ public class VentanaConcurso extends javax.swing.JFrame {
                 .addComponent(jLabelClientes)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelVentas)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel11)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -348,14 +375,14 @@ public class VentanaConcurso extends javax.swing.JFrame {
         }
         jTableConcursosVigentes.setModel(modeloConcursosVigentes);
     }
-
+    
     public void limpiarTablaConcursosVigentes() {
         for (int i = 0; i < modeloConcursosVigentes.getRowCount(); i++) {
             modeloConcursosVigentes.removeRow(i);
             i = i - 1;
         }
     }
-
+    
     public void cargarConcursosParticipo() {
         modeloConcursosParticipo = (DefaultTableModel) jTableConcursosParticipo.getModel();
         Object[] ob = new Object[6];
@@ -372,11 +399,23 @@ public class VentanaConcurso extends javax.swing.JFrame {
         }
         jTableConcursosParticipo.setModel(modeloConcursosParticipo);
     }
-
+    
     public void limpiarTablaConcursosParticipo() {
         for (int i = 0; i < modeloConcursosParticipo.getRowCount(); i++) {
             modeloConcursosParticipo.removeRow(i);
             i = i - 1;
+        }
+    }
+    
+    public void CuentaConMulta() {
+        if (cliente.isMulta()) {
+            jLabel8.setVisible(true);
+            jLabel10.setVisible(true);
+            jLabel11.setVisible(true);
+        } else {
+            jLabel8.setVisible(false);
+            jLabel10.setVisible(false);
+            jLabel11.setVisible(false);
         }
     }
 
@@ -394,21 +433,21 @@ public class VentanaConcurso extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(VentanaConcurso.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(VentanaConcurso.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(VentanaConcurso.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VentanaConcurso.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -430,8 +469,11 @@ public class VentanaConcurso extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelClientes;
     private javax.swing.JLabel jLabelEmpleados;

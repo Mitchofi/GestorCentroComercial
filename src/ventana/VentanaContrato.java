@@ -362,7 +362,7 @@ public class VentanaContrato extends javax.swing.JFrame {
             String descripcion = txtContrato.getText();
             Date fechaInicio = jDateInicio.getDate();
             Date fechaFinal = jDateFinal.getDate();
-            if (controlador.validarCorreo(correo)>2 || controlador.validarCorreoAdmin(correo)) {
+            if (controlador.validarCorreo(correo) > 2 || controlador.validarCorreoAdmin(correo)) {
                 JOptionPane.showMessageDialog(this, "Ya hay un usuario registrado con ese correo");
             } else {
                 AdministradorDeNegocio administradorNegocio = new AdministradorDeNegocio(nombre, cedula, telefono, correo, contrasena, edad);
@@ -373,6 +373,9 @@ public class VentanaContrato extends javax.swing.JFrame {
                 if (controlador.anadirNegocio(administradorNegocio, negocio, contrato, local)) {
                     JOptionPane.showMessageDialog(this, "Registrado correctamente");
                     cleanTextField();
+                    VentanaAdministrador ventanaAdministrador = new VentanaAdministrador();
+                    ventanaAdministrador.setVisible(true);
+                    this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "No pudiste ser registrado"
                             + " debido a que hay un usuario registrado con algunos de los datos que escribistes ");

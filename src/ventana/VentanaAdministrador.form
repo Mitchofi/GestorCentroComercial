@@ -78,9 +78,9 @@
                           <Component id="jLabelEmpleados" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelLocales" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelClientes" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelVentas" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelConcursos" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelSolicitudes" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelVentas" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelSolicitudes1" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="16" max="32767" attributes="0"/>
                   </Group>
@@ -101,8 +101,8 @@
                       <Component id="jLabelConcursos" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabelVentas" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Component id="jLabelSolicitudes" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jLabelSolicitudes1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -199,7 +199,7 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelVentasMouseClicked"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabelSolicitudes">
+            <Component class="javax.swing.JLabel" name="jLabelSolicitudes1">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="24" style="1"/>
@@ -213,7 +213,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelSolicitudesMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelSolicitudes1MouseClicked"/>
               </Events>
             </Component>
           </SubComponents>

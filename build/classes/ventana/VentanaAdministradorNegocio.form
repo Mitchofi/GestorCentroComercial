@@ -78,6 +78,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabelSolicitudes1" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelEmpleados" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelClientes" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelVentas" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -111,6 +112,8 @@
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Component id="jLabelSolicitudes" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jLabelSolicitudes1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -213,6 +216,23 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="NEGOCIO"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabelSolicitudes1">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="24" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="33" green="33" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Desocupar"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelSolicitudes1MouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

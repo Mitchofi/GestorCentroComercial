@@ -21,6 +21,10 @@ public class ControladorVentanaVendedorNegocio {
         return controlador.buscarClientePorUsuario(correo);
     }
 
+    public void eliminarSeparado(String codigo, int cantidad, Empleado empleado, Cliente cliente) {
+        controladorAux.eliminarSeparado(codigo, cantidad, empleado, cliente);
+    }
+
     public Articulo buscarArticulo(String codigo) {
         return controladorAux.buscarArticulo(codigo);
     }
@@ -31,5 +35,9 @@ public class ControladorVentanaVendedorNegocio {
 
     public boolean realizarSeparado(String codigo, int cantidad, Empleado empleado, Negocio negocio, Cliente cliente, Date fechaRecogida) {
         return controladorAux.realizarSeparado(codigo, cantidad, empleado, negocio, cliente, fechaRecogida);
+    }
+
+    public void pagarSeparado(String codigo, int cantidad, Empleado empleado, Cliente cliente) {
+        controladorAux.pagarSeparado(codigo, cantidad, empleado, cliente);
     }
 }
